@@ -9,6 +9,7 @@ var options = {
 
 }
 
+// http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
 function loadCanvas(dataURL) {
   var canvas = document.getElementById(options.sourceCanvasId);
   var context = canvas.getContext('2d');
