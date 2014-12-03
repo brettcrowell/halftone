@@ -3,7 +3,7 @@ var options = {
   viewportId: 'viewport',
   imageWidth: 640,
   imageHeight: 480,
-  scaleFactor: 0.25,
+  resolution: 0.25,
   pixelChar: '•'
 
 }
@@ -11,8 +11,8 @@ var options = {
 $(document).ready(function(){
 
   var viewport = $('#' + options.viewportId),
-      rows = options.imageHeight * options.scaleFactor,
-      cols = options.imageWidth * options.scaleFactor;
+      rows = options.imageHeight * options.resolution,
+      cols = options.imageWidth * options.resolution;
 
   for(var r = 0; r < rows; r++){
 

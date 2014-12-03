@@ -1,4 +1,8 @@
-p {
-  line-height: 50%;
+div#viewport {
+  font-size: 1em;
+  line-height: 0.35em;
+  letter-spacing: -0.29em;
   font-family: monospace;
+  position: absolute;
+  background-color: #444;
 }
