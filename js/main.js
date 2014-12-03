@@ -75,9 +75,30 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    var hexMatrix = buildHexMatrix(options.imageHeight, options.imageWidth, options.resolution, context);
+    var hexMatrix = buildHexMatrix(options.imageWidth, options.imageHeight, options.resolution, context);
 
     var viewport = $('#' + options.viewportId);
+
+    var renderStart = new Date().getTime();
+
+    _.each(hexMatrix, function(row){
+
+      _.each(row, function(pixel){
+
+        var pixel = $("<span/>").css('color', pixel).append(options.pixelChar);
+
+        viewport.append(pixel);
+
+      });
+
+      viewport.append('<br/>');
+
+    });
+
+    var renderEnd = new Date().getTime();
+
+    console.log("Render time: " + (renderEnd - renderStart));
+
 
 
   };
