@@ -36,14 +36,20 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData){
 
 }
 
-function buildHexMatrix(imageWidth, imageHeight, resolution, ctxImageData){
+function buildHexMatrix(canvas, resolution){
 
   var matrixStart = new Date().getTime();
 
+  var width = canvas.width,
+      height = canvas.height;
+
+  var context = canvas.getContext('2d'),
+      ctxImageData = context.getImageData(0, 0, width, height).data;
+
   var matrix = [];
 
-  var rows = imageHeight * resolution,
-      cols = imageWidth * resolution;
+  var rows = height * resolution,
+      cols = width * resolution;
 
   for(var r = 0; r < rows; r++){
 
@@ -54,7 +60,7 @@ function buildHexMatrix(imageWidth, imageHeight, resolution, ctxImageData){
       var xOnCanvas = c * (1 / resolution),
           yOnCanvas = r * (1 / resolution);
 
-      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, imageWidth, ctxImageData);
+      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, width, ctxImageData);
 
       currentRow.push(colorAtPoint);
 
@@ -84,9 +90,7 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    var ctxImageData = context.getImageData(0, 0, this.width, this.height).data;
-
-    var hexMatrix = buildHexMatrix(this.width, this.height, options.resolution, ctxImageData);
+    var hexMatrix = buildHexMatrix(canvas, options.resolution);
 
     var viewport = $('#' + options.viewportId);
 
