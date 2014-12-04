@@ -112,6 +112,8 @@ $(document).ready(function(){
 
         pixel.attr({
 
+          'row': r,
+          'col': c,
           'cx': xOnCanvas,
           'cy': yOnCanvas,
           'r': pixelRadius,
