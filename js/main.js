@@ -5,8 +5,9 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.25,
-  pixelChar: '•'
+  resolution: 0.2,
+  pixelChar: '•',
+  backgroundColor: '#000'
 
 }
 
@@ -79,15 +80,32 @@ $(document).ready(function(){
 
     var viewport = $('#' + options.viewportId);
 
+    var svg = Snap(options.imageWidth, options.imageHeight);
+
+    viewport.append(svg);
+
+    var pixelWidth = 1 / options.resolution,
+        pixelRadius = pixelWidth / 2;
+
     var renderStart = new Date().getTime();
 
-    _.each(hexMatrix, function(row){
+    _.each(hexMatrix, function(row, r){
 
-      _.each(row, function(pixel){
+      _.each(row, function(pixelColor, c){
 
-        var pixel = $("<span/>").css('color', pixel).append(options.pixelChar);
+        var xOnCanvas = (c * pixelWidth) + pixelRadius,
+            yOnCanvas = (r * pixelWidth) + pixelRadius;
 
-        viewport.append(pixel);
+        var pixel = svg.circle();
+
+        pixel.attr({
+
+          'cx': xOnCanvas,
+          'cy': yOnCanvas,
+          'r': pixelRadius,
+          'fill': pixelColor
+
+        });
 
       });
 
