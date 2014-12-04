@@ -78,9 +78,11 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
-function renderHexMatrix(width, height, resolution, hexMatrix){
+function renderCanvasToSvg(canvas, resolution){
 
-  var svg = Snap(width, height);
+  var hexMatrix = buildHexMatrix(canvas, resolution);
+
+  var svg = Snap(canvas.width, canvas.height);
 
   var pixelWidth = 1 / resolution,
       pixelRadius = pixelWidth / 2;
@@ -122,8 +124,14 @@ function renderHexMatrix(width, height, resolution, hexMatrix){
 
 $(document).ready(function(){
 
+  var viewport = $('#' + options.viewportId);
+
   var canvas = document.getElementById(options.sourceCanvasId),
       context = canvas.getContext('2d');
+
+  var renderedSvg = renderCanvasToSvg(canvas, options.resolution)
+
+  viewport.append(renderedSvg);
 
   // load image from data url
   var imageObj = new Image();
@@ -131,11 +139,7 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    var hexMatrix = buildHexMatrix(canvas, options.resolution);
-
-    var viewport = $('#' + options.viewportId);
-
-    var renderedSvg = renderHexMatrix(canvas.width, canvas.height, options.resolution, hexMatrix)
+    var renderedSvg = renderCanvasToSvg(canvas, options.resolution)
 
     viewport.append(renderedSvg);
 
