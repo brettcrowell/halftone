@@ -19,16 +19,24 @@ function rgbToHex(r, g, b) {
     return ((r << 16) | (g << 8) | b).toString(16);
 }
 
-function getHexAtPoint(x, y, ctx){
+// http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
+// http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
+function getHexAtPoint(x, y, totalWidth, ctxImageData){
 
-  var p = ctx.getImageData(x, y, 1, 1).data,
-      hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+  var dataIndex = (y * totalWidth + x) * 4;
+
+  var r = ctxImageData[dataIndex],
+      g = ctxImageData[dataIndex+1],
+      b = ctxImageData[dataIndex+2],
+      a = ctxImageData[dataIndex+3];
+
+  hex = "#" + ("000000" + rgbToHex(r, g, b)).slice(-6);
 
   return hex;
 
 }
 
-function buildHexMatrix(imageWidth, imageHeight, resolution, context){
+function buildHexMatrix(imageWidth, imageHeight, resolution, ctxImageData){
 
   var matrixStart = new Date().getTime();
 
@@ -46,7 +54,7 @@ function buildHexMatrix(imageWidth, imageHeight, resolution, context){
       var xOnCanvas = c * (1 / resolution),
           yOnCanvas = r * (1 / resolution);
 
-      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, context);
+      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, imageWidth, ctxImageData);
 
       currentRow.push(colorAtPoint);
 
@@ -76,13 +84,13 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    var hexMatrix = buildHexMatrix(options.imageWidth, options.imageHeight, options.resolution, context);
+    var ctxImageData = context.getImageData(0, 0, this.width, this.height).data;
+
+    var hexMatrix = buildHexMatrix(this.width, this.height, options.resolution, ctxImageData);
 
     var viewport = $('#' + options.viewportId);
 
     var svg = Snap(options.imageWidth, options.imageHeight);
-
-    viewport.append(svg);
 
     var pixelWidth = 1 / options.resolution,
         pixelRadius = pixelWidth / 2;
@@ -117,6 +125,7 @@ $(document).ready(function(){
 
     console.log("Render time: " + (renderEnd - renderStart));
 
+    viewport.append(svg);
 
 
   };
