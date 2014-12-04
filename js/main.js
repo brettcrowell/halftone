@@ -78,6 +78,47 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
+function renderHexMatrix(width, height, resolution, hexMatrix){
+
+  var svg = Snap(width, height);
+
+  var pixelWidth = 1 / resolution,
+      pixelRadius = pixelWidth / 2;
+
+  var renderStart = new Date().getTime();
+
+  _.each(hexMatrix, function(row, r){
+
+    _.each(row, function(pixelColor, c){
+
+      var xOnCanvas = (c * pixelWidth) + pixelRadius,
+          yOnCanvas = (r * pixelWidth) + pixelRadius;
+
+      var pixel = svg.circle();
+
+      pixel.attr({
+
+        'row': r,
+        'col': c,
+        'cx': xOnCanvas,
+        'cy': yOnCanvas,
+        'r': pixelRadius,
+        'fill': pixelColor
+
+      });
+
+    });
+
+  });
+
+  var renderEnd = new Date().getTime();
+
+  console.log("Render time: " + (renderEnd - renderStart));
+
+  return svg;
+
+}
+
 
 $(document).ready(function(){
 
@@ -94,44 +135,9 @@ $(document).ready(function(){
 
     var viewport = $('#' + options.viewportId);
 
-    var svg = Snap(options.imageWidth, options.imageHeight);
+    var renderedSvg = renderHexMatrix(canvas.width, canvas.height, options.resolution, hexMatrix)
 
-    var pixelWidth = 1 / options.resolution,
-        pixelRadius = pixelWidth / 2;
-
-    var renderStart = new Date().getTime();
-
-    _.each(hexMatrix, function(row, r){
-
-      _.each(row, function(pixelColor, c){
-
-        var xOnCanvas = (c * pixelWidth) + pixelRadius,
-            yOnCanvas = (r * pixelWidth) + pixelRadius;
-
-        var pixel = svg.circle();
-
-        pixel.attr({
-
-          'row': r,
-          'col': c,
-          'cx': xOnCanvas,
-          'cy': yOnCanvas,
-          'r': pixelRadius,
-          'fill': pixelColor
-
-        });
-
-      });
-
-      viewport.append('<br/>');
-
-    });
-
-    var renderEnd = new Date().getTime();
-
-    console.log("Render time: " + (renderEnd - renderStart));
-
-    viewport.append(svg);
+    viewport.append(renderedSvg);
 
 
   };
