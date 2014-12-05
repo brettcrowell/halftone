@@ -17,7 +17,7 @@ var options = {
 var cache = {
 
   virtualDOM: [],
-  matrix: []
+  currentMatrix: []
 
 }
 
@@ -86,6 +86,9 @@ function buildHexMatrix(canvas, resolution){
   var matrixEnd = new Date().getTime();
 
   console.log("Matrix generation time: " + (matrixEnd - matrixStart));
+
+  // store this matrix in the cache for comparison
+  cache.currentMatrix = matrix;
 
   return matrix;
 
