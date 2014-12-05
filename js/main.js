@@ -1,7 +1,9 @@
 var options = {
 
   viewportId: 'viewport',
+  svgId: 'display',
   sourceCanvasId: 'imgSource',
+  svgNamespace: "http://www.w3.org/2000/svg",
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
@@ -83,7 +85,7 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
-function renderCanvasToSvg(canvas, resolution){
+function renderCanvasToSvg(svg, canvas, resolution){
 
   var hexMatrix = buildHexMatrix(canvas, resolution);
 
@@ -111,23 +113,19 @@ function renderCanvasToSvg(canvas, resolution){
 
       } else {
 
-        var svg = Snap('#display');
+        var pixel = document.createElementNS(options.svgNamespace,"circle");
 
-        var pixel = svg.circle();
+        pixel.setAttributeNS(null, "cx", xOnCanvas);
+        pixel.setAttributeNS(null, "cy", yOnCanvas);
+        pixel.setAttributeNS(null, "r", pixelRadius);
 
-        pixel.attr({
-
-          'cx': xOnCanvas,
-          'cy': yOnCanvas,
-          'r': pixelRadius
-
-        });
+        svg.appendChild(pixel);
 
         virtualDOM[r].push(pixel);
 
       }
 
-      pixel.attr('fill', pixelColor);
+      pixel.setAttributeNS(null, "fill", pixelColor);
 
     });
 
@@ -142,7 +140,8 @@ function renderCanvasToSvg(canvas, resolution){
 
 $(document).ready(function(){
 
-  var canvas = document.getElementById(options.sourceCanvasId),
+  var svg = document.getElementById(options.svgId),
+      canvas = document.getElementById(options.sourceCanvasId),
       context = canvas.getContext('2d');
 
   var viewport = $('div#' + options.viewportId);
@@ -155,7 +154,7 @@ $(document).ready(function(){
 
   });
 
-  renderCanvasToSvg(canvas, options.resolution)
+  renderCanvasToSvg(svg, canvas, options.resolution)
 
   // load image from data url
   var imageObj = new Image();
@@ -163,7 +162,7 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    renderCanvasToSvg(canvas, options.resolution)
+    renderCanvasToSvg(svg, canvas, options.resolution)
 
   };
 
