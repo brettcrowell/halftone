@@ -14,7 +14,12 @@ var options = {
 
 // max frame rate = 1 / ((21+19)/1000)
 
-var virtualDOM = [];
+var cache = {
+
+  virtualDOM: [],
+  matrix: []
+
+}
 
 // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
 // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
@@ -109,6 +114,8 @@ function removeToInsertLater(element) {
 function renderMatrixToSvg(hexMatrix, svg, resolution){
 
   var addSvgToViewport = removeToInsertLater(svg);
+
+  var virtualDOM = cache.virtualDOM;
 
   var pixelWidth = 1 / resolution,
       pixelRadius = pixelWidth / 2;
