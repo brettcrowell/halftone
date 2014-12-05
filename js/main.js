@@ -5,7 +5,7 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.2,
+  resolution: 0.25,
   pixelChar: '•',
   backgroundColor: '#000'
 
@@ -21,7 +21,7 @@ function rgbToHex(r, g, b) {
 
 // http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
 // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
-function getHexAtPoint(x, y, totalWidth, ctxImageData){
+function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
 
   var dataIndex = (y * totalWidth + x) * 4;
 
@@ -30,9 +30,14 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData){
       b = ctxImageData[dataIndex+2],
       a = ctxImageData[dataIndex+3];
 
-  hex = "#" + ("000000" + rgbToHex(r, g, b)).slice(-6);
+  hex = ("000000" + rgbToHex(r, g, b)).slice(-6);
 
-  return hex;
+  if(!shorthand){
+    return "#" + hex;
+  }
+
+  // @todo: replace with regex?
+  return "#" + hex[0] + hex[2] + hex[4];
 
 }
 
@@ -60,7 +65,7 @@ function buildHexMatrix(canvas, resolution){
       var xOnCanvas = c * (1 / resolution),
           yOnCanvas = r * (1 / resolution);
 
-      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, width, ctxImageData);
+      var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, width, ctxImageData, true);
 
       currentRow.push(colorAtPoint);
 
@@ -84,7 +89,7 @@ function renderCanvasToSvg(canvas, resolution){
 
   var hexMatrix = buildHexMatrix(canvas, resolution);
 
-  var svg = Snap(canvas.width, canvas.height);
+  var svg = Snap('#display');
 
   var pixelWidth = 1 / resolution,
       pixelRadius = pixelWidth / 2;
@@ -141,14 +146,19 @@ function renderCanvasToSvg(canvas, resolution){
 
 $(document).ready(function(){
 
-  var viewport = $('#' + options.viewportId);
-
   var canvas = document.getElementById(options.sourceCanvasId),
       context = canvas.getContext('2d');
 
-  var renderedSvg = renderCanvasToSvg(canvas, options.resolution)
+  var viewport = $('div#' + options.viewportId);
 
-  viewport.append(renderedSvg);
+  viewport.css({
+
+    width: canvas.width + 'px',
+    height: canvas.height + 'px'
+
+  });
+
+  renderCanvasToSvg(canvas, options.resolution)
 
   // load image from data url
   var imageObj = new Image();
@@ -156,10 +166,7 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    var renderedSvg = renderCanvasToSvg(canvas, options.resolution)
-
-    viewport.append(renderedSvg);
-
+    renderCanvasToSvg(canvas, options.resolution)
 
   };
 
