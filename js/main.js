@@ -94,6 +94,34 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
+function getDifferenceMatrix(oldMatrix, newMatrix){
+
+  var differenceMatrix = [];
+
+  _.each(newMatrix, function(row, r){
+
+    var currentRow = [];
+
+    _.each(newMatrix, function(col, c){
+
+      var newPixel = newMatrix[r][c];
+
+      if(newPixel === oldMatrix[r][c]){
+        currentRow.push(null);
+      } else {
+        currentRow.push(newPixel[r][c]);
+      }
+
+    });
+
+    differenceMatrix.push(currentRow);
+
+  });
+
+  return differenceMatrix;
+
+}
+
 /**
  * Remove an element and provide a function that inserts it into its original position
  * https://developers.google.com/speed/articles/javascript-dom
@@ -131,32 +159,34 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
 
     _.each(row, function(pixelColor, c){
 
-      //console.log('row: ' + r)
+      if(pixelColor !== null){
 
-      var xOnCanvas = (c * pixelWidth) + pixelRadius,
-          yOnCanvas = (r * pixelWidth) + pixelRadius;
+        var xOnCanvas = (c * pixelWidth) + pixelRadius,
+            yOnCanvas = (r * pixelWidth) + pixelRadius;
 
-      var cachedDomNode = virtualDOM[r][c];
+        var cachedDomNode = virtualDOM[r][c];
 
-      if(cachedDomNode){
+        if(cachedDomNode){
 
-        var pixel = virtualDOM[r][c];
+          var pixel = virtualDOM[r][c];
 
-      } else {
+        } else {
 
-        var pixel = document.createElementNS(options.svgNamespace,"circle");
+          var pixel = document.createElementNS(options.svgNamespace,"circle");
 
-        pixel.setAttributeNS(null, "cx", xOnCanvas);
-        pixel.setAttributeNS(null, "cy", yOnCanvas);
-        pixel.setAttributeNS(null, "r", pixelRadius);
+          pixel.setAttributeNS(null, "cx", xOnCanvas);
+          pixel.setAttributeNS(null, "cy", yOnCanvas);
+          pixel.setAttributeNS(null, "r", pixelRadius);
 
-        svg.appendChild(pixel);
+          svg.appendChild(pixel);
 
-        virtualDOM[r].push(pixel);
+          virtualDOM[r].push(pixel);
+
+        }
+
+        pixel.setAttributeNS(null, "fill", pixelColor);
 
       }
-
-      pixel.setAttributeNS(null, "fill", pixelColor);
 
     });
 
@@ -201,7 +231,13 @@ $(document).ready(function(){
 
     hexMatrix = buildHexMatrix(canvas, options.resolution);
 
-    renderMatrixToSvg(hexMatrix, svg, options.resolution)
+    renderMatrixToSvg(hexMatrix, svg, options.resolution);
+
+    hexMatrix = buildHexMatrix(canvas, options.resolution);
+
+    var differenceMatrix = getDifferenceMatrix(cache.currentMatrix, hexMatrix);
+
+    renderMatrixToSvg(differenceMatrix, svg, options.resolution);
 
   };
 
