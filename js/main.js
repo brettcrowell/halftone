@@ -87,8 +87,6 @@ function renderCanvasToSvg(canvas, resolution){
 
   var hexMatrix = buildHexMatrix(canvas, resolution);
 
-  var svg = Snap('#display');
-
   var pixelWidth = 1 / resolution,
       pixelRadius = pixelWidth / 2;
 
@@ -113,6 +111,8 @@ function renderCanvasToSvg(canvas, resolution){
 
       } else {
 
+        var svg = Snap('#display');
+
         var pixel = svg.circle();
 
         pixel.attr({
@@ -136,8 +136,6 @@ function renderCanvasToSvg(canvas, resolution){
   var renderEnd = new Date().getTime();
 
   console.log("Render time: " + (renderEnd - renderStart));
-
-  return svg;
 
 }
 
