@@ -7,10 +7,12 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.25,
+  resolution: 0.17,
   backgroundColor: '#000'
 
 }
+
+// max frame rate = 1 / ((21+19)/1000)
 
 var virtualDOM = [];
 
@@ -30,8 +32,7 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
 
   var r = ctxImageData[dataIndex],
       g = ctxImageData[dataIndex+1],
-      b = ctxImageData[dataIndex+2],
-      a = ctxImageData[dataIndex+3];
+      b = ctxImageData[dataIndex+2];
 
   hex = ("000000" + rgbToHex(r, g, b)).slice(-6);
 
