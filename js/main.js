@@ -8,6 +8,7 @@ var options = {
   imageWidth: 640,
   imageHeight: 480,
   resolution: 0.17,
+  frameRate: 15,
   backgroundColor: '#000'
 
 }
@@ -85,7 +86,7 @@ function buildHexMatrix(canvas, resolution){
 
   var matrixEnd = new Date().getTime();
 
-  console.log("Matrix generation time: " + (matrixEnd - matrixStart));
+  //console.log("Matrix generation time: " + (matrixEnd - matrixStart));
 
   // store this matrix in the cache for comparison
   cache.currentMatrix = matrix;
@@ -125,6 +126,7 @@ function getDifferenceMatrix(oldMatrix, newMatrix){
   });
 
   var matrixEnd = new Date().getTime();
+  //console.log("Difference matrix generation time: " + (matrixEnd - matrixStart));
   console.log("Pixels changed: " + ((numChangedPixels / totalPixelsSeen) * 100) + "%");
 
   return differenceMatrix;
@@ -205,7 +207,7 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
 
   addSvgToViewport();
 
-  console.log("Render time: " + (renderEnd - renderStart));
+  //console.log("Render time: " + (renderEnd - renderStart));
 
 }
 
@@ -230,7 +232,76 @@ $(document).ready(function(){
 
   var hexMatrix = buildHexMatrix(canvas, options.resolution);
 
-  renderMatrixToSvg(hexMatrix, svg, options.resolution)
+  renderMatrixToSvg(hexMatrix, svg, options.resolution);
+
+  function hasGetUserMedia() {
+    return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia || navigator.msGetUserMedia);
+  }
+
+  if (hasGetUserMedia()) {
+    // Good to go!
+  } else {
+    alert('getUserMedia() is not supported in your browser');
+  }
+
+  // http://www.html5rocks.com/en/tutorials/getusermedia/intro/
+  var video = document.querySelector('video'),
+      localMediaStream = null;
+
+  var errorCallback = function(e) {
+    console.log('Reeeejected!', e);
+  };
+
+  var vgaConstraints = {
+    video: {
+      mandatory: {
+        maxWidth: 640,
+        maxHeight: 480
+      }
+    }
+  };
+
+  function drawVideoToCanvas(video, canvasContext){
+
+    canvasContext.drawImage(video, 0, 0);
+
+    var oldHexMatrix = cache.currentMatrix;
+
+    hexMatrix = buildHexMatrix(canvas, options.resolution);
+
+    var differenceMatrix = getDifferenceMatrix(oldHexMatrix, hexMatrix);
+
+    renderMatrixToSvg(differenceMatrix, svg, options.resolution);
+
+  }
+
+  function startVideo(stream) {
+
+    var frameInterval = options.frameRate / 1000;
+
+    localMediaStream = stream;
+
+    var video = document.querySelector('video');
+    video.src = window.URL.createObjectURL(localMediaStream);
+
+    setInterval(function(){
+      drawVideoToCanvas(video, context);
+    }, frameInterval);
+
+    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+    // See crbug.com/110938.
+    video.onloadedmetadata = function(e) {
+      // Ready to go. Do some stuff.
+    };
+
+  }
+
+  // Not showing vendor prefixes.
+  navigator.webkitGetUserMedia(vgaConstraints, startVideo, errorCallback);
+
+
+  /*
 
   // load image from data url
   var imageObj = new Image();
@@ -251,5 +322,6 @@ $(document).ready(function(){
   };
 
   imageObj.src = options.testImage;
+  */
 
 });
