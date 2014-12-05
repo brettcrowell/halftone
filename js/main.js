@@ -78,6 +78,8 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
+var virtualDOM = [];
+
 function renderCanvasToSvg(canvas, resolution){
 
   var hexMatrix = buildHexMatrix(canvas, resolution);
@@ -91,17 +93,31 @@ function renderCanvasToSvg(canvas, resolution){
 
   _.each(hexMatrix, function(row, r){
 
+    if(!virtualDOM[r]){ virtualDOM.push([]); }
+
     _.each(row, function(pixelColor, c){
+
+      console.log('row: ' + r)
 
       var xOnCanvas = (c * pixelWidth) + pixelRadius,
           yOnCanvas = (r * pixelWidth) + pixelRadius;
 
-      var pixel = svg.circle();
+      var jqSelect = $('circle[row=' + r + '][col=' + c + ']');
+
+      if(virtualDOM[r][c]){
+
+        var pixel = virtualDOM[r][c];
+
+      } else {
+
+        var pixel = svg.circle();
+
+        virtualDOM[r].push(pixel);
+
+      }
 
       pixel.attr({
 
-        'row': r,
-        'col': c,
         'cx': xOnCanvas,
         'cy': yOnCanvas,
         'r': pixelRadius,
