@@ -5,11 +5,12 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.25,
-  pixelChar: '•',
+  resolution: 0.01,
   backgroundColor: '#000'
 
 }
+
+var virtualDOM = [];
 
 // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
 // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
@@ -36,7 +37,6 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
     return "#" + hex;
   }
 
-  // @todo: replace with regex?
   return "#" + hex[0] + hex[2] + hex[4];
 
 }
@@ -62,8 +62,8 @@ function buildHexMatrix(canvas, resolution){
 
     for(var c = 0; c < cols; c++){
 
-      var xOnCanvas = c * (1 / resolution),
-          yOnCanvas = r * (1 / resolution);
+      var xOnCanvas = Math.round(c * (1 / resolution)),
+          yOnCanvas = Math.round(r * (1 / resolution));
 
       var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, width, ctxImageData, true);
 
@@ -82,8 +82,6 @@ function buildHexMatrix(canvas, resolution){
   return matrix;
 
 }
-
-var virtualDOM = [];
 
 function renderCanvasToSvg(canvas, resolution){
 
@@ -154,7 +152,8 @@ $(document).ready(function(){
   viewport.css({
 
     width: canvas.width + 'px',
-    height: canvas.height + 'px'
+    height: canvas.height + 'px',
+    'background-color': options.backgroundColor
 
   });
 
