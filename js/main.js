@@ -96,27 +96,36 @@ function buildHexMatrix(canvas, resolution){
 
 function getDifferenceMatrix(oldMatrix, newMatrix){
 
+  var totalPixelsSeen = 0,
+      numChangedPixels = 0;
+
+  var matrixStart = new Date().getTime();
+
   var differenceMatrix = [];
 
   _.each(newMatrix, function(row, r){
 
-    var currentRow = [];
+    var differenceRow = [];
 
-    _.each(newMatrix, function(col, c){
+    _.each(row, function(newPixel, c){
 
-      var newPixel = newMatrix[r][c];
-
-      if(newPixel === oldMatrix[r][c]){
-        currentRow.push(null);
+      if(newPixel == oldMatrix[r][c]){
+        differenceRow.push(null);
       } else {
-        currentRow.push(newPixel[r][c]);
+        differenceRow.push(newPixel);
+        numChangedPixels++;
       }
+
+      totalPixelsSeen++;
 
     });
 
-    differenceMatrix.push(currentRow);
+    differenceMatrix.push(differenceRow);
 
   });
+
+  var matrixEnd = new Date().getTime();
+  console.log("Pixels changed: " + ((numChangedPixels / totalPixelsSeen) * 100) + "%");
 
   return differenceMatrix;
 
