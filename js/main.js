@@ -5,7 +5,7 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.01,
+  resolution: 0.17,
   backgroundColor: '#000'
 
 }
