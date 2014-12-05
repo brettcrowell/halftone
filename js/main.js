@@ -97,14 +97,14 @@ function renderCanvasToSvg(canvas, resolution){
 
     _.each(row, function(pixelColor, c){
 
-      console.log('row: ' + r)
+      //console.log('row: ' + r)
 
       var xOnCanvas = (c * pixelWidth) + pixelRadius,
           yOnCanvas = (r * pixelWidth) + pixelRadius;
 
-      var jqSelect = $('circle[row=' + r + '][col=' + c + ']');
+      var cachedDomNode = virtualDOM[r][c];
 
-      if(virtualDOM[r][c]){
+      if(cachedDomNode){
 
         var pixel = virtualDOM[r][c];
 
@@ -112,18 +112,19 @@ function renderCanvasToSvg(canvas, resolution){
 
         var pixel = svg.circle();
 
+        pixel.attr({
+
+          'cx': xOnCanvas,
+          'cy': yOnCanvas,
+          'r': pixelRadius
+
+        });
+
         virtualDOM[r].push(pixel);
 
       }
 
-      pixel.attr({
-
-        'cx': xOnCanvas,
-        'cy': yOnCanvas,
-        'r': pixelRadius,
-        'fill': pixelColor
-
-      });
+      pixel.attr('fill', pixelColor);
 
     });
 
