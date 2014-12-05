@@ -106,11 +106,9 @@ function removeToInsertLater(element) {
   };
 }
 
-function renderCanvasToSvg(svg, canvas, resolution){
+function renderMatrixToSvg(hexMatrix, svg, resolution){
 
   var addSvgToViewport = removeToInsertLater(svg);
-
-  var hexMatrix = buildHexMatrix(canvas, resolution);
 
   var pixelWidth = 1 / resolution,
       pixelRadius = pixelWidth / 2;
@@ -179,7 +177,11 @@ $(document).ready(function(){
 
   });
 
-  renderCanvasToSvg(svg, canvas, options.resolution)
+  /////////
+
+  var hexMatrix = buildHexMatrix(canvas, options.resolution);
+
+  renderMatrixToSvg(hexMatrix, svg, options.resolution)
 
   // load image from data url
   var imageObj = new Image();
@@ -187,7 +189,9 @@ $(document).ready(function(){
 
     context.drawImage(this, 0, 0);
 
-    renderCanvasToSvg(svg, canvas, options.resolution)
+    hexMatrix = buildHexMatrix(canvas, options.resolution);
+
+    renderMatrixToSvg(hexMatrix, svg, options.resolution)
 
   };
 
