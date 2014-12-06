@@ -7,8 +7,8 @@ var options = {
   testImage: './img/test-image.jpg',
   imageWidth: 640,
   imageHeight: 480,
-  resolution: 0.17,
-  frameRate: 15,
+  resolution: 0.15,
+  frameRate: 8,
   backgroundColor: '#000'
 
 }
@@ -278,7 +278,7 @@ $(document).ready(function(){
 
   function startVideo(stream) {
 
-    var frameInterval = options.frameRate / 1000;
+    var frameInterval = 1 / (options.frameRate / 1000);
 
     localMediaStream = stream;
 
