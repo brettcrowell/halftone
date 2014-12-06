@@ -8,6 +8,7 @@ var options = {
   imageWidth: 640,
   imageHeight: 480,
   resolution: 0.15,
+  minPixelSimilarity: 0.75,
   frameRate: 8,
   backgroundColor: '#000'
 
@@ -46,7 +47,7 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
     return "#" + hex;
   }
 
-  return "#" + hex[0] + hex[0] + hex[0];
+  return "#" + hex[0] + hex[2] + hex[4];
 
 }
 
@@ -95,6 +96,49 @@ function buildHexMatrix(canvas, resolution){
 
 }
 
+function hexToRgb(hex){
+
+  hex = hex.substr(1);
+
+  return {
+
+    r: parseInt(hex[0], 16),
+    g: parseInt(hex[1], 16),
+    b: parseInt(hex[2], 16)
+
+  }
+
+}
+
+function calculateSimilarity(n1,n2){
+
+  var max = Math.max(n1,n2),
+      min = Math.min(n1,n2);
+
+  var similarity = min / max;
+
+  return similarity;
+
+}
+
+function getMinSimilarity(hex1, hex2){
+
+  var dec1 = hexToRgb(hex1),
+      dec2 = hexToRgb(hex2);
+
+  var similarities = [
+
+    calculateSimilarity(dec1.r, dec2.r),
+    calculateSimilarity(dec1.g, dec2.g),
+    calculateSimilarity(dec1.b, dec2.b)
+
+  ]
+
+  return _.min(similarities);
+
+
+}
+
 function getDifferenceMatrix(oldMatrix, newMatrix){
 
   var totalPixelsSeen = 0,
@@ -110,11 +154,20 @@ function getDifferenceMatrix(oldMatrix, newMatrix){
 
     _.each(row, function(newPixel, c){
 
-      if(newPixel == oldMatrix[r][c]){
+      var oldPixel = oldMatrix[r][c],
+          similarity = getMinSimilarity(oldPixel, newPixel);
+
+      if(similarity > options.minPixelSimilarity){
+
+        // new pixel color is 'similar enough' to old to omit
         differenceRow.push(null);
+
       } else {
+
+        // new pixel color is significantly different from old
         differenceRow.push(newPixel);
         numChangedPixels++;
+
       }
 
       totalPixelsSeen++;
