@@ -46,7 +46,7 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
     return "#" + hex;
   }
 
-  return "#" + hex[0] + hex[2] + hex[4];
+  return "#" + hex[0] + hex[0] + hex[0];
 
 }
 
@@ -155,7 +155,7 @@ function removeToInsertLater(element) {
 
 function renderMatrixToSvg(hexMatrix, svg, resolution){
 
-  var addSvgToViewport = removeToInsertLater(svg);
+  //var addSvgToViewport = removeToInsertLater(svg);
 
   var virtualDOM = cache.virtualDOM;
 
@@ -205,7 +205,7 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
 
   var renderEnd = new Date().getTime();
 
-  addSvgToViewport();
+  //addSvgToViewport();
 
   //console.log("Render time: " + (renderEnd - renderStart));
 
