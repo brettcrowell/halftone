@@ -248,7 +248,6 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
 
           pixel.setAttributeNS(null, "cx", xOnCanvas);
           pixel.setAttributeNS(null, "cy", yOnCanvas);
-          pixel.setAttributeNS(null, "r", pixelRadius);
 
           svg.appendChild(pixel);
 
@@ -256,7 +255,12 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
 
         }
 
+        // set pixel color
         pixel.setAttributeNS(null, "fill", pixelColor);
+
+        // rasterbating the pixels (changing diameter based on shade)
+        pixel.setAttributeNS(null, "r", (pixelRadius * ((15 - hexToBw(pixelColor)) / 15)));
+
 
       }
 
