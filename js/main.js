@@ -51,6 +51,14 @@ function getHexAtPoint(x, y, totalWidth, ctxImageData, shorthand){
 
 }
 
+function hexToBw(hex){
+
+  var rgb = hexToRgb(hex);
+
+  return (rgb.r + rgb.b + rgb.g) / 3;
+
+}
+
 function buildHexMatrix(canvas, resolution){
 
   var matrixStart = new Date().getTime();
