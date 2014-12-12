@@ -19,7 +19,8 @@ var options = {
 var cache = {
 
   virtualDOM: [],
-  currentMatrix: []
+  currentMatrix: [],
+  maxLumens: 0
 
 }
 
@@ -84,6 +85,8 @@ function buildHexMatrix(canvas, resolution){
           yOnCanvas = Math.round(r * (1 / resolution));
 
       var colorAtPoint = getHexAtPoint(xOnCanvas, yOnCanvas, width, ctxImageData, true);
+
+      cache.maxLumens = Math.max(hexToBw(colorAtPoint), cache.maxLumens);
 
       currentRow.push(colorAtPoint);
 
@@ -221,7 +224,8 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
   var virtualDOM = cache.virtualDOM;
 
   var pixelWidth = 1 / resolution,
-      pixelRadius = pixelWidth / 2;
+      pixelRadius = pixelWidth / 2,
+      maxLumens = cache.maxLumens;
 
   var renderStart = new Date().getTime();
 
@@ -259,7 +263,7 @@ function renderMatrixToSvg(hexMatrix, svg, resolution){
         pixel.setAttributeNS(null, "fill", pixelColor);
 
         // rasterbating the pixels (changing diameter based on shade)
-        pixel.setAttributeNS(null, "r", (pixelRadius * ((15 - hexToBw(pixelColor)) / 15)));
+        pixel.setAttributeNS(null, "r", (pixelRadius * ((maxLumens - hexToBw(pixelColor)) / maxLumens)));
 
 
       }
