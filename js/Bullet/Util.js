@@ -10,15 +10,15 @@ Bullet.Util = {
 
     }),
 
-    hexToBw: function (hex){
+    hexToBw: _.memoize(function (hex){
 
         var rgb = this.hexToRgb(hex);
 
         return (rgb.r + rgb.b + rgb.g) / 3;
 
-    },
+    }),
 
-    hexToRgb: function (hex){
+    hexToRgb: _.memoize(function (hex){
 
         hex = hex.substr(1);
 
@@ -30,7 +30,7 @@ Bullet.Util = {
 
         }
 
-    },
+    }),
 
     getDifferenceMatrix: function (oldMatrix, newMatrix){
 

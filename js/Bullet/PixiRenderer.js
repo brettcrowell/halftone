@@ -1,6 +1,6 @@
 Bullet.PixiRenderer = function(){
 
-    this.renderer = new PIXI.autoDetectRenderer(640,480); //
+    this.renderer = new PIXI.autoDetectRenderer(640,480,null,false,1,false); //
     this.stage = new PIXI.Stage(0xffffff);
 
     this._nodeCache = [];
@@ -14,8 +14,6 @@ Bullet.PixiRenderer.prototype = {
     },
 
     render: function(hexMatrix, resolution){
-
-        var renderStart = new Date().getTime();
 
         var stage = this.stage,
             nodeCache = this._nodeCache,
@@ -65,8 +63,6 @@ Bullet.PixiRenderer.prototype = {
         });
 
         this.renderer.render(stage);
-
-        console.log(new Date().getTime() - renderStart)
 
     }
 
