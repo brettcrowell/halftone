@@ -67,53 +67,6 @@ Bullet.RasterFrameEncoder.prototype = {
 
         return matrix;
 
-    },
-
-    /*getDifferenceMatrix: function (oldMatrix, newMatrix){
-
-        var totalPixelsSeen = 0,
-            numChangedPixels = 0;
-
-        var matrixStart = new Date().getTime();
-
-        var differenceMatrix = [];
-
-        _.each(newMatrix, function(row, r){
-
-            var differenceRow = [];
-
-            _.each(row, function(newPixel, c){
-
-                var oldPixel = oldMatrix[r][c],
-                    similarity = getMinSimilarity(oldPixel, newPixel);
-
-                if(similarity > options.minPixelSimilarity){
-
-                    // new pixel color is 'similar enough' to old to omit
-                    differenceRow.push(null);
-
-                } else {
-
-                    // new pixel color is significantly different from old
-                    differenceRow.push(newPixel);
-                    numChangedPixels++;
-
-                }
-
-                totalPixelsSeen++;
-
-            });
-
-            differenceMatrix.push(differenceRow);
-
-        });
-
-        var matrixEnd = new Date().getTime();
-        //console.log("Difference matrix generation time: " + (matrixEnd - matrixStart));
-        console.log("Pixels changed: " + ((numChangedPixels / totalPixelsSeen) * 100) + "%");
-
-        return differenceMatrix;
-
-    }*/
+    }
 
 }

@@ -34,9 +34,17 @@ $(document).ready(function(){
   var frameInterval = 1 / (Bullet.Options.frameRate / 1000),
       resolution = Bullet.Options.resolution;
 
+  var lastKnownFrame = null;
+
   setInterval(
       function(){
-        render.render(encoder.encodeFrame(source.getFrame(), resolution), resolution);
+
+        var currentFrame = encoder.encodeFrame(source.getFrame(), resolution);
+
+        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
+
+        render.render(differenceMatrix, resolution);
+        lastKnownFrame = currentFrame;
       },
       frameInterval
   )

@@ -30,6 +30,47 @@ Bullet.Util = {
 
     },
 
+    getDifferenceMatrix: function (oldMatrix, newMatrix){
+
+        var totalPixelsSeen = 0,
+            numChangedPixels = 0;
+
+        var differenceMatrix = [];
+
+        _.each(newMatrix, function(row, r){
+
+            var differenceRow = [];
+
+            _.each(row, function(newPixel, c){
+
+                var oldPixel = oldMatrix[r][c],
+                    similarity = this.getMinSimilarity(oldPixel, newPixel);
+
+                if(similarity > Bullet.Options.minPixelSimilarity){
+
+                    // new pixel color is 'similar enough' to old to omit
+                    differenceRow.push(null);
+
+                } else {
+
+                    // new pixel color is significantly different from old
+                    differenceRow.push(newPixel);
+                    numChangedPixels++;
+
+                }
+
+                totalPixelsSeen++;
+
+            }.bind(this));
+
+            differenceMatrix.push(differenceRow);
+
+        }.bind(this));
+
+        return differenceMatrix;
+
+    },
+
     calculateSimilarity: function (n1,n2){
 
         var max = Math.max(n1,n2),
@@ -43,14 +84,14 @@ Bullet.Util = {
 
     getMinSimilarity: function (hex1, hex2){
 
-        var dec1 = hexToRgb(hex1),
-            dec2 = hexToRgb(hex2);
+        var dec1 = this.hexToRgb(hex1),
+            dec2 = this.hexToRgb(hex2);
 
         var similarities = [
 
-            calculateSimilarity(dec1.r, dec2.r),
-            calculateSimilarity(dec1.g, dec2.g),
-            calculateSimilarity(dec1.b, dec2.b)
+            this.calculateSimilarity(dec1.r, dec2.r),
+            this.calculateSimilarity(dec1.g, dec2.g),
+            this.calculateSimilarity(dec1.b, dec2.b)
 
         ]
 
