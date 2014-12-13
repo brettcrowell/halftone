@@ -1,4 +1,4 @@
-Bullet.WebcamSource = function(document){
+Bullet.WebcamSource = function(){
 
     this.video = document.createElement('video');
     this.canvas = document.createElement('canvas');
@@ -13,8 +13,6 @@ Bullet.WebcamSource = function(document){
 
     // Not showing vendor prefixes.
     navigator.webkitGetUserMedia(Bullet.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
-
-    return this.video;
 
 }
 
