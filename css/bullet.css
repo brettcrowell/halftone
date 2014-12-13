@@ -8,5 +8,10 @@ svg {
 }
 
 video {
-  display: none;
+  //display: none;
+}
+
+div#viewport {
+  width: 640px;
+  height: 480px;
 }
