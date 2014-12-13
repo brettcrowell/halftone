@@ -7,6 +7,10 @@ Bullet.SvgRenderer = function(){
 
 Bullet.SvgRenderer.prototype = {
 
+    getElement: function(){
+      return this.element;
+    },
+
     render: function(hexMatrix, resolution){
 
         var pixelWidth = 1 / resolution,
