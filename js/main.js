@@ -23,10 +23,10 @@ $(document).ready(function(){
 
   //var svg = document.getElementById(Bullet.Options.svgId);
 
-  var source = new Bullet.WebcamSource(document);
-      //encoder = new Bullet.RasterEncoder();
+  var source = new Bullet.WebcamSource();
+      encoder = new Bullet.RasterFrameEncoder();
 
-  document.body.appendChild(source);
+  console.log(encoder.encodeFrame(source.getFrame(), .1));
 
   //new Bullet.SvgViewer(source, svg, encoder);
 
