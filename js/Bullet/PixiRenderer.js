@@ -1,7 +1,9 @@
 Bullet.PixiRenderer = function(){
 
-    this.renderer = new PIXI.autoDetectRenderer(640,480, null, false, true); //
+    this.renderer = new PIXI.autoDetectRenderer(640,480); //
     this.stage = new PIXI.Stage(0xffffff);
+
+    this._nodeCache = [];
 
 }
 
@@ -16,33 +18,45 @@ Bullet.PixiRenderer.prototype = {
         var renderStart = new Date().getTime();
 
         var stage = this.stage,
+            nodeCache = this._nodeCache,
             pixelWidth = 1 / resolution,
             pixelRadius = pixelWidth / 2;
 
-        for (var i = this.stage.children.length - 1; i >= 0; i--) {
-            this.stage.removeChild(this.stage.children[i]);
-        };
-
-        this.renderer.render(stage);
-
         _.each(hexMatrix, function(row, r){
+
+            if(!nodeCache[r]){ nodeCache.push([]); }
 
             _.each(row, function(pixelColor, c){
 
                 if(pixelColor !== null){
 
-                    var pixel = new PIXI.Graphics();
+                    var pixel = nodeCache[r][c];
 
-                    var xOnCanvas = (c * pixelWidth) + pixelRadius,
-                        yOnCanvas = (r * pixelWidth) + pixelRadius;
+                    if(!pixel){
 
-                    var rasterRadius = (pixelRadius * ((15 - Bullet.Util.hexToBw(pixelColor)) / 15));
+                        var graphics = new PIXI.Graphics();
 
-                    pixel.beginFill(0x000000);
-                    pixel.drawCircle(xOnCanvas, yOnCanvas, rasterRadius);
-                    pixel.endFill();
+                        graphics.beginFill(0x000000);
+                        graphics.drawCircle(0, 0, pixelWidth);
+                        graphics.endFill();
 
-                    stage.addChild(pixel);
+                        pixel = new PIXI.Sprite(graphics.generateTexture());
+
+                        stage.addChild(pixel);
+
+                        nodeCache[r].push(pixel);
+
+                    }
+
+                    var rasterWidth = (pixelWidth * ((15 - Bullet.Util.hexToBw(pixelColor)) / 15));
+
+                    var xOnCanvas = (c * pixelWidth),
+                        yOnCanvas = (r * pixelWidth);
+
+                    pixel.x = xOnCanvas + ((pixelWidth - rasterWidth) / 2);
+                    pixel.y = yOnCanvas + ((pixelWidth - rasterWidth) / 2);
+
+                    pixel.width = pixel.height = rasterWidth;
 
                 }
 
