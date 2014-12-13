@@ -7,6 +7,8 @@
 
 // max frame rate = 1 / ((21+19)/1000)
 
+// source --> encode --> compress --> decompress/render/display
+
 Bullet = {};
 
 var cache = {
@@ -24,11 +26,19 @@ $(document).ready(function(){
   //var svg = document.getElementById(Bullet.Options.svgId);
 
   var source = new Bullet.WebcamSource();
-      encoder = new Bullet.RasterFrameEncoder();
+      encoder = new Bullet.RasterFrameEncoder(),
+      render = new Bullet.SvgRenderer();
 
-  console.log(encoder.encodeFrame(source.getFrame(), .1));
+  document.getElementById('viewport').appendChild(render.element);
 
-  //new Bullet.SvgViewer(source, svg, encoder);
+  setInterval(
+      function(){
+        render.render(encoder.encodeFrame(source.getFrame(), .1),.1);
+      },
+      500
+  )
+
+  //var frameInterval = 1 / (options.frameRate / 1000);, new Bullet.SvgRenderer();
 
 
 });
