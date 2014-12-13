@@ -83,6 +83,14 @@ Bullet.Util = {
 
     },
 
+    average: function(arr){
+
+        var sum = _.reduce(arr, function(a,b){ return a + b; });
+
+        return sum / arr.length;
+
+    },
+
     hasGetUserMedia: function() {
         return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia || navigator.msGetUserMedia);

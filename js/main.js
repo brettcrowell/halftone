@@ -27,7 +27,7 @@ $(document).ready(function(){
 
   var source = new Bullet.WebcamSource();
       encoder = new Bullet.RasterFrameEncoder(),
-      render = new Bullet.SvgRenderer();
+      render = new Bullet.PixiRenderer();
 
   document.getElementById('viewport').appendChild(render.getElement());
 
@@ -36,15 +36,70 @@ $(document).ready(function(){
 
   var lastKnownFrame = null;
 
+  var metrics = {
+    renderTimes: [],
+    totalTimes: [],
+    imageTimes: [],
+    encodeTimes: [],
+    compressTimes: []
+  };
+
+  function displayMetrics(renderTime, totalTime, imageTime, encodeTime, compressTime){
+
+    metrics.totalTimes.push(totalTime);
+    var averageTime = Bullet.Util.average(metrics.totalTimes);
+
+    metrics.renderTimes.push(renderTime);
+    var averageRenderTime = Bullet.Util.average(metrics.renderTimes);
+
+    metrics.imageTimes.push(imageTime);
+    var averageImageTime = Bullet.Util.average(metrics.imageTimes);
+
+    metrics.encodeTimes.push(encodeTime);
+    var averageEncodeTime = Bullet.Util.average(metrics.encodeTimes);
+
+    metrics.compressTimes.push(compressTime);
+    var averageCompressTime = Bullet.Util.average(metrics.compressTimes);
+
+    document.getElementById('total').textContent = parseInt(averageTime);
+    document.getElementById('render').textContent = parseInt(averageRenderTime);
+    document.getElementById('fps').textContent = parseInt(1000 / averageTime);
+    document.getElementById('nonrender').textContent = parseInt(averageTime - averageRenderTime);
+    document.getElementById('image').textContent = parseInt(averageImageTime);
+    document.getElementById('encode').textContent = parseInt(averageEncodeTime);
+    document.getElementById('compress').textContent = parseInt(averageCompressTime);
+
+
+  }
+
   setInterval(
       function(){
 
-        var currentFrame = encoder.encodeFrame(source.getFrame(), resolution);
+        var totalBegin = new Date().getTime();
 
-        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
+            var imageBegin = new Date().getTime();
+        var imageData = source.getFrame();
+            var imageTime = new Date().getTime() - imageBegin;
+
+            var frameBegin = new Date().getTime();
+        var currentFrame = encoder.encodeFrame(imageData, resolution);
+            var frameTime = new Date().getTime() - frameBegin;
+
+            var compressBegin = new Date().getTime();
+        var differenceMatrix = (true) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
+            var compressTime = new Date().getTime() - compressBegin;
+
+        var renderBegin = new Date().getTime();
 
         render.render(differenceMatrix, resolution);
+
+        var renderTime = new Date().getTime() - renderBegin,
+            totalTime = new Date().getTime() - totalBegin;
+
+        displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
+
         lastKnownFrame = currentFrame;
+
       },
       frameInterval
   )
