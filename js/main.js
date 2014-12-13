@@ -27,9 +27,9 @@ $(document).ready(function(){
 
   var source = new Bullet.WebcamSource();
       encoder = new Bullet.RasterFrameEncoder(),
-      render = new Bullet.SvgRenderer();
+      render = new Bullet.PixiRenderer();
 
-  document.getElementById('viewport').appendChild(render.element);
+  document.getElementById('viewport').appendChild(render.getElement());
 
   var frameInterval = 1 / (Bullet.Options.frameRate / 1000),
       resolution = Bullet.Options.resolution;
