@@ -1,8 +1,15 @@
 Bullet.WebcamSource = function(){
 
+    this.width = Bullet.Options.videoConstraints.video.mandatory.maxWidth;
+    this.height = Bullet.Options.videoConstraints.video.mandatory.maxHeight;
+
     this.video = document.createElement('video');
+
     this.canvas = document.createElement('canvas');
-    this.context = this.canvas.getContext('2d')
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+    this.context = this.canvas.getContext('2d');
+
     this.localMediaStream = null;
 
     if (!Bullet.Util.hasGetUserMedia()) {
@@ -46,12 +53,9 @@ Bullet.WebcamSource.prototype = {
 
     getFrame: function(video, canvasContext){
 
-        var width = Bullet.Options.imageWidth,
-            height = Bullet.Options.imageHeight;
-
         this.context.drawImage(this.video, 0, 0);
 
-        return this.context.getImageData(0, 0, width, height).data;
+        return this.context.getImageData(0, 0, this.width, this.height).data;
 
     }
 
