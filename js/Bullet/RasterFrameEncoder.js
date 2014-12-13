@@ -35,17 +35,16 @@ Bullet.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, resolution){
 
-        var width = 640,
-            height = 480; // @todo: REMOVE THIS
+        var width = 640, height = 480; // @todo: REMOVE THIS
 
-        var matrix = [];
+        var pixelEncoding = {};
 
         var rows = height * resolution,
             cols = width * resolution;
 
-        for(var r = 0; r < rows; r++){
+        var currentPixel = 0;
 
-            var currentRow = [];
+        for(var r = 0; r < rows; r++){
 
             for(var c = 0; c < cols; c++){
 
@@ -54,18 +53,15 @@ Bullet.RasterFrameEncoder.prototype = {
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
 
-                currentRow.push(colorAtPoint);
+                pixelEncoding[currentPixel.toString(36)] = colorAtPoint;
+
+                currentPixel++;
 
             }
 
-            matrix.push(currentRow)
-
         }
 
-        // store this matrix in the cache for comparison
-        this.lastEncodedFrame = matrix;
-
-        return matrix;
+        return pixelEncoding;
 
     }
 
