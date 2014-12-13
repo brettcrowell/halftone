@@ -31,14 +31,15 @@ $(document).ready(function(){
 
   document.getElementById('viewport').appendChild(render.element);
 
+  var frameInterval = 1 / (Bullet.Options.frameRate / 1000),
+      resolution = Bullet.Options.resolution;
+
   setInterval(
       function(){
-        render.render(encoder.encodeFrame(source.getFrame(), .1),.1);
+        render.render(encoder.encodeFrame(source.getFrame(), resolution), resolution);
       },
-      500
+      frameInterval
   )
-
-  //var frameInterval = 1 / (options.frameRate / 1000);, new Bullet.SvgRenderer();
 
 
 });
