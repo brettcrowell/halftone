@@ -72,37 +72,36 @@ $(document).ready(function(){
 
   }
 
-  setInterval(
-      function(){
+  function updateFrame(){
 
-        var totalBegin = new Date().getTime();
+    var totalBegin = new Date().getTime();
 
-            var imageBegin = new Date().getTime();
-        var imageData = source.getFrame();
-            var imageTime = new Date().getTime() - imageBegin;
+    var imageBegin = new Date().getTime();
+    var imageData = source.getFrame();
+    var imageTime = new Date().getTime() - imageBegin;
 
-            var frameBegin = new Date().getTime();
-        var currentFrame = encoder.encodeFrame(imageData, resolution);
-            var frameTime = new Date().getTime() - frameBegin;
+    var frameBegin = new Date().getTime();
+    var currentFrame = encoder.encodeFrame(imageData, resolution);
+    var frameTime = new Date().getTime() - frameBegin;
 
-            var compressBegin = new Date().getTime();
-        var differenceMatrix = (true) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
-            var compressTime = new Date().getTime() - compressBegin;
+    var compressBegin = new Date().getTime();
+    var differenceMatrix = (true) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
+    var compressTime = new Date().getTime() - compressBegin;
 
-        var renderBegin = new Date().getTime();
+    var renderBegin = new Date().getTime();
 
-        render.render(differenceMatrix, resolution);
+    render.render(differenceMatrix, resolution);
 
-        var renderTime = new Date().getTime() - renderBegin,
-            totalTime = new Date().getTime() - totalBegin;
+    var renderTime = new Date().getTime() - renderBegin,
+      totalTime = new Date().getTime() - totalBegin;
 
-        displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
+    displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
 
-        lastKnownFrame = currentFrame;
+    lastKnownFrame = currentFrame;
 
-      },
-      frameInterval
-  )
+  }
+
+  setInterval(updateFrame, frameInterval)
 
 
 });
