@@ -10,7 +10,7 @@ Bullet.Util = {
 
     hexToBw: function (hex){
 
-        var rgb = hexToRgb(hex);
+        var rgb = this.hexToRgb(hex);
 
         return (rgb.r + rgb.b + rgb.g) / 3;
 
