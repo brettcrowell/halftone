@@ -27,7 +27,7 @@ $(document).ready(function(){
 
   var source = new Bullet.WebcamSource();
       encoder = new Bullet.RasterFrameEncoder(),
-      render = new Bullet.PixiRenderer();
+      render = new Bullet.SvgRenderer();
 
   document.getElementById('viewport').appendChild(render.getElement());
 

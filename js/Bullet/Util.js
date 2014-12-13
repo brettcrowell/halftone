@@ -44,7 +44,7 @@ Bullet.Util = {
             _.each(row, function(newPixel, c){
 
                 var oldPixel = oldMatrix[r][c],
-                    similarity = this.getMinSimilarity(oldPixel, newPixel);
+                    similarity = this.getLuminanceSimilarity(oldPixel, newPixel);
 
                 if(similarity > Bullet.Options.minPixelSimilarity){
 
@@ -71,32 +71,15 @@ Bullet.Util = {
 
     },
 
-    calculateSimilarity: function (n1,n2){
+    getLuminanceSimilarity: function (hex1, hex2){
 
-        var max = Math.max(n1,n2),
-            min = Math.min(n1,n2);
+        var dec1 = this.hexToBw(hex1),
+            dec2 = this.hexToBw(hex2);
 
-        var similarity = min / max;
+        var max = Math.max(dec1,dec2),
+            min = Math.min(dec1,dec2);
 
-        return similarity;
-
-    },
-
-    getMinSimilarity: function (hex1, hex2){
-
-        var dec1 = this.hexToRgb(hex1),
-            dec2 = this.hexToRgb(hex2);
-
-        var similarities = [
-
-            this.calculateSimilarity(dec1.r, dec2.r),
-            this.calculateSimilarity(dec1.g, dec2.g),
-            this.calculateSimilarity(dec1.b, dec2.b)
-
-        ]
-
-        return _.min(similarities);
-
+        return min / max;
 
     },
 
