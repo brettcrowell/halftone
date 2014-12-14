@@ -35,6 +35,8 @@ Bullet.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray){
 
+        var width = Bullet.Options.videoConstraints.video.mandatory.maxWidth,
+            height = Bullet.Options.videoConstraints.video.mandatory.maxHeight;
 
         var cols = Bullet.Options.quality,
             rows = (cols / width) * height;

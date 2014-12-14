@@ -6,9 +6,9 @@ Bullet.WebcamSource = function(){
     this.video = document.createElement('video');
 
     this.canvas = document.createElement('canvas');
+    this.context = this.canvas.getContext('2d');
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    this.context = this.canvas.getContext('2d');
 
     this.localMediaStream = null;
 
@@ -53,7 +53,7 @@ Bullet.WebcamSource.prototype = {
 
     getFrame: function(video, canvasContext){
 
-        this.context.drawImage(this.video, 0, 0);
+        this.context.drawImage(this.video, 0, 0, this.width, this.height);
 
         return this.context.getImageData(0, 0, this.width, this.height).data;
 

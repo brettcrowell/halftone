@@ -11,10 +11,9 @@ Bullet.Options = {
     backgroundColor: '#eee',
     videoConstraints: {
         video: {
-            optional: [{sourceId: 'c7a89a8cfbf6bb4aa502573afa3f524ae8dd6af83c189bd94529990522adc454'}],
             mandatory: {
-                maxWidth: 640,
-                maxHeight: 480
+                maxWidth: 160,
+                maxHeight: 120
             }
         }
     }
