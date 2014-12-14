@@ -39,6 +39,14 @@ Bullet.PixiRenderer.prototype = {
                         graphics.endFill();
 
                         pixel = new PIXI.Sprite(graphics.generateTexture());
+                        pixel.anchor.x = 0.5;
+                        pixel.anchor.y = 0.5;
+
+                        var xOnCanvas = (c * pixelWidth),
+                            yOnCanvas = (r * pixelWidth);
+
+                        pixel.x = xOnCanvas + pixelRadius;
+                        pixel.y = yOnCanvas + pixelRadius;
 
                         stage.addChild(pixel);
 
@@ -48,11 +56,6 @@ Bullet.PixiRenderer.prototype = {
 
                     var rasterWidth = (pixelWidth * ((15 - Bullet.Util.hexToBw(pixelColor)) / 15));
 
-                    var xOnCanvas = (c * pixelWidth),
-                        yOnCanvas = (r * pixelWidth);
-
-                    pixel.x = xOnCanvas + ((pixelWidth - rasterWidth) / 2);
-                    pixel.y = yOnCanvas + ((pixelWidth - rasterWidth) / 2);
 
                     pixel.width = pixel.height = rasterWidth;
 
