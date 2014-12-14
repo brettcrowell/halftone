@@ -48,6 +48,10 @@ Bullet.PixiRenderer.prototype = {
                         pixel.x = xOnCanvas + pixelRadius;
                         pixel.y = yOnCanvas + pixelRadius;
 
+                        if(encoderOutput.metadata.stagger && (r % 2 === 0)){
+                            pixel.x += pixelRadius
+                        }
+
                         stage.addChild(pixel);
 
                         nodeCache[r].push(pixel);

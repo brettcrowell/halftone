@@ -83,7 +83,7 @@ $(document).ready(function(){
           var imageTime = new Date().getTime() - imageBegin;
 
           var frameBegin = new Date().getTime();
-    var currentFrame = encoder.encodeFrame(imageData);
+    var currentFrame = encoder.encodeFrame(imageData, Bullet.Options.stagger);
           var frameTime = new Date().getTime() - frameBegin;
 
           var compressBegin = new Date().getTime();
