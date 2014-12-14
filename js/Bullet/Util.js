@@ -14,7 +14,7 @@ Bullet.Util = {
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: _.memoize(function(pixelColor, maxWidth, maxLumens, minLumens){
+    getRasterWidth: function(pixelColor, maxWidth, maxLumens, minLumens){
 
         if(maxLumens === minLumens){
             return (maxWidth - maxLumens) * maxWidth;
@@ -25,7 +25,7 @@ Bullet.Util = {
 
         return maxWidth - (((grayscaleColor - minLumens) / gradient) * maxWidth);
 
-    }),
+    },
 
     hexToGrayscaleRgb: _.memoize(function (hex){
 
@@ -56,13 +56,13 @@ Bullet.Util = {
 
         var differenceMatrix = [];
 
-        _.each(newMatrix, function(row, r){
+        _.each(newMatrix.matrix, function(row, r){
 
             var differenceRow = [];
 
             _.each(row, function(newPixel, c){
 
-                var oldPixel = oldMatrix[r][c],
+                var oldPixel = oldMatrix.matrix[r][c],
                     similarity = this.getLuminanceSimilarity(oldPixel, newPixel);
 
                 if(similarity > Bullet.Options.minPixelSimilarity){
@@ -86,7 +86,7 @@ Bullet.Util = {
 
         }.bind(this));
 
-        return differenceMatrix;
+        return { metadata: newMatrix.metadata, matrix: differenceMatrix };
 
     },
 
