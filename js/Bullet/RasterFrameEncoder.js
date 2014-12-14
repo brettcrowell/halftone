@@ -40,8 +40,8 @@ Bullet.RasterFrameEncoder.prototype = {
         var rows = height * resolution,
             cols = width * resolution;
 
-        var minLumens = 0,
-            maxLumens = 15;
+        var minLumens = 15,
+            maxLumens = 0;
 
         var matrix = [];
 
