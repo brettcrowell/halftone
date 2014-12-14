@@ -6,7 +6,7 @@ Bullet.Options = {
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
     resolution: 0.2,
-    minPixelSimilarity: 0.8,
+    minPixelSimilarity: 0.95,
     frameRate: 8,
     backgroundColor: '#eee',
     videoConstraints: {

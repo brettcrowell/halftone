@@ -1,6 +1,6 @@
 Bullet.PixiRenderer = function(){
 
-    this.renderer = new PIXI.autoDetectRenderer(640,480,null,false,1,false); //
+    this.renderer = new PIXI.autoDetectRenderer(1280,960,null,false,2,false); //
     this.stage = new PIXI.Stage(0xffffff);
 
     this._nodeCache = [];
@@ -17,7 +17,7 @@ Bullet.PixiRenderer.prototype = {
 
         var stage = this.stage,
             nodeCache = this._nodeCache,
-            pixelWidth = 1 / resolution,
+            pixelWidth = 1280 / encoderOutput.metadata.cols,
             pixelRadius = pixelWidth / 2;
 
         _.each(encoderOutput.matrix, function(row, r){
