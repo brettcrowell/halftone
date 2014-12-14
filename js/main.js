@@ -78,21 +78,21 @@ $(document).ready(function(){
 
     var totalBegin = new Date().getTime();
 
-        var imageBegin = new Date().getTime();
+          var imageBegin = new Date().getTime();
     var imageData = source.getFrame();
-        var imageTime = new Date().getTime() - imageBegin;
+          var imageTime = new Date().getTime() - imageBegin;
 
-        var frameBegin = new Date().getTime();
-    var currentFrame = encoder.encodeFrame(imageData, resolution);
-        var frameTime = new Date().getTime() - frameBegin;
+          var frameBegin = new Date().getTime();
+    var currentFrame = encoder.encodeFrame(imageData);
+          var frameTime = new Date().getTime() - frameBegin;
 
-        var compressBegin = new Date().getTime();
+          var compressBegin = new Date().getTime();
     var differenceMatrix = (lastKnownFrame === null) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
-        var compressTime = new Date().getTime() - compressBegin;
+          var compressTime = new Date().getTime() - compressBegin;
 
     var renderBegin = new Date().getTime();
 
-    render.render(differenceMatrix, resolution);
+    render.render(differenceMatrix);
 
     var renderTime = new Date().getTime() - renderBegin,
         totalTime = new Date().getTime() - totalBegin;

@@ -33,12 +33,11 @@ Bullet.RasterFrameEncoder.prototype = {
      * @returns {Array}
      */
 
-    encodeFrame: function (canvasPixelArray, resolution){
+    encodeFrame: function (canvasPixelArray){
 
-        var width = 640, height = 480;
 
-        var rows = height * resolution,
-            cols = width * resolution;
+        var cols = Bullet.Options.quality,
+            rows = (cols / width) * height;
 
         var minLumens = 15,
             maxLumens = 0;
@@ -51,8 +50,8 @@ Bullet.RasterFrameEncoder.prototype = {
 
             for(var c = 0; c < cols; c++){
 
-                var xOnCanvas = Math.round(c * (1 / resolution)),
-                    yOnCanvas = Math.round(r * (1 / resolution));
+                var xOnCanvas = Math.round(c * (width / cols)),
+                    yOnCanvas = Math.round(r * (width / cols));
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
 

@@ -13,7 +13,7 @@ Bullet.PixiRenderer.prototype = {
         return this.renderer.view;
     },
 
-    render: function(encoderOutput, resolution){
+    render: function(encoderOutput){
 
         var stage = this.stage,
             nodeCache = this._nodeCache,
