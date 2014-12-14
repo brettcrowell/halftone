@@ -33,7 +33,7 @@ Bullet.RasterFrameEncoder.prototype = {
      * @returns {Array}
      */
 
-    encodeFrame: function (canvasPixelArray){
+    encodeFrame: function (canvasPixelArray, stagger){
 
         var width = Bullet.Options.videoConstraints.video.mandatory.maxWidth,
             height = Bullet.Options.videoConstraints.video.mandatory.maxHeight;
@@ -41,7 +41,9 @@ Bullet.RasterFrameEncoder.prototype = {
         var cols = Bullet.Options.quality,
             rows = (cols / width) * height;
 
-        var minLumens = 15,
+        var pixelWidth = width / cols,
+            staggerWidth = pixelWidth / 2,
+            minLumens = 15,
             maxLumens = 0;
 
         var matrix = [];
@@ -50,10 +52,12 @@ Bullet.RasterFrameEncoder.prototype = {
 
             var currentRow = [];
 
+            var offsetWidth = (r % 2 == 0) ? pixelWidth : staggerWidth;
+
             for(var c = 0; c < cols; c++){
 
-                var xOnCanvas = Math.round(c * (width / cols)),
-                    yOnCanvas = Math.round(r * (width / cols));
+                var xOnCanvas = Math.round((c * pixelWidth) + offsetWidth),
+                    yOnCanvas = Math.round((r * pixelWidth) + staggerWidth);
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
 
@@ -76,6 +80,7 @@ Bullet.RasterFrameEncoder.prototype = {
             metadata: {
                 rows: rows,
                 cols: cols,
+                stagger: stagger,
                 minLumens: minLumens,
                 maxLumens: maxLumens
             },
