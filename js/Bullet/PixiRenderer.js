@@ -13,14 +13,14 @@ Bullet.PixiRenderer.prototype = {
         return this.renderer.view;
     },
 
-    render: function(hexMatrix, resolution){
+    render: function(encoderOutput, resolution){
 
         var stage = this.stage,
             nodeCache = this._nodeCache,
             pixelWidth = 1 / resolution,
             pixelRadius = pixelWidth / 2;
 
-        _.each(hexMatrix, function(row, r){
+        _.each(encoderOutput.matrix, function(row, r){
 
             if(!nodeCache[r]){ nodeCache.push([]); }
 
@@ -54,8 +54,10 @@ Bullet.PixiRenderer.prototype = {
 
                     }
 
-                    var rasterWidth = (pixelWidth * ((15 - Bullet.Util.hexToBw(pixelColor)) / 15));
-
+                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
+                                                                 pixelWidth,
+                                                                 encoderOutput.metadata.maxLumens,
+                                                                 encoderOutput.metadata.minLumens);
 
                     pixel.width = pixel.height = rasterWidth;
 

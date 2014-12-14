@@ -35,13 +35,15 @@ Bullet.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, resolution){
 
-        var width = 640,
-            height = 480; // @todo: REMOVE THIS
-
-        var matrix = [];
+        var width = 640, height = 480;
 
         var rows = height * resolution,
             cols = width * resolution;
+
+        var minLumens = 0,
+            maxLumens = 15;
+
+        var matrix = [];
 
         for(var r = 0; r < rows; r++){
 
@@ -54,6 +56,9 @@ Bullet.RasterFrameEncoder.prototype = {
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
 
+                minLumens = Math.min(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), minLumens);
+                maxLumens = Math.max(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), maxLumens);
+
                 currentRow.push(colorAtPoint);
 
             }
@@ -65,7 +70,18 @@ Bullet.RasterFrameEncoder.prototype = {
         // store this matrix in the cache for comparison
         this.lastEncodedFrame = matrix;
 
-        return matrix;
+        return {
+
+            metadata: {
+                rows: rows,
+                cols: cols,
+                minLumens: minLumens,
+                maxLumens: maxLumens
+            },
+
+            matrix: matrix
+
+        }
 
     }
 

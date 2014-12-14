@@ -10,7 +10,24 @@ Bullet.Util = {
 
     }),
 
-    hexToBw: _.memoize(function (hex){
+    hexToDecimal: _.memoize(function(hex){
+        return parseInt(hex.substr(1), 16);
+    }),
+
+    getRasterWidth: _.memoize(function(pixelColor, maxWidth, maxLumens, minLumens){
+
+        if(maxLumens === minLumens){
+            return (maxWidth - maxLumens) * maxWidth;
+        }
+
+        var grayscaleColor = this.hexToGrayscaleRgb(pixelColor),
+            gradient = maxLumens - minLumens;
+
+        return maxWidth - (((grayscaleColor - minLumens) / gradient) * maxWidth);
+
+    }),
+
+    hexToGrayscaleRgb: _.memoize(function (hex){
 
         var rgb = this.hexToRgb(hex);
 
@@ -75,8 +92,8 @@ Bullet.Util = {
 
     getLuminanceSimilarity: function (hex1, hex2){
 
-        var dec1 = this.hexToBw(hex1),
-            dec2 = this.hexToBw(hex2);
+        var dec1 = this.hexToGrayscaleRgb(hex1),
+            dec2 = this.hexToGrayscaleRgb(hex2);
 
         var max = Math.max(dec1,dec2),
             min = Math.min(dec1,dec2);
