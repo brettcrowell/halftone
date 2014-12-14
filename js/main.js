@@ -4,6 +4,8 @@
 // memoize everything!!!!!
 // base36
 // calculate similarity based on grayscale
+// offset encoding
+// compressor
 
 // max frame rate = 1 / ((21+19)/1000)
 
@@ -76,17 +78,17 @@ $(document).ready(function(){
 
     var totalBegin = new Date().getTime();
 
-    var imageBegin = new Date().getTime();
+      var imageBegin = new Date().getTime();
     var imageData = source.getFrame();
-    var imageTime = new Date().getTime() - imageBegin;
+      var imageTime = new Date().getTime() - imageBegin;
 
-    var frameBegin = new Date().getTime();
+      var frameBegin = new Date().getTime();
     var currentFrame = encoder.encodeFrame(imageData, resolution);
-    var frameTime = new Date().getTime() - frameBegin;
+      var frameTime = new Date().getTime() - frameBegin;
 
-    var compressBegin = new Date().getTime();
+      var compressBegin = new Date().getTime();
     var differenceMatrix = (true) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
-    var compressTime = new Date().getTime() - compressBegin;
+      var compressTime = new Date().getTime() - compressBegin;
 
     var renderBegin = new Date().getTime();
 
