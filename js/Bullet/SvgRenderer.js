@@ -11,7 +11,7 @@ Bullet.SvgRenderer.prototype = {
       return this.element;
     },
 
-    render: function(hexMatrix, resolution){
+    render: function(encoderOutput, resolution){
 
         var pixelWidth = 1 / resolution,
             pixelRadius = pixelWidth / 2;
@@ -19,7 +19,7 @@ Bullet.SvgRenderer.prototype = {
         var nodeCache = this._nodeCache,
             element = this.element;
 
-        _.each(hexMatrix, function(row, r){
+        _.each(encoderOutput.matrix, function(row, r){
 
             if(!nodeCache[r]){ nodeCache.push([]); }
 
@@ -52,8 +52,13 @@ Bullet.SvgRenderer.prototype = {
                     // set pixel color
                     pixel.setAttributeNS(null, "fill", pixelColor);
 
+                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
+                                                                 pixelRadius,
+                                                                 encoderOutput.metadata.maxLumens,
+                                                                 encoderOutput.metadata.minLumens);
+
                     // rasterbating the pixels (changing diameter based on shade)
-                    pixel.setAttributeNS(null, "r", (pixelRadius * ((15 - Bullet.Util.hexToBw(pixelColor)) / 15)));
+                    pixel.setAttributeNS(null, "r", rasterWidth);
 
 
                 }
