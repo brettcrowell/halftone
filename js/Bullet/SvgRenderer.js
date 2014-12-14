@@ -11,9 +11,9 @@ Bullet.SvgRenderer.prototype = {
       return this.element;
     },
 
-    render: function(encoderOutput, resolution){
+    render: function(encoderOutput){
 
-        var pixelWidth = 1 / resolution,
+        var pixelWidth = 1280 / encoderOutput.metadata.cols,
             pixelRadius = pixelWidth / 2;
 
         var nodeCache = this._nodeCache,
@@ -27,9 +27,6 @@ Bullet.SvgRenderer.prototype = {
 
                 if(pixelColor !== null){
 
-                    var xOnCanvas = (c * pixelWidth) + pixelRadius,
-                        yOnCanvas = (r * pixelWidth) + pixelRadius;
-
                     var cachedDomNode = nodeCache[r][c];
 
                     if(cachedDomNode){
@@ -39,6 +36,13 @@ Bullet.SvgRenderer.prototype = {
                     } else {
 
                         var pixel = document.createElementNS(Bullet.Options.svgNamespace, "circle");
+
+                        var xOnCanvas = (c * pixelWidth) + pixelRadius,
+                            yOnCanvas = (r * pixelWidth) + pixelRadius;
+
+                        if(encoderOutput.metadata.stagger && (r % 2 === 0)){
+                            xOnCanvas += pixelRadius
+                        }
 
                         pixel.setAttributeNS(null, "cx", xOnCanvas);
                         pixel.setAttributeNS(null, "cy", yOnCanvas);
