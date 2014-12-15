@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="125d0f06-406f-4454-9d62-a28518812d72" name="Default" comment="Adding">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" afterPath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/Util.js" afterPath="$PROJECT_DIR$/js/Bullet/Util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/bullet.css" afterPath="$PROJECT_DIR$/css/bullet.css" />
     </list>
     <ignored path="bullet-cam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,10 +78,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60556847" vertical-offset="141" max-vertical-offset="1105">
+            <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="1105">
               <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
               <folding />
             </state>
@@ -100,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Util.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Util.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="2091">
-              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.38863108" vertical-offset="124" max-vertical-offset="2108">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -159,9 +157,9 @@
         <option value="$PROJECT_DIR$/js/Bullet/SvgRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" />
         <option value="$PROJECT_DIR$/js/Bullet/Options.js" />
-        <option value="$PROJECT_DIR$/js/Bullet/Util.js" />
         <option value="$PROJECT_DIR$/css/bullet.css" />
         <option value="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
+        <option value="$PROJECT_DIR$/js/Bullet/Util.js" />
       </list>
     </option>
   </component>
@@ -647,26 +645,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/Options.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="430" max-vertical-offset="1683">
           <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="2091">
-          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -689,8 +671,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60556847" vertical-offset="141" max-vertical-offset="1105">
+        <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="1105">
           <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/Options.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38863108" vertical-offset="124" max-vertical-offset="2108">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
