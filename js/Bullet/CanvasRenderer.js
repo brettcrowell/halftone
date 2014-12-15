@@ -37,15 +37,23 @@ Bullet.CanvasRenderer.prototype = {
                     }
 
                     var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
-                                                                  pixelRadius * 1.25,
+                                                                  pixelWidth,
                                                                   encoderOutput.metadata.maxLumens,
                                                                   encoderOutput.metadata.minLumens);
 
                     context.beginPath();
-                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 2 * Math.PI, false);
+                    context.rect(c * pixelWidth, r * pixelWidth, rasterRadius, rasterRadius);
                     context.fillStyle = pixelColor;
                     context.fill();
                     context.closePath();
+/*
+                    context.beginPath();
+                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 2 * Math.PI, false);
+                    context.fillStyle = pixelColor;
+                    context.fill();
+                    context.closePath();*/
+
+
 
                 }
 
