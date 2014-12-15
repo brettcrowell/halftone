@@ -41,21 +41,8 @@ Bullet.CanvasRenderer.prototype = {
                                                                   encoderOutput.metadata.maxLumens,
                                                                   encoderOutput.metadata.minLumens);
 
-                    /*context.beginPath();
-                    context.arc(xOnCanvas, yOnCanvas, pixelRadius, 0, 2 * Math.PI, false);
-                    context.fillStyle = pixelColor;
-                    context.fill();
-                    context.closePath();*/
-
-                    var numberOfSides = 8;
-
                     context.beginPath();
-                    context.moveTo (xOnCanvas +  rasterRadius * Math.cos(0), yOnCanvas +  rasterRadius *  Math.sin(0));
-
-                    for (var i = 1; i <= numberOfSides;i += 1) {
-                        context.lineTo (xOnCanvas + rasterRadius * Math.cos(i * 2 * Math.PI / numberOfSides), yOnCanvas + rasterRadius * Math.sin(i * 2 * Math.PI / numberOfSides));
-                    }
-
+                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 2 * Math.PI, false);
                     context.fillStyle = pixelColor;
                     context.fill();
                     context.closePath();
