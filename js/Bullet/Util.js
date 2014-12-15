@@ -23,7 +23,7 @@ Bullet.Util = {
         var grayscaleColor = this.hexToGrayscaleRgb(pixelColor),
             gradient = maxLumens - minLumens;
 
-        return maxWidth - (((grayscaleColor - minLumens) / gradient) * maxWidth);
+        return  (((grayscaleColor - minLumens) / gradient) * maxWidth);
 
     },
 

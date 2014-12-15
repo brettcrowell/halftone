@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="125d0f06-406f-4454-9d62-a28518812d72" name="Default" comment="Adding">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" afterPath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/Options.js" afterPath="$PROJECT_DIR$/js/Bullet/Options.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/Util.js" afterPath="$PROJECT_DIR$/js/Bullet/Util.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/bullet.css" afterPath="$PROJECT_DIR$/css/bullet.css" />
     </list>
     <ignored path="bullet-cam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,11 +50,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Options.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Options.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Bullet/Options.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19721578" vertical-offset="0" max-vertical-offset="862">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
               <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3825">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -63,18 +73,18 @@
       <file leaf-file-name="RasterFrameEncoder.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="719" max-vertical-offset="1683">
+            <state vertical-scroll-proportion="0.0" vertical-offset="430" max-vertical-offset="1683">
               <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1105">
-              <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+            <state vertical-scroll-proportion="0.60556847" vertical-offset="141" max-vertical-offset="1105">
+              <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -94,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="2091">
-              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -113,8 +123,8 @@
       <file leaf-file-name="bullet.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/bullet.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="306">
-              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -142,16 +152,16 @@
         <option value="$PROJECT_DIR$/js/Bullet/SvgViewer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/RasterEncoder.js" />
         <option value="$PROJECT_DIR$/js/Bullet/BulletCompressor.js" />
-        <option value="$PROJECT_DIR$/js/Bullet/Util.js" />
-        <option value="$PROJECT_DIR$/css/bullet.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/Bullet/WebcamSource.js" />
         <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/js/Bullet/PixiRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/SvgRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" />
-        <option value="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/Options.js" />
+        <option value="$PROJECT_DIR$/js/Bullet/Util.js" />
+        <option value="$PROJECT_DIR$/css/bullet.css" />
+        <option value="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
       </list>
     </option>
   </component>
@@ -346,6 +356,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2905983" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -353,9 +365,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -595,22 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/bullet.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="306">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1224">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/WebcamSource.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1139">
@@ -653,26 +647,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/Options.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="1683">
+        <state vertical-scroll-proportion="0.0" vertical-offset="430" max-vertical-offset="1683">
           <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="2091">
+          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3825">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/bullet.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1105">
-          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/Options.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19721578" vertical-offset="0" max-vertical-offset="862">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.60556847" vertical-offset="141" max-vertical-offset="1105">
+          <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
           <folding />
         </state>
       </provider>
