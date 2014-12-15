@@ -87,7 +87,7 @@ $(document).ready(function(){
           var frameTime = new Date().getTime() - frameBegin;
 
           var compressBegin = new Date().getTime();
-    var differenceMatrix = (lastKnownFrame === null) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
+    var differenceMatrix = (true || lastKnownFrame === null) ? currentFrame : Bullet.Util.getDifferenceMatrix(lastKnownFrame, currentFrame);
           var compressTime = new Date().getTime() - compressBegin;
 
     var renderBegin = new Date().getTime();

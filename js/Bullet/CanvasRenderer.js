@@ -16,9 +16,12 @@ Bullet.CanvasRenderer.prototype = {
 
     render: function(encoderOutput){
 
-        var context = this.context,
+        var canvas = this.element,
+            context = this.context,
             pixelWidth = 1280 / encoderOutput.metadata.cols,
             pixelRadius = pixelWidth / 2;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         _.each(encoderOutput.matrix, function(row, r){
 
