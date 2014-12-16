@@ -2,13 +2,13 @@ Bullet.Util = {
 
     // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
-    rgbToHex: _.memoize(function(r, g, b) {
+    rgbToHex: function(r, g, b) {
 
         if (r > 255 || g > 255 || b > 255)
             throw "Invalid color component";
         return ((r << 16) | (g << 8) | b).toString(16);
 
-    }),
+    },
 
     hexToDecimal: _.memoize(function(hex){
         return parseInt(hex.substr(1), 16);
@@ -24,7 +24,7 @@ Bullet.Util = {
             grayscaleColor = _.max([rgb.r, rgb.b, rgb.g]),//this.hexToGrayscaleRgb(pixelColor),
             gradient = maxLumens - minLumens;
 
-        return  (((grayscaleColor - minLumens) / gradient) * maxWidth);
+        return (((grayscaleColor - minLumens) / gradient) * maxWidth);
 
     },
 
