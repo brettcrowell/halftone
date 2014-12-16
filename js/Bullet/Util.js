@@ -21,7 +21,7 @@ Bullet.Util = {
         }
 
         var rgb = this.hexToRgb(pixelColor),
-            grayscaleColor = _.max([rgb.r, rgb.b, rgb.g]),//this.hexToGrayscaleRgb(pixelColor),
+            grayscaleColor = this.hexToGrayscaleRgb(pixelColor),
             gradient = maxLumens - minLumens;
 
         return (((grayscaleColor - minLumens) / gradient) * maxWidth);
@@ -30,9 +30,11 @@ Bullet.Util = {
 
     hexToGrayscaleRgb: _.memoize(function (hex){
 
+        // http://bobpowell.net/grayscale.aspx
+
         var rgb = this.hexToRgb(hex);
 
-        return (rgb.r + rgb.b + rgb.g) / 3;
+        return (rgb.r *.3) + (rgb.b *.59) + (rgb.g *.11);
 
     }),
 
