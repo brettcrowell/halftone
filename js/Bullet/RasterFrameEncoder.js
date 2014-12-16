@@ -12,11 +12,13 @@ Bullet.RasterFrameEncoder.prototype = {
 
         var dataIndex = (y * totalWidth + x) * 4;
 
-        var r = canvasPixelArray[dataIndex],
-            g = canvasPixelArray[dataIndex+1],
-            b = canvasPixelArray[dataIndex+2];
+        var mul = Bullet.Options.colorMultiplier;
 
-        hex = ("000000" + Bullet.Util.rgbToHex(Math.min(r * 2, 255), Math.min(g * 2, 255), Math.min(b * 2, 255))).slice(-6);
+        var r = Math.min(canvasPixelArray[dataIndex]   * mul, 255),
+            g = Math.min(canvasPixelArray[dataIndex+1] * mul, 255),
+            b = Math.min(canvasPixelArray[dataIndex+2] * mul, 255);
+
+        hex = ("000000" + Bullet.Util.rgbToHex(r,g,b)).slice(-6);
 
         if(!shorthand){
             return "#" + hex;
