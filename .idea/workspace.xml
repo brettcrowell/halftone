@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="125d0f06-406f-4454-9d62-a28518812d72" name="Default" comment="Adding">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" afterPath="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/Options.js" afterPath="$PROJECT_DIR$/js/Bullet/Options.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/Util.js" afterPath="$PROJECT_DIR$/js/Bullet/Util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/bullet.css" afterPath="$PROJECT_DIR$/css/bullet.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" afterPath="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bullet-cam.iws" />
@@ -62,21 +60,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RasterFrameEncoder.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RasterFrameEncoder.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
-              <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.3457249" vertical-offset="27" max-vertical-offset="1683">
+              <caret line="18" column="113" selection-start-line="18" selection-start-column="113" selection-end-line="18" selection-end-column="113" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CanvasRenderer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5464037" vertical-offset="192" max-vertical-offset="1071">
-              <caret line="39" column="84" selection-start-line="39" selection-start-column="84" selection-end-line="39" selection-end-column="84" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="1071">
+              <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -95,8 +93,8 @@
       <file leaf-file-name="Util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="2108">
-              <caret line="26" column="15" selection-start-line="26" selection-start-column="15" selection-end-line="26" selection-end-column="15" />
+            <state vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="2108">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -149,11 +147,11 @@
         <option value="$PROJECT_DIR$/js/Bullet/PixiRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/SvgRenderer.js" />
         <option value="$PROJECT_DIR$/js/Bullet/WebcamSource.js" />
-        <option value="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" />
         <option value="$PROJECT_DIR$/js/Bullet/Util.js" />
         <option value="$PROJECT_DIR$/css/bullet.css" />
-        <option value="$PROJECT_DIR$/js/Bullet/Options.js" />
         <option value="$PROJECT_DIR$/js/Bullet/CanvasRenderer.js" />
+        <option value="$PROJECT_DIR$/js/Bullet/Options.js" />
+        <option value="$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js" />
       </list>
     </option>
   </component>
@@ -376,7 +374,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2905983" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2905983" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -631,30 +629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
-          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/WebcamSource.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="2108">
-          <caret line="26" column="15" selection-start-line="26" selection-start-column="15" selection-end-line="26" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/bullet.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
@@ -681,8 +655,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/Bullet/CanvasRenderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5464037" vertical-offset="192" max-vertical-offset="1071">
-          <caret line="39" column="84" selection-start-line="39" selection-start-column="84" selection-end-line="39" selection-end-column="84" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="1071">
+          <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/WebcamSource.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/Util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="2108">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/Bullet/RasterFrameEncoder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3457249" vertical-offset="27" max-vertical-offset="1683">
+          <caret line="18" column="113" selection-start-line="18" selection-start-column="113" selection-end-line="18" selection-end-column="113" />
           <folding />
         </state>
       </provider>

@@ -16,7 +16,7 @@ Bullet.RasterFrameEncoder.prototype = {
             g = canvasPixelArray[dataIndex+1],
             b = canvasPixelArray[dataIndex+2];
 
-        hex = ("000000" + Bullet.Util.rgbToHex(r, g, b)).slice(-6);
+        hex = ("000000" + Bullet.Util.rgbToHex(Math.min(r * 2, 255), Math.min(g * 2, 255), Math.min(b * 2, 255))).slice(-6);
 
         if(!shorthand){
             return "#" + hex;

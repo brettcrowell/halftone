@@ -37,7 +37,7 @@ Bullet.CanvasRenderer.prototype = {
                     }
 
                     var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
-                                                                  pixelRadius * 1.25,
+                                                                  pixelRadius,
                                                                   encoderOutput.metadata.maxLumens,
                                                                   encoderOutput.metadata.minLumens);
 
