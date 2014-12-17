@@ -18,23 +18,30 @@ Bullet.CanvasRenderer.prototype = {
 
         var canvas = this.element,
             context = this.context,
+            matrix = encoderOutput.matrix,
             pixelWidth = 1280 / encoderOutput.metadata.cols,
             pixelRadius = pixelWidth / 2;
 
+        var row, pixelColor, xOffset = 0;
+
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        _.each(encoderOutput.matrix, function(row, r){
+        for(var r = 0; r < matrix.length; r++){
 
-            _.each(row, function(pixelColor, c){
+            row = matrix[r];
+
+            if(encoderOutput.metadata.stagger && (r % 2 === 0)){
+                xOffset = pixelRadius
+            }
+
+            for(var c = 0; c < row.length; c++){
+
+                pixelColor = row[c];
 
                 if(pixelColor !== null){
 
-                    var xOnCanvas = (c * pixelWidth) + pixelRadius,
+                    var xOnCanvas = (c * pixelWidth) + pixelRadius + xOffset,
                         yOnCanvas = (r * pixelWidth) + pixelRadius;
-
-                    if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                        xOnCanvas += pixelRadius
-                    }
 
                     var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
                                                                   pixelRadius,
@@ -49,10 +56,9 @@ Bullet.CanvasRenderer.prototype = {
 
                 }
 
-            });
+            }
 
-        });
-
+            xOffset = 0;
+        }
     }
-
 };
