@@ -12,6 +12,6 @@ div#viewport {
   height: 960px;
 }
 
-canvas {
+canvas.renderer {
   background-color: #000;
 }
