@@ -8,13 +8,6 @@ Bullet.CachedCanvasRenderer = function(){
     this.element.width = 1280;
     this.element.height = 960;
 
-    for(var i = 0; i <= 4096; i++){
-
-        var color = "#" + ("000" + i.toString(16)).slice(-3);
-        this.cache[color] = this.generateCircle(color);
-
-    }
-
 }
 
 Bullet.CachedCanvasRenderer.prototype = {
@@ -75,6 +68,12 @@ Bullet.CachedCanvasRenderer.prototype = {
 
                     var xOnCanvas = ((c * pixelWidth) + xOffset) + ((pixelWidth - rasterWidth) / 2),
                         yOnCanvas = (r * pixelWidth) + ((pixelWidth - rasterWidth) / 2) ;
+
+                    var sourcePixel = this.cache[pixelColor];
+
+                    if(!sourcePixel){
+                        sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor);
+                    }
 
                     context.drawImage(cache[pixelColor], 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
 
