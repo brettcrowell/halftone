@@ -8,8 +8,8 @@ Bullet.Options = {
     quality: 110,
     colorMultiplier: 1.7,
     stagger: true,
-    brightnessSimilarity: 0.05,
-    hueSimilarity: 0.05,
+    brightnessSimilarity: 0.06,
+    hueSimilarity: 0.06,
     frameRate: 7,
     backgroundColor: '#eee',
     videoConstraints: {
