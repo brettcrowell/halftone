@@ -11,14 +11,17 @@ Bullet.Compressor.prototype = {
 
         var differenceMatrix = [];
 
-        _.each(newMatrix.matrix, function(row, r){
+        for(var r = 0; r < newMatrix.matrix.length; r++){
 
-            var differenceRow = [];
+            var row = newMatrix.matrix[r],
+                differenceRow = [];
 
-            _.each(row, function(newPixel, c){
+            for(var c = 0; c < row.length; c++){
+
+                var newPixel = row[c];
 
                 var oldPixel = oldMatrix.matrix[r][c],
-                    similarity = Bullet.Util.getLuminanceSimilarity(oldPixel, newPixel);
+                  similarity = Bullet.Util.getLuminanceSimilarity(oldPixel, newPixel);
 
                 if(similarity > Bullet.Options.minPixelSimilarity){
 
@@ -33,13 +36,11 @@ Bullet.Compressor.prototype = {
 
                 }
 
-                totalPixelsSeen++;
-
-            }.bind(this));
+            }
 
             differenceMatrix.push(differenceRow);
 
-        }.bind(this));
+        }
 
         return { metadata: newMatrix.metadata, matrix: differenceMatrix };
 
