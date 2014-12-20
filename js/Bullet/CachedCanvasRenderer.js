@@ -45,8 +45,6 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         var row, pixelColor, xOffset = 0;
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
         for(var r = 0; r < matrix.length; r++){
 
             row = matrix[r];
@@ -61,13 +59,18 @@ Bullet.CachedCanvasRenderer.prototype = {
 
                 if(pixelColor !== null){
 
+                    var xOnCanvas = ((c * pixelWidth) + xOffset) + ((pixelWidth - rasterWidth) / 2),
+                        yOnCanvas = (r * pixelWidth) + ((pixelWidth - rasterWidth) / 2) ;
+
+                    context.clearRect(xOnCanvas, yOnCanvas, pixelWidth, pixelWidth);
+
                     var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
                                                                  pixelWidth * 1.25,
                                                                  encoderOutput.metadata.maxLumens,
                                                                  encoderOutput.metadata.minLumens);
 
-                    var xOnCanvas = ((c * pixelWidth) + xOffset) + ((pixelWidth - rasterWidth) / 2),
-                        yOnCanvas = (r * pixelWidth) + ((pixelWidth - rasterWidth) / 2) ;
+                    xOnCanvas += ((pixelWidth - rasterWidth) / 2);
+                    yOnCanvas += ((pixelWidth - rasterWidth) / 2) ;
 
                     var sourcePixel = this.cache[pixelColor];
 
