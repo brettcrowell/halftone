@@ -40,8 +40,8 @@ Bullet.CachedCanvasRenderer.prototype = {
             context = this.context,
             cache = this.cache;
             matrix = encoderOutput.matrix,
-            pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelWidth / 2;
+            pixelSize = 1280 / encoderOutput.metadata.cols,
+            pixelRadius = pixelSize / 2;
 
         var row, pixelColor, xOffset = 0;
 

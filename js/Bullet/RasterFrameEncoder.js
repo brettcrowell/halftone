@@ -43,8 +43,8 @@ Bullet.RasterFrameEncoder.prototype = {
         var cols = Bullet.Options.quality,
             rows = (cols / width) * height;
 
-        var pixelWidth = width / cols,
-            staggerWidth = pixelWidth / 2;
+        var pixelSize = width / cols,
+            staggerWidth = pixelSize / 2;
 
         var matrix = [];
 
@@ -52,12 +52,12 @@ Bullet.RasterFrameEncoder.prototype = {
 
             var currentRow = [];
 
-            var offsetWidth = (r % 2 == 0) ? pixelWidth : staggerWidth;
+            var offsetWidth = (r % 2 == 0) ? pixelSize : staggerWidth;
 
             for(var c = 0; c < cols; c++){
 
-                var xOnCanvas = Math.round((c * pixelWidth) + offsetWidth),
-                    yOnCanvas = Math.round((r * pixelWidth) + staggerWidth);
+                var xOnCanvas = Math.round((c * pixelSize) + offsetWidth),
+                    yOnCanvas = Math.round((r * pixelSize) + staggerWidth);
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
 

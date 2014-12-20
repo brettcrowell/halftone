@@ -20,7 +20,7 @@ Bullet.CanvasRenderer.prototype = {
             context = this.context,
             matrix = encoderOutput.matrix,
             pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelWidth / 2;
+            pixelRadius = pixelSize / 2;
 
         var row, pixelColor, xOffset = 0;
 
@@ -40,8 +40,8 @@ Bullet.CanvasRenderer.prototype = {
 
                 if(pixelColor !== null){
 
-                    var xOnCanvas = (c * pixelWidth) + pixelRadius + xOffset,
-                        yOnCanvas = (r * pixelWidth) + pixelRadius;
+                    var xOnCanvas = (c * pixelSize) + pixelRadius + xOffset,
+                        yOnCanvas = (r * pixelSize) + pixelRadius;
 
                     var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
                                                                   pixelRadius,

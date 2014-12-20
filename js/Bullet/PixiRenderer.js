@@ -18,7 +18,7 @@ Bullet.PixiRenderer.prototype = {
         var stage = this.stage,
             nodeCache = this._nodeCache,
             pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelWidth / 2;
+            pixelRadius = pixelSize / 2;
 
         _.each(encoderOutput.matrix, function(row, r){
 
@@ -35,15 +35,15 @@ Bullet.PixiRenderer.prototype = {
                         var graphics = new PIXI.Graphics();
 
                         graphics.beginFill(0x000000);
-                        graphics.drawCircle(0, 0, pixelWidth);
+                        graphics.drawCircle(0, 0, pixelSize);
                         graphics.endFill();
 
                         pixel = new PIXI.Sprite(graphics.generateTexture());
                         pixel.anchor.x = 0.5;
                         pixel.anchor.y = 0.5;
 
-                        var xOnCanvas = (c * pixelWidth),
-                            yOnCanvas = (r * pixelWidth);
+                        var xOnCanvas = (c * pixelSize),
+                            yOnCanvas = (r * pixelSize);
 
                         if(encoderOutput.metadata.stagger && (r % 2 === 0)){
                             xOnCanvas += pixelRadius
@@ -59,7 +59,7 @@ Bullet.PixiRenderer.prototype = {
                     }
 
                     var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
-                                                                 pixelWidth,
+                                                                 pixelSize,
                                                                  encoderOutput.metadata.maxLumens,
                                                                  encoderOutput.metadata.minLumens);
 

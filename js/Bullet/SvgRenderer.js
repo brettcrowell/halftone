@@ -14,7 +14,7 @@ Bullet.SvgRenderer.prototype = {
     render: function(encoderOutput){
 
         var pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelWidth / 2;
+            pixelRadius = pixelSize / 2;
 
         var nodeCache = this._nodeCache,
             element = this.element;
@@ -37,8 +37,8 @@ Bullet.SvgRenderer.prototype = {
 
                         var pixel = document.createElementNS(Bullet.Options.svgNamespace, "circle");
 
-                        var xOnCanvas = (c * pixelWidth) + pixelRadius,
-                            yOnCanvas = (r * pixelWidth) + pixelRadius;
+                        var xOnCanvas = (c * pixelSize) + pixelRadius,
+                            yOnCanvas = (r * pixelSize) + pixelRadius;
 
                         if(encoderOutput.metadata.stagger && (r % 2 === 0)){
                             xOnCanvas += pixelRadius
