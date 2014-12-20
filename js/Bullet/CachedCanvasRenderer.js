@@ -36,8 +36,7 @@ Bullet.CachedCanvasRenderer.prototype = {
 
     render: function(encoderOutput){
 
-        var canvas = this.element,
-            context = this.context,
+        var context = this.context,
             cache = this.cache;
             matrix = encoderOutput.matrix,
             pixelSize = 1280 / encoderOutput.metadata.cols,
@@ -59,6 +58,8 @@ Bullet.CachedCanvasRenderer.prototype = {
 
                 if(pixelColor !== null){
 
+                    var adjPixelColor = Bullet.Util.brightenHexColor(pixelColor, Bullet.Options.colorMultiplier);
+
                     var xOnCanvas = (c * pixelSize) + xOffset,
                         yOnCanvas = r * pixelSize
 
@@ -69,13 +70,13 @@ Bullet.CachedCanvasRenderer.prototype = {
                     xOnCanvas += (pixelSize - rasterWidth) / 2;
                     yOnCanvas += (pixelSize - rasterWidth) / 2;
 
-                    var sourcePixel = this.cache[pixelColor];
+                    var sourcePixel = this.cache[adjPixelColor];
 
                     if(!sourcePixel){
-                        sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor);
+                        sourcePixel = this.cache[adjPixelColor] = this.generateCircle(adjPixelColor);
                     }
 
-                    context.drawImage(cache[pixelColor], 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
+                    context.drawImage(cache[adjPixelColor], 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
 
                 }
 

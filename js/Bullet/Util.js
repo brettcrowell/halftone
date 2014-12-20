@@ -22,6 +22,20 @@ Bullet.Util = {
 
     },
 
+    brightenHexColor: _.memoize(function(hex, mul){
+
+        var rgb = this.hexToRgb(hex);
+
+        var r = Math.min(rgb.r * mul, 255),
+            g = Math.min(rgb.g * mul, 255),
+            b = Math.min(rgb.b * mul, 255);
+
+        hex = ("000000" + Bullet.Util.rgbToHex(r,g,b)).slice(-6);
+
+        return "#" + hex[0] + hex[2] + hex[4];
+
+    }),
+
     hexToGrayscaleRgb: _.memoize(function (hex){
 
         // http://bobpowell.net/grayscale.aspx
@@ -38,9 +52,9 @@ Bullet.Util = {
 
         return {
 
-            r: parseInt(hex[0], 16),
-            g: parseInt(hex[1], 16),
-            b: parseInt(hex[2], 16)
+            r: parseInt(hex[0] + hex[0], 16),
+            g: parseInt(hex[1] + hex[1], 16),
+            b: parseInt(hex[2] + hex[2], 16)
 
         }
 
