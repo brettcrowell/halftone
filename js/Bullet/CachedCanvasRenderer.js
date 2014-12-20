@@ -61,7 +61,7 @@ Bullet.CachedCanvasRenderer.prototype = {
 
                 if(pixelColor !== null){
 
-                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelWidth * 1.25);
+                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelWidth * 1.2);
 
                     var xOnCanvas = ((c * pixelWidth) + xOffset) + ((pixelWidth - rasterWidth) / 2),
                         yOnCanvas = (r * pixelWidth) + ((pixelWidth - rasterWidth) / 2) ;
