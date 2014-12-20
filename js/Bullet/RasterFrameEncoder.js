@@ -44,9 +44,7 @@ Bullet.RasterFrameEncoder.prototype = {
             rows = (cols / width) * height;
 
         var pixelWidth = width / cols,
-            staggerWidth = pixelWidth / 2,
-            minLumens = 15,
-            maxLumens = 0;
+            staggerWidth = pixelWidth / 2;
 
         var matrix = [];
 
@@ -62,9 +60,6 @@ Bullet.RasterFrameEncoder.prototype = {
                     yOnCanvas = Math.round((r * pixelWidth) + staggerWidth);
 
                 var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, width, canvasPixelArray, true);
-
-                minLumens = Math.min(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), minLumens);
-                maxLumens = Math.max(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), maxLumens);
 
                 currentRow.push(colorAtPoint);
 
@@ -82,9 +77,7 @@ Bullet.RasterFrameEncoder.prototype = {
             metadata: {
                 rows: rows,
                 cols: cols,
-                stagger: stagger,
-                minLumens: minLumens,
-                maxLumens: maxLumens
+                stagger: stagger
             },
 
             matrix: matrix

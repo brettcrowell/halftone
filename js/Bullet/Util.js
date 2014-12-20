@@ -14,17 +14,12 @@ Bullet.Util = {
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: function(pixelColor, maxWidth, maxLumens, minLumens){
-
-        if(maxLumens === minLumens){
-            return (maxWidth - maxLumens) * maxWidth;
-        }
+    getRasterWidth: function(pixelColor, maxWidth){
 
         var rgb = this.hexToRgb(pixelColor),
-            grayscaleColor = this.hexToGrayscaleRgb(pixelColor),
-            gradient = maxLumens - minLumens;
+            grayscaleColor = this.hexToGrayscaleRgb(pixelColor);
 
-        return (((grayscaleColor - minLumens) / gradient) * maxWidth);
+        return (grayscaleColor / 15) * maxWidth;
 
     },
 
