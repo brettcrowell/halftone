@@ -25,8 +25,9 @@ Bullet.RasterFrameEncoder.prototype = {
     getHexAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray, shorthand){
 
         var roundPixelSize = Math.round(pixelSize),
-            xCenter = x + (roundPixelSize / 2),
-            yCenter = y + (roundPixelSize / 2);
+            roundPixelRadius = Math.round(pixelSize / 2),
+            xCenter = x + roundPixelRadius,
+            yCenter = y + roundPixelRadius;
 
         // gather pixels for upperLeft/uproundPixelSizeperRight, lowerLeft/lowerRight
         var quadColors = [
