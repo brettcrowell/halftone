@@ -18,12 +18,13 @@ Bullet.Compressor.prototype = {
                 var oldPixel = oldMatrix.matrix[r][c],
                     newPixel = row[c];
 
-                var oldValue = Bullet.Util.hexToHsv(oldPixel)[2],
-                    newValue = Bullet.Util.hexToHsv(newPixel)[2];
+                var oldHsv = Bullet.Util.hexToHsv(oldPixel),
+                    newHsv = Bullet.Util.hexToHsv(newPixel);
 
-                var brightnessDiff = Math.max(oldValue, newValue) - Math.min(oldValue, newValue);
+                var hueDiff = Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0]),
+                    brightnessDiff = Math.max(oldHsv[2], newHsv[2]) - Math.min(oldHsv[2], newHsv[2]);
 
-                if(brightnessDiff < Bullet.Options.minPixelSimilarity){
+                if(brightnessDiff < Bullet.Options.brightnessSimilarity && hueDiff < Bullet.Options.hueSimilarity){
 
                     // new pixel color is 'similar enough' to old to omit
                     differenceRow.push(null);
