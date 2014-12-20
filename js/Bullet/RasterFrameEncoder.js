@@ -43,11 +43,19 @@ Bullet.RasterFrameEncoder.prototype = {
             return a + b;
         };
 
-        var avgColor = [
+        /*var avgColor = [
 
           quadColors.map(function(rgb){ return rgb.r; }).reduce(sum) / 4,
           quadColors.map(function(rgb){ return rgb.g; }).reduce(sum) / 4,
           quadColors.map(function(rgb){ return rgb.b; }).reduce(sum) / 4
+
+        ]*/
+
+        var avgColor = [
+
+            (quadColors[0].r + quadColors[1].r + quadColors[2].r + quadColors[3].r) / 4,
+            (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g) / 4,
+            (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b) / 4
 
         ]
 
