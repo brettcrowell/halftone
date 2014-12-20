@@ -24,18 +24,18 @@ Bullet.RasterFrameEncoder.prototype = {
     // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
     getHexAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray, shorthand){
 
-        var roundPixelSize = Math.round(pixelSize),
-            roundPixelRadius = Math.round(pixelSize / 2),
+        var roundPixelRadius = Math.round(pixelSize / 2),
+            roundPixelQuad = Math.round(pixelSize / 4),
             xCenter = x + roundPixelRadius,
             yCenter = y + roundPixelRadius;
 
         // gather pixels for upperLeft/uproundPixelSizeperRight, lowerLeft/lowerRight
         var quadColors = [
 
-          this._getRgbAtPoint(xCenter - 1, yCenter, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter, yCenter - 1, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter + 1, yCenter, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter, yCenter + 1 + roundPixelSize, totalWidth, canvasPixelArray)
+          this._getRgbAtPoint(xCenter - roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
+          this._getRgbAtPoint(xCenter, yCenter - roundPixelQuad, totalWidth, canvasPixelArray),
+          this._getRgbAtPoint(xCenter + roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
+          this._getRgbAtPoint(xCenter, yCenter + roundPixelQuad, totalWidth, canvasPixelArray)
 
         ];
 
