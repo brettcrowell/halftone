@@ -39,17 +39,19 @@ Bullet.RasterFrameEncoder.prototype = {
 
         ];
 
-        tmp = function(key, array){
+        var sum = function(a, b) {
+            return a + b;
+        };
 
-            return (_.reduce(_.map(array, function(rgb){
-                return rgb[key];
-            }), function(memo, rgb){
-                return memo + rgb;
-            })) / 4;
+        var avgColor = [
 
-        }
+          quadColors.map(function(rgb){ return rgb.r; }).reduce(sum) / 4,
+          quadColors.map(function(rgb){ return rgb.g; }).reduce(sum) / 4,
+          quadColors.map(function(rgb){ return rgb.b; }).reduce(sum) / 4
 
-        hex = ("000000" + Bullet.Util.rgbToHex(tmp('r', quadColors), tmp('g', quadColors), tmp('b', quadColors))).slice(-6);
+        ]
+
+        hex = ("000000" + Bullet.Util.rgbToHex(avgColor[0], avgColor[1], avgColor[2])).slice(-6);
 
         if(!shorthand){
             return "#" + hex;
