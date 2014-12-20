@@ -18,43 +18,47 @@ Bullet.CanvasRenderer.prototype = {
 
         var canvas = this.element,
             context = this.context,
+            matrix = encoderOutput.matrix,
             pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelWidth / 2;
+            pixelRadius = pixelSize / 2;
+
+        var row, pixelColor, xOffset = 0;
 
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        _.each(encoderOutput.matrix, function(row, r){
+        for(var r = 0; r < matrix.length; r++){
 
-            _.each(row, function(pixelColor, c){
+            row = matrix[r];
+
+            if(encoderOutput.metadata.stagger && (r % 2 === 0)){
+                xOffset = pixelRadius
+            }
+
+            for(var c = 0; c < row.length; c++){
+
+                pixelColor = row[c];
 
                 if(pixelColor !== null){
 
-                    var xOnCanvas = (c * pixelWidth) + pixelRadius,
-                        yOnCanvas = (r * pixelWidth) + pixelRadius;
-
-                    if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                        xOnCanvas += pixelRadius
-                    }
+                    var xOnCanvas = (c * pixelSize) + pixelRadius + xOffset,
+                        yOnCanvas = (r * pixelSize) + pixelRadius;
 
                     var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
-                                                                  pixelRadius * 1.25,
+                                                                  pixelRadius,
                                                                   encoderOutput.metadata.maxLumens,
                                                                   encoderOutput.metadata.minLumens);
 
                     context.beginPath();
-                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 2 * Math.PI, false);
+                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 6, false);
                     context.fillStyle = pixelColor;
                     context.fill();
                     context.closePath();
 
-
-
                 }
 
-            });
+            }
 
-        });
-
+            xOffset = 0;
+        }
     }
-
 };

@@ -2,36 +2,33 @@ Bullet.Util = {
 
     // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
-    rgbToHex: _.memoize(function(r, g, b) {
+    rgbToHex: function(r, g, b) {
 
         if (r > 255 || g > 255 || b > 255)
             throw "Invalid color component";
         return ((r << 16) | (g << 8) | b).toString(16);
 
-    }),
+    },
 
     hexToDecimal: _.memoize(function(hex){
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: function(pixelColor, maxWidth, maxLumens, minLumens){
+    getRasterWidth: function(pixelColor, maxWidth){
 
-        if(maxLumens === minLumens){
-            return (maxWidth - maxLumens) * maxWidth;
-        }
+        var hsv = this.hexToHsv(pixelColor);
 
-        var grayscaleColor = this.hexToGrayscaleRgb(pixelColor),
-            gradient = maxLumens - minLumens;
-
-        return maxWidth - (((grayscaleColor - minLumens) / gradient) * maxWidth);
+        return hsv[2] * maxWidth;
 
     },
 
     hexToGrayscaleRgb: _.memoize(function (hex){
 
+        // http://bobpowell.net/grayscale.aspx
+
         var rgb = this.hexToRgb(hex);
 
-        return (rgb.r + rgb.b + rgb.g) / 3;
+        return (rgb.r *.3) + (rgb.b *.59) + (rgb.g *.11);
 
     }),
 
@@ -49,46 +46,84 @@ Bullet.Util = {
 
     }),
 
-    getDifferenceMatrix: function (oldMatrix, newMatrix){
+    // http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 
-        var totalPixelsSeen = 0,
-            numChangedPixels = 0;
+    hexToHsv: _.memoize(function(hex){
 
-        var differenceMatrix = [];
+        var r = parseInt(hex[1] + hex[1], 16),
+            g = parseInt(hex[2] + hex[2], 16),
+            b = parseInt(hex[3] + hex[3], 16);
 
-        _.each(newMatrix.matrix, function(row, r){
+        return this.rgbToHsv(r,g,b);
+    }),
 
-            var differenceRow = [];
+    /**
+     * Converts an RGB color value to HSV. Conversion formula
+     * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+     * Assumes r, g, and b are contained in the set [0, 255] and
+     * returns h, s, and v in the set [0, 1].
+     *
+     * @param   Number  r       The red color value
+     * @param   Number  g       The green color value
+     * @param   Number  b       The blue color value
+     * @return  Array           The HSV representation
+     */
+    rgbToHsv: function(r, g, b){
+        r = r/255, g = g/255, b = b/255;
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, v = max;
 
-            _.each(row, function(newPixel, c){
+        var d = max - min;
+        s = max == 0 ? 0 : d / max;
 
-                var oldPixel = oldMatrix.matrix[r][c],
-                    similarity = this.getLuminanceSimilarity(oldPixel, newPixel);
+        if(max == min){
+            h = 0; // achromatic
+        }else{
+            switch(max){
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
 
-                if(similarity > Bullet.Options.minPixelSimilarity){
+        return [h, s, v];
+    },
 
-                    // new pixel color is 'similar enough' to old to omit
-                    differenceRow.push(null);
+    /**
+    * Converts an HSV color value to RGB. Conversion formula
+    * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
+    * Assumes h, s, and v are contained in the set [0, 1] and
+    * returns r, g, and b in the set [0, 255].
+    *
+    * @param   Number  h       The hue
+    * @param   Number  s       The saturation
+    * @param   Number  v       The value
+    * @return  Array           The RGB representation
+    */
+    hsvToRgb: function(h, s, v){
 
-                } else {
+        var r, g, b;
 
-                    // new pixel color is significantly different from old
-                    differenceRow.push(newPixel);
-                    numChangedPixels++;
+        var i = Math.floor(h * 6);
+        var f = h * 6 - i;
+        var p = v * (1 - s);
+        var q = v * (1 - f * s);
+        var t = v * (1 - (1 - f) * s);
 
-                }
+        switch(i % 6){
+            case 0: r = v, g = t, b = p; break;
+            case 1: r = q, g = v, b = p; break;
+            case 2: r = p, g = v, b = t; break;
+            case 3: r = p, g = q, b = v; break;
+            case 4: r = t, g = p, b = v; break;
+            case 5: r = v, g = p, b = q; break;
+        }
 
-                totalPixelsSeen++;
-
-            }.bind(this));
-
-            differenceMatrix.push(differenceRow);
-
-        }.bind(this));
-
-        return { metadata: newMatrix.metadata, matrix: differenceMatrix };
+        return [r * 255, g * 255, b * 255];
 
     },
+
 
     getLuminanceSimilarity: function (hex1, hex2){
 

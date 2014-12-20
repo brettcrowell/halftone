@@ -22,7 +22,7 @@ Bullet.RasterFrameEncoder.prototype = {
 
     // http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
     // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
-    getPixelColor: function (x, y, pixelSize, totalWidth, canvasPixelArray, shorthand){
+    getHexAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray, shorthand){
 
         var roundPixelSize = Math.round(pixelSize);
 
@@ -72,9 +72,7 @@ Bullet.RasterFrameEncoder.prototype = {
             rows = (cols / width) * height;
 
         var pixelSize = width / cols,
-            staggerWidth = pixelSize / 2,
-            minLumens = 15,
-            maxLumens = 0;
+            staggerWidth = pixelSize / 2;
 
         var matrix = [];
 
@@ -89,10 +87,7 @@ Bullet.RasterFrameEncoder.prototype = {
                 var xOnCanvas = Math.round((c * pixelSize) + offsetWidth),
                     yOnCanvas = Math.round((r * pixelSize) + staggerWidth);
 
-                var colorAtPoint = this.getPixelColor(xOnCanvas, yOnCanvas, pixelSize, width, canvasPixelArray, true);
-
-                minLumens = Math.min(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), minLumens);
-                maxLumens = Math.max(Bullet.Util.hexToGrayscaleRgb(colorAtPoint), maxLumens);
+                var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, pixelSize, width, canvasPixelArray, true);
 
                 currentRow.push(colorAtPoint);
 
@@ -110,9 +105,7 @@ Bullet.RasterFrameEncoder.prototype = {
             metadata: {
                 rows: rows,
                 cols: cols,
-                stagger: stagger,
-                minLumens: minLumens,
-                maxLumens: maxLumens
+                stagger: stagger
             },
 
             matrix: matrix
