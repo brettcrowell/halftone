@@ -7,7 +7,7 @@ Bullet.Compressor.prototype = {
     getDifferenceMatrix: function (oldMatrix, newMatrix){
 
         var differenceMatrix = {},
-            currentPixel = 0;
+            currentPixelIndex = 0;
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
@@ -18,8 +18,11 @@ Bullet.Compressor.prototype = {
                 var oldPixel = oldMatrix.matrix[r][c],
                     newPixel = row[c];
 
-                var oldHsv = Bullet.Util.hexToHsv(oldPixel),
-                    newHsv = Bullet.Util.hexToHsv(newPixel);
+                var oldPixelAdjusted = Bullet.Util.brightenHexColor(oldPixel, Bullet.Options.colorMultiplier),
+                    newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, Bullet.Options.colorMultiplier)
+
+                var oldHsv = Bullet.Util.hexToHsv(oldPixelAdjusted),
+                    newHsv = Bullet.Util.hexToHsv(newPixelAdjusted);
 
                 var hueDiff = Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0]),
                     brightnessDiff = Math.max(oldHsv[2], newHsv[2]) - Math.min(oldHsv[2], newHsv[2]);
@@ -28,16 +31,16 @@ Bullet.Compressor.prototype = {
 
                 } else {
 
-                    if(!differenceMatrix[newPixel]){
-                        differenceMatrix[newPixel] = [];
+                    if(!differenceMatrix[newPixelAdjusted]){
+                        differenceMatrix[newPixelAdjusted] = [];
                     }
 
                     // new pixel color is significantly different from old
-                    differenceMatrix[newPixel].push(currentPixel);
+                    differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
 
                 }
 
-                currentPixel++;
+                currentPixelIndex++;
 
             }
 

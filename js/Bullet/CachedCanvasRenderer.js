@@ -37,12 +37,11 @@ Bullet.CachedCanvasRenderer.prototype = {
     _renderColor: function(pixelColor, pixelSize, pixelRadius, cols, pixelIndexArray, context){
 
         var cache = this.cache,
-            adjPixelColor = Bullet.Util.brightenHexColor(pixelColor, Bullet.Options.colorMultiplier),
-            rasterWidth = Bullet.Util.getRasterWidth(adjPixelColor, pixelSize),
-            sourcePixel = cache[adjPixelColor];
+            rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelSize),
+            sourcePixel = cache[pixelColor];
 
         if (!sourcePixel) {
-            sourcePixel = this.cache[adjPixelColor] = this.generateCircle(adjPixelColor);
+            sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor);
         }
 
         var row, col, xOffset;
@@ -60,7 +59,7 @@ Bullet.CachedCanvasRenderer.prototype = {
             }
 
             var xOnCanvas = (col * pixelSize) + xOffset,
-              yOnCanvas = row * pixelSize
+                yOnCanvas = row * pixelSize;
 
             context.clearRect(xOnCanvas, yOnCanvas, pixelSize, pixelSize);
 
