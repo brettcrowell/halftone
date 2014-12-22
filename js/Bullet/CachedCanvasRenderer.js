@@ -21,11 +21,11 @@ Bullet.CachedCanvasRenderer.prototype = {
         var canvas = document.createElement('canvas'),
             context = canvas.getContext('2d');
 
-        canvas.width = 50;
-        canvas.height = 50;
+        canvas.width = 20;
+        canvas.height = 20;
 
         context.beginPath();
-        context.arc(25, 25, 25, 0, Math.PI * 2, false);
+        context.arc(10, 10, 10, 0, Math.PI * 2, false);
         context.fillStyle = color;
         context.fill();
         context.closePath();
@@ -75,7 +75,7 @@ Bullet.CachedCanvasRenderer.prototype = {
                 xOnCanvas += (pixelSize - rasterWidth) / 2;
                 yOnCanvas += (pixelSize - rasterWidth) / 2;
 
-                context.drawImage(sourcePixel, 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
+                context.drawImage(sourcePixel, 0, 0, 20, 20, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
 
                 xOffset = 0;
 
