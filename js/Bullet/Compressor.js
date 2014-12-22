@@ -6,7 +6,8 @@ Bullet.Compressor.prototype = {
 
     getDifferenceMatrix: function (oldMatrix, newMatrix){
 
-        var differenceMatrix = {};
+        var differenceMatrix = {},
+            currentPixel = 0;
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
@@ -32,9 +33,11 @@ Bullet.Compressor.prototype = {
                     }
 
                     // new pixel color is significantly different from old
-                    differenceMatrix[newPixel].push(newPixel);
+                    differenceMatrix[newPixel].push(currentPixel);
 
                 }
+
+                currentPixel++;
 
             }
 
