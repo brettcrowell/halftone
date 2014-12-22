@@ -18,16 +18,15 @@ Bullet.Compressor.prototype = {
                 var oldPixel = oldMatrix.matrix[r][c],
                     newPixel = row[c];
 
-                var oldPixelAdjusted = Bullet.Util.brightenHexColor(oldPixel, Bullet.Options.colorMultiplier),
-                    newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, Bullet.Options.colorMultiplier)
-
-                var oldHsv = Bullet.Util.hexToHsv(oldPixelAdjusted),
-                    newHsv = Bullet.Util.hexToHsv(newPixelAdjusted);
+                var oldHsv = Bullet.Util.hexToHsv(oldPixel),
+                    newHsv = Bullet.Util.hexToHsv(newPixel);
 
                 var hueDiff = Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0]),
                     brightnessDiff = Math.max(oldHsv[2], newHsv[2]) - Math.min(oldHsv[2], newHsv[2]);
 
                 if(brightnessDiff > Bullet.Options.brightnessSimilarity || hueDiff > Bullet.Options.hueSimilarity){
+
+                    var newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, Bullet.Options.colorMultiplier)
 
                     if(!differenceMatrix[newPixelAdjusted]){
                         differenceMatrix[newPixelAdjusted] = [];
