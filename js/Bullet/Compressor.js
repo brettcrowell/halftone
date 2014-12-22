@@ -28,8 +28,8 @@ Bullet.Compressor.prototype = {
 
                 if(brightnessDiff > Bullet.Options.brightnessSimilarity || hueDiff > Bullet.Options.hueSimilarity){
 
-                    //var newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, multiplier)
-                    var newPixelAdjusted = Bullet.Util.hsvToHex(newHsv[0], newHsv[1], Math.min(newHsv[2] * multiplier, 1));
+                    var newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, multiplier)
+                    //var newPixelAdjusted = Bullet.Util.hsvToHex(newHsv[0], newHsv[1], Math.min(newHsv[2] * multiplier, 1));
 
 
                     if(!differenceMatrix[newPixelAdjusted]){
