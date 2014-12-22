@@ -6,12 +6,11 @@ Bullet.Compressor.prototype = {
 
     getDifferenceMatrix: function (oldMatrix, newMatrix){
 
-        var differenceMatrix = [];
+        var differenceMatrix = {};
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
-            var row = newMatrix.matrix[r],
-                differenceRow = [];
+            var row = newMatrix.matrix[r];
 
             for(var c = 0; c < row.length; c++){
 
@@ -26,19 +25,18 @@ Bullet.Compressor.prototype = {
 
                 if(brightnessDiff < Bullet.Options.brightnessSimilarity && hueDiff < Bullet.Options.hueSimilarity){
 
-                    // new pixel color is 'similar enough' to old to omit
-                    differenceRow.push(null);
-
                 } else {
 
+                    if(!differenceMatrix[newPixel]){
+                        differenceMatrix[newPixel] = [];
+                    }
+
                     // new pixel color is significantly different from old
-                    differenceRow.push(newPixel);
+                    differenceMatrix[newPixel].push(newPixel);
 
                 }
 
             }
-
-            differenceMatrix.push(differenceRow);
 
         }
 
