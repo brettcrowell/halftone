@@ -39,50 +39,50 @@ Bullet.CachedCanvasRenderer.prototype = {
         var context = this.context,
             cache = this.cache;
             matrix = encoderOutput.matrix,
-            pixelSize = 1280 / encoderOutput.metadata.cols,
+            cols = encoderOutput.metadata.cols,
+            pixelSize = 1280 / cols,
             pixelRadius = pixelSize / 2;
 
-        var row, pixelColor, xOffset = 0;
+        var row, col, pixelColor, xOffset = 0;
 
-        for(var r = 0; r < matrix.length; r++){
+        for(var pixelColor in matrix) {
 
-            row = matrix[r];
+            var colorArray = matrix[pixelColor],
+                adjPixelColor = Bullet.Util.brightenHexColor(pixelColor, Bullet.Options.colorMultiplier),
+                rasterWidth = Bullet.Util.getRasterWidth(adjPixelColor, pixelSize * 1.2),
+                sourcePixel = this.cache[adjPixelColor];
 
-            if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                xOffset = pixelRadius
+            if (!sourcePixel) {
+                sourcePixel = this.cache[adjPixelColor] = this.generateCircle(adjPixelColor);
             }
 
-            for(var c = 0; c < row.length; c++){
+            for (var p = 0; p < colorArray.length; p++) {
 
-                pixelColor = row[c];
+                var pixelIndex = colorArray[p];
 
-                if(pixelColor !== null){
+                // decode pixelIndex (find row and col)
+                row = Math.floor(pixelIndex / cols);
+                col = pixelIndex % cols;
 
-                    var adjPixelColor = Bullet.Util.brightenHexColor(pixelColor, Bullet.Options.colorMultiplier);
-
-                    var xOnCanvas = (c * pixelSize) + xOffset,
-                        yOnCanvas = r * pixelSize
-
-                    context.clearRect(xOnCanvas, yOnCanvas, pixelSize, pixelSize);
-
-                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelSize * 1.2);
-
-                    xOnCanvas += (pixelSize - rasterWidth) / 2;
-                    yOnCanvas += (pixelSize - rasterWidth) / 2;
-
-                    var sourcePixel = this.cache[adjPixelColor];
-
-                    if(!sourcePixel){
-                        sourcePixel = this.cache[adjPixelColor] = this.generateCircle(adjPixelColor);
-                    }
-
-                    context.drawImage(cache[adjPixelColor], 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
-
+                if (encoderOutput.metadata.stagger && (row % 2 === 0)) {
+                    xOffset = pixelRadius
                 }
 
-            }
+                var xOnCanvas = (col * pixelSize) + xOffset,
+                    yOnCanvas = row * pixelSize
 
-            xOffset = 0;
+                context.clearRect(xOnCanvas, yOnCanvas, pixelSize, pixelSize);
+
+                xOnCanvas += (pixelSize - rasterWidth) / 2;
+                yOnCanvas += (pixelSize - rasterWidth) / 2;
+
+                context.drawImage(sourcePixel, 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
+
+                xOffset = 0;
+
+
+            }
         }
+
     }
 };
