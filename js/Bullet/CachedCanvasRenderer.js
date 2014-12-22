@@ -34,58 +34,53 @@ Bullet.CachedCanvasRenderer.prototype = {
 
     },
 
-    _renderColor: function(pixelColor, pixelSize, pixelRadius, cols, pixelIndexArray, context){
-
-        var cache = this.cache,
-            rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelSize),
-            sourcePixel = cache[pixelColor];
-
-        if (!sourcePixel) {
-            sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor);
-        }
-
-        var row, col, xOffset;
-
-        for (var p = 0; p < pixelIndexArray.length; p++) {
-
-            var pixelIndex = pixelIndexArray[p];
-
-            // decode pixelIndex (find row and col)
-            row = Math.floor(pixelIndex / cols);
-            col = pixelIndex % cols;
-
-            if (row % 2 === 0) {
-                xOffset = pixelRadius
-            }
-
-            var xOnCanvas = (col * pixelSize) + xOffset,
-                yOnCanvas = row * pixelSize;
-
-            context.clearRect(xOnCanvas, yOnCanvas, pixelSize, pixelSize);
-
-            xOnCanvas += (pixelSize - rasterWidth) / 2;
-            yOnCanvas += (pixelSize - rasterWidth) / 2;
-
-            context.drawImage(sourcePixel, 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
-
-            xOffset = 0;
-
-
-        }
-
-    },
-
     render: function(encoderOutput){
 
         var context = this.context,
+            cache = this.cache,
             matrix = encoderOutput.matrix,
             cols = encoderOutput.metadata.cols,
             pixelSize = 1280 / cols,
             pixelRadius = pixelSize / 2;
 
+        var row, col, xOffset;
+
         for(var pixelColor in matrix) {
 
-            this._renderColor(pixelColor, pixelSize, pixelRadius, cols, matrix[pixelColor], context)
+            var pixelIndexArray = matrix[pixelColor],
+                rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelSize),
+                sourcePixel = cache[pixelColor];
+
+            if (!sourcePixel) {
+                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor);
+            }
+
+            for (var p = 0; p < pixelIndexArray.length; p++) {
+
+                var pixelIndex = pixelIndexArray[p];
+
+                // decode pixelIndex (find row and col)
+                row = Math.floor(pixelIndex / cols);
+                col = pixelIndex % cols;
+
+                if (row % 2 === 0) {
+                    xOffset = pixelRadius
+                }
+
+                var xOnCanvas = (col * pixelSize) + xOffset,
+                  yOnCanvas = row * pixelSize;
+
+                context.clearRect(xOnCanvas, yOnCanvas, pixelSize, pixelSize);
+
+                xOnCanvas += (pixelSize - rasterWidth) / 2;
+                yOnCanvas += (pixelSize - rasterWidth) / 2;
+
+                context.drawImage(sourcePixel, 0, 0, 50, 50, xOnCanvas, yOnCanvas, rasterWidth, rasterWidth);
+
+                xOffset = 0;
+
+
+            }
 
         }
 
