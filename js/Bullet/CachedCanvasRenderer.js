@@ -49,7 +49,7 @@ Bullet.CachedCanvasRenderer.prototype = {
 
             var colorArray = matrix[pixelColor],
                 adjPixelColor = Bullet.Util.brightenHexColor(pixelColor, Bullet.Options.colorMultiplier),
-                rasterWidth = Bullet.Util.getRasterWidth(adjPixelColor, pixelSize * 1.2),
+                rasterWidth = Bullet.Util.getRasterWidth(adjPixelColor, pixelSize),
                 sourcePixel = this.cache[adjPixelColor];
 
             if (!sourcePixel) {
