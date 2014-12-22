@@ -27,9 +27,7 @@ Bullet.Compressor.prototype = {
                 var hueDiff = Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0]),
                     brightnessDiff = Math.max(oldHsv[2], newHsv[2]) - Math.min(oldHsv[2], newHsv[2]);
 
-                if(brightnessDiff < Bullet.Options.brightnessSimilarity && hueDiff < Bullet.Options.hueSimilarity){
-
-                } else {
+                if(brightnessDiff > Bullet.Options.brightnessSimilarity || hueDiff > Bullet.Options.hueSimilarity){
 
                     if(!differenceMatrix[newPixelAdjusted]){
                         differenceMatrix[newPixelAdjusted] = [];
