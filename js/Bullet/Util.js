@@ -14,13 +14,14 @@ Bullet.Util = {
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: function(pixelColor, maxWidth){
+    getRasterWidth: _.memoize(function(pixelColor){
 
-        var hsv = this.hexToHsv(pixelColor);
+        var rgb = this.base36toRgb(pixelColor),
+            hsv = this.rgbToHsv(rgb);
 
-        return hsv[2] * maxWidth;
+        return hsv[2];
 
-    },
+    }),
 
     brightenHexColor: _.memoize(function(hex, mul){
 

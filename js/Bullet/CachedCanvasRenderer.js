@@ -43,7 +43,7 @@ Bullet.CachedCanvasRenderer.prototype = {
         var context = this.context,
             cache = this.cache;
 
-        var rasterWidth = pixelSize, //Bullet.Util.getRasterWidth(pixelColor, pixelSize),
+        var rasterWidth = Bullet.Util.getRasterWidth(pixelColor) * pixelSize,
             sourcePixel = cache[pixelColor];
 
         if (!sourcePixel) {
