@@ -98,7 +98,7 @@ $(document).ready(function(){
     var renderTime = new Date().getTime() - renderBegin,
         totalTime = new Date().getTime() - totalBegin;
 
-    displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
+    //displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
 
     lastKnownFrame = currentFrame;
 
