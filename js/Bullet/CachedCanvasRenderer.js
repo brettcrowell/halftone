@@ -16,7 +16,7 @@ Bullet.CachedCanvasRenderer.prototype = {
         return this.element;
     },
 
-    generateCircle: function(color){
+    generateCircle: function(colorBase36){
 
         var canvas = document.createElement('canvas'),
             context = canvas.getContext('2d');
@@ -24,9 +24,13 @@ Bullet.CachedCanvasRenderer.prototype = {
         canvas.width = 20;
         canvas.height = 20;
 
+        var rgb = Bullet.Util.base36toRgb(colorBase36);
+
+        var rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+
         context.beginPath();
         context.arc(10, 10, 10, 0, Math.PI * 2, false);
-        context.fillStyle = color;
+        context.fillStyle = rgbString;
         context.fill();
         context.closePath();
 
@@ -39,7 +43,7 @@ Bullet.CachedCanvasRenderer.prototype = {
         var context = this.context,
             cache = this.cache;
 
-        var rasterWidth = Bullet.Util.getRasterWidth(pixelColor, pixelSize),
+        var rasterWidth = pixelSize, //Bullet.Util.getRasterWidth(pixelColor, pixelSize),
             sourcePixel = cache[pixelColor];
 
         if (!sourcePixel) {
