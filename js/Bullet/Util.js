@@ -91,8 +91,8 @@ Bullet.Util = {
      * @param   Number  b       The blue color value
      * @return  Array           The HSV representation
      */
-    rgbToHsv: function(r, g, b){
-        r = r/255, g = g/255, b = b/255;
+    rgbToHsv: function(rgb){
+        var r = rgb[0]/255, g = rgb[1]/255, b = rgb[2]/255;
         var max = Math.max(r, g, b), min = Math.min(r, g, b);
         var h, s, v = max;
 
@@ -124,8 +124,9 @@ Bullet.Util = {
     * @param   Number  v       The value
     * @return  Array           The RGB representation
     */
-    hsvToRgb: function(h, s, v){
+    hsvToRgb: function(hsv){
 
+        var h = hsv[0], s = hsv[1], v = hsv[2];
         var r, g, b;
 
         var i = Math.floor(h * 6);
@@ -147,6 +148,17 @@ Bullet.Util = {
 
     },
 
+    hsvToBase36: function(hsv){
+
+        var rgb = this.hsvToRgb(hsv);
+
+        var r = (Math.round(rgb[0]/255) * 35).toString(36),
+            g = (Math.round(rgb[1]/255) * 35).toString(36),
+            b = (Math.round(rgb[2]/255) * 35).toString(36);
+
+        return "#" + r + g + b;
+
+    },
 
     getLuminanceSimilarity: function (hex1, hex2){
 

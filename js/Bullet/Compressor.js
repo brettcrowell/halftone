@@ -20,15 +20,15 @@ Bullet.Compressor.prototype = {
                 var oldPixel = oldMatrix.matrix[r][c],
                     newPixel = row[c];
 
-                var oldHsv = Bullet.Util.hexToHsv(oldPixel),
-                    newHsv = Bullet.Util.hexToHsv(newPixel);
+                var oldHsv = Bullet.Util.rgbToHsv(oldPixel),
+                    newHsv = Bullet.Util.rgbToHsv(newPixel);
 
                 var hueDiff = Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0]),
                     brightnessDiff = Math.max(oldHsv[2], newHsv[2]) - Math.min(oldHsv[2], newHsv[2]);
 
                 if(brightnessDiff > Bullet.Options.brightnessSimilarity || hueDiff > Bullet.Options.hueSimilarity){
 
-                    var newPixelAdjusted = Bullet.Util.brightenHexColor(newPixel, multiplier)
+                    var newPixelAdjusted = Bullet.Util.hsvToBase36(newHsv);
                     //var newPixelAdjusted = Bullet.Util.hsvToHex(newHsv[0], newHsv[1], Math.min(newHsv[2] * multiplier, 1));
 
 
