@@ -23,10 +23,12 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         canvas.width = canvas.height = pixelSize;
 
-        var rgb = Bullet.Util.base36toRgb(colorBase36),
+        var base = Bullet.Options.colorBase;
+
+        var rgb = Bullet.Util.base36toRgb(colorBase36, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Bullet.Util.getRasterWidth(colorBase36) * ((pixelSize - 1) / 2),
+        var rasterSize = Bullet.Util.getRasterWidth(colorBase36, base) * ((pixelSize - 1) / 2),
             xOnCanvas = yOnCanvas = pixelSize / 2;
 
         context.beginPath();

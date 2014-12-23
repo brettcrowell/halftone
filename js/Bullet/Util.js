@@ -14,14 +14,14 @@ Bullet.Util = {
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: _.memoize(function(pixelColor){
+    getRasterWidth: function(colorBase36, colorBase){
 
-        var rgb = this.base36toRgb(pixelColor),
+        var rgb = this.base36toRgb(colorBase36, colorBase),
             hsv = this.rgbToHsv(rgb);
 
         return hsv[2];
 
-    }),
+    },
 
     brightenHexColor: _.memoize(function(hex, mul){
 
@@ -149,25 +149,29 @@ Bullet.Util = {
 
     },
 
-    rgbToBase36: function(rgb){
+    rgbToBase36: function(rgb, base){
 
-        var r = Math.round((rgb[0]/255) * 35).toString(36),
-            g = Math.round((rgb[1]/255) * 35).toString(36),
-            b = Math.round((rgb[2]/255) * 35).toString(36);
+        var range = base - 1;
+
+        var r = Math.round((rgb[0]/255) * range).toString(base),
+            g = Math.round((rgb[1]/255) * range).toString(base),
+            b = Math.round((rgb[2]/255) * range).toString(base);
 
         return r + g + b;
 
     },
 
-    base36toRgb: _.memoize(function(base36){
+    base36toRgb: function(base36, base){
 
-        var r = Math.round((parseInt(base36[0], 36) / 35) * 255),
-            g = Math.round((parseInt(base36[1], 36) / 35) * 255),
-            b = Math.round((parseInt(base36[2], 36) / 35) * 255);
+        var range = base - 1;
+
+        var r = Math.round((parseInt(base36[0], base) / range) * 255),
+            g = Math.round((parseInt(base36[1], base) / range) * 255),
+            b = Math.round((parseInt(base36[2], base) / range) * 255);
 
         return [r,g,b];
 
-    }),
+    },
 
     brightenRgb: function(rgb, factor){
 

@@ -5,8 +5,9 @@ Bullet.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 80,
-    colorMultiplier: 1.7,
+    quality: 120,
+    colorMultiplier: 1.75,
+    colorBase: 20, // max 36
     stagger: true,
     hueSimilarity: 0.001,
     frameRate: 7,

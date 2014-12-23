@@ -9,15 +9,13 @@ Bullet.Compressor.prototype = {
         var differenceMatrix = {},
             currentPixelIndex = 0;
 
-        var multiplier = Bullet.Options.colorMultiplier;
+        var mul = Bullet.Options.colorMultiplier;
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
             var row = newMatrix.matrix[r];
 
             for(var c = 0; c < row.length; c++){
-
-                var mul = Bullet.Options.colorMultiplier;
 
                 var oldPixel = Bullet.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
                     newPixel = Bullet.Util.brightenRgb(row[c], mul);
@@ -29,7 +27,7 @@ Bullet.Compressor.prototype = {
 
                 if(hueDiffPct > Bullet.Options.hueSimilarity){
 
-                    var newPixelAdjusted = Bullet.Util.rgbToBase36(newPixel);
+                    var newPixelAdjusted = Bullet.Util.rgbToBase36(newPixel, Bullet.Options.colorBase);
 
                     if(!differenceMatrix[newPixelAdjusted]){
                         differenceMatrix[newPixelAdjusted] = [];
