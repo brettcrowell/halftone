@@ -29,7 +29,7 @@ Bullet.CachedCanvasRenderer.prototype = {
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
         var rasterSize = Bullet.Util.getRasterWidth(colorBase36, base) * ((pixelSize - 1) / 2),
-            xOnCanvas = yOnCanvas = pixelSize / 2;
+            xOnCanvas = yOnCanvas = (pixelSize / 2);
 
         context.beginPath();
         context.fillRect(0, 0, pixelSize, pixelSize);
@@ -50,7 +50,7 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         var matrix = encoderOutput.matrix,
             cols = encoderOutput.metadata.cols,
-            pixelSize = 1280 / cols,
+            pixelSize = this.element.width / cols,
             pixelRadius = pixelSize / 2;
 
         for(var pixelColor in matrix) {
