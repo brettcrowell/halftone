@@ -5,11 +5,10 @@ Bullet.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 110,
+    quality: 120,
     colorMultiplier: 1.7,
     stagger: true,
-    brightnessSimilarity: 0.06,
-    hueSimilarity: 0.06,
+    hueSimilarity: 0.5,
     frameRate: 7,
     backgroundColor: '#eee',
     videoConstraints: {
