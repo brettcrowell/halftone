@@ -149,9 +149,7 @@ Bullet.Util = {
 
     },
 
-    hsvToBase36: function(hsv){
-
-        var rgb = this.hsvToRgb(hsv);
+    rgbToBase36: function(rgb){
 
         var r = Math.round((rgb[0]/255) * 35).toString(36),
             g = Math.round((rgb[1]/255) * 35).toString(36),
