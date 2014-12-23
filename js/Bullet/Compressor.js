@@ -28,7 +28,8 @@ Bullet.Compressor.prototype = {
                 if(hueDiffPct > Bullet.Options.hueSimilarity){
 
                     var rgb = Bullet.Util.hsvToRgb(newHsv);
-                    var newPixelAdjusted = Bullet.Util.rgbToBase36(rgb);
+                    var brightRgb = Bullet.Util.brightenRgb(rgb, Bullet.Options.colorMultiplier);
+                    var newPixelAdjusted = Bullet.Util.rgbToBase36(brightRgb);
                     //var newPixelAdjusted = Bullet.Util.hsvToHex(newHsv[0], newHsv[1], Math.min(newHsv[2] * multiplier, 1));
 
 

@@ -159,11 +159,21 @@ Bullet.Util = {
 
     },
 
-    base36toRgb: function(base36){
+    base36toRgb: _.memoize(function(base36){
 
         var r = Math.round((parseInt(base36[0], 36) / 35) * 255),
             g = Math.round((parseInt(base36[1], 36) / 35) * 255),
             b = Math.round((parseInt(base36[2], 36) / 35) * 255);
+
+        return [r,g,b];
+
+    }),
+
+    brightenRgb: function(rgb, factor){
+
+        var r = Math.min(rgb[0] * factor, 255),
+            g = Math.min(rgb[1] * factor, 255),
+            b = Math.min(rgb[2] * factor, 255);
 
         return [r,g,b];
 
