@@ -32,6 +32,7 @@ Bullet.RasterFrameEncoder.prototype = {
         // gather pixels for upperLeft/uproundPixelSizeperRight, lowerLeft/lowerRight
         var quadColors = [
 
+          this._getRgbAtPoint(xCenter, yCenter, totalWidth, canvasPixelArray),
           this._getRgbAtPoint(xCenter - roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
           this._getRgbAtPoint(xCenter, yCenter - roundPixelQuad, totalWidth, canvasPixelArray),
           this._getRgbAtPoint(xCenter + roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
@@ -53,9 +54,9 @@ Bullet.RasterFrameEncoder.prototype = {
 
         var avgColor = [
 
-            (quadColors[0].r + quadColors[1].r + quadColors[2].r + quadColors[3].r) / 4,
-            (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g) / 4,
-            (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b) / 4
+            (quadColors[0].r + quadColors[1].r + quadColors[2].r + quadColors[3].r + quadColors[4].r) / 5,
+            (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g + quadColors[4].g) / 5,
+            (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b + quadColors[4].b) / 5
 
         ]
 

@@ -71,6 +71,15 @@ Bullet.Util = {
         return this.rgbToHsv(r,g,b);
     }),
 
+    hsvToHex: function(h, s, v){
+
+        var rgb = this.hsvToRgb(h, s, v),
+            hex = ("000000" + this.rgbToHex(rgb[0],rgb[1],rgb[2])).slice(-6);
+
+        return "#" + hex[0] + hex[2] + hex[4];
+
+    },
+
     /**
      * Converts an RGB color value to HSV. Conversion formula
      * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
