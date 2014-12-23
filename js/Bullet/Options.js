@@ -9,7 +9,7 @@ Bullet.Options = {
     colorMultiplier: 1.75,
     colorBase: 20, // max 36
     stagger: true,
-    hueSimilarity: 0.001,
+    maxPctRgbDifference: 0.05,
     frameRate: 7,
     backgroundColor: '#eee',
     videoConstraints: {

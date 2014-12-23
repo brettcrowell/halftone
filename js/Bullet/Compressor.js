@@ -19,13 +19,8 @@ Bullet.Compressor.prototype = {
 
                 var oldPixel = Bullet.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
                     newPixel = Bullet.Util.brightenRgb(row[c], mul);
-
-                var oldHsv = Bullet.Util.rgbToHsv(oldPixel),
-                    newHsv = Bullet.Util.rgbToHsv(newPixel);
-
-                var hueDiffPct = (Math.max(oldHsv[0], newHsv[0]) - Math.min(oldHsv[0], newHsv[0])) / Math.max(oldHsv[0], newHsv[0]);
-
-                if(hueDiffPct > Bullet.Options.hueSimilarity){
+                
+                if(Bullet.Util.getRgbSimilarity(oldPixel, newPixel) > Bullet.Options.maxPctRgbDifference){
 
                     var newPixelAdjusted = Bullet.Util.rgbToBase36(newPixel, Bullet.Options.colorBase);
 

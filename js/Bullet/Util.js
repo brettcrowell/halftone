@@ -37,15 +37,13 @@ Bullet.Util = {
 
     }),
 
-    hexToGrayscaleRgb: _.memoize(function (hex){
+    rgbToGrayscale: function (rgb){
 
         // http://bobpowell.net/grayscale.aspx
 
-        var rgb = this.hexToRgb(hex);
+        return (rgb[0] *.3) + (rgb[1] *.59) + (rgb[2] *.11);
 
-        return (rgb.r *.3) + (rgb.b *.59) + (rgb.g *.11);
-
-    }),
+    },
 
     hexToRgb: _.memoize(function (hex){
 
@@ -183,15 +181,15 @@ Bullet.Util = {
 
     },
 
-    getLuminanceSimilarity: function (hex1, hex2){
+    getRgbSimilarity: function (rgb1, rgb2){
 
-        var dec1 = this.hexToGrayscaleRgb(hex1),
-            dec2 = this.hexToGrayscaleRgb(hex2);
+        var dec1 = this.rgbToGrayscale(rgb1),
+            dec2 = this.rgbToGrayscale(rgb2);
 
         var max = Math.max(dec1,dec2),
             min = Math.min(dec1,dec2);
 
-        return min / max;
+        return (max - min) / max;
 
     },
 
