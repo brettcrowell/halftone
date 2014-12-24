@@ -81,8 +81,8 @@ Bullet.RasterFrameEncoder.prototype = {
         var cols = Bullet.Options.quality,
             rows = (cols / width) * height;
 
-        var pixelSize = width / cols,
-            staggerWidth = pixelSize / 2;
+        var sampleSize = width / cols,
+            staggerWidth = sampleSize / 2;
 
         var matrix = [];
 
@@ -90,14 +90,14 @@ Bullet.RasterFrameEncoder.prototype = {
 
             var currentRow = [];
 
-            var offsetWidth = (r % 2 == 0) ? pixelSize : staggerWidth;
+            var offsetWidth = (r % 2 == 0) ? sampleSize : staggerWidth;
 
             for(var c = 0; c < cols; c++){
 
-                var xOnCanvas = Math.round((c * pixelSize) + offsetWidth),
-                    yOnCanvas = Math.round((r * pixelSize) + staggerWidth);
+                var xOnCanvas = Math.round((c * sampleSize) + offsetWidth),
+                    yOnCanvas = Math.round((r * sampleSize) + staggerWidth);
 
-                var colorAtPoint = this.getRgbAtPoint(xOnCanvas, yOnCanvas, pixelSize, width, canvasPixelArray);
+                var colorAtPoint = this.getRgbAtPoint(xOnCanvas, yOnCanvas, sampleSize, width, canvasPixelArray);
 
                 currentRow.push(colorAtPoint);
 
