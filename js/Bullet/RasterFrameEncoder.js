@@ -22,7 +22,7 @@ Bullet.RasterFrameEncoder.prototype = {
 
     // http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
     // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
-    getHexAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray, shorthand){
+    getRgbAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray){
 
         var roundPixelRadius = Math.round(pixelSize / 2),
             roundPixelQuad = Math.round(pixelSize / 4),
@@ -40,11 +40,13 @@ Bullet.RasterFrameEncoder.prototype = {
 
         ];
 
+        /*
+
         var sum = function(a, b) {
             return a + b;
         };
 
-        /*var avgColor = [
+        var avgColor = [
 
           quadColors.map(function(rgb){ return rgb.r; }).reduce(sum) / 4,
           quadColors.map(function(rgb){ return rgb.g; }).reduce(sum) / 4,
@@ -60,13 +62,7 @@ Bullet.RasterFrameEncoder.prototype = {
 
         ]
 
-        hex = ("000000" + Bullet.Util.rgbToHex(avgColor[0], avgColor[1], avgColor[2])).slice(-6);
-
-        if(!shorthand){
-            return "#" + hex;
-        }
-
-        return "#" + hex[0] + hex[2] + hex[4];
+        return [avgColor[0], avgColor[1], avgColor[2]];
 
     },
 
@@ -101,7 +97,7 @@ Bullet.RasterFrameEncoder.prototype = {
                 var xOnCanvas = Math.round((c * pixelSize) + offsetWidth),
                     yOnCanvas = Math.round((r * pixelSize) + staggerWidth);
 
-                var colorAtPoint = this.getHexAtPoint(xOnCanvas, yOnCanvas, pixelSize, width, canvasPixelArray, true);
+                var colorAtPoint = this.getRgbAtPoint(xOnCanvas, yOnCanvas, pixelSize, width, canvasPixelArray);
 
                 currentRow.push(colorAtPoint);
 

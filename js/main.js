@@ -102,6 +102,8 @@ $(document).ready(function(){
 
     lastKnownFrame = currentFrame;
 
+    // Object.keys(differenceMatrix.matrix).map(function(c){ return differenceMatrix.matrix[c].length; }).reduce(function(a,b){ return a + b })
+
   }
 
   setInterval(updateFrame, frameInterval)
