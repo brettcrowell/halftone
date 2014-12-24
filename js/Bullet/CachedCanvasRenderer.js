@@ -1,6 +1,9 @@
 Bullet.CachedCanvasRenderer = function(){
 
-    this.cache = {};
+    var colorBase = Bullet.Options.colorBase,
+        colorSpace = Math.pow(colorBase, 3);
+
+    this.cache = new Array(colorSpace);
     this.element = document.createElement('canvas');
     this.context = this.element.getContext('2d');
 
@@ -58,10 +61,11 @@ Bullet.CachedCanvasRenderer.prototype = {
             var context = this.context,
                 cache = this.cache;
 
-            var sourcePixel = cache[pixelColor];
+            var sourceIndex = parseInt(pixelColor, Bullet.Options.colorBase),
+                sourcePixel = cache[sourceIndex];
 
             if (!sourcePixel) {
-                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor, pixelSize);
+                sourcePixel = this.cache[sourceIndex] = this.generateCircle(pixelColor, pixelSize);
             }
 
             var row, col, xOffset;
