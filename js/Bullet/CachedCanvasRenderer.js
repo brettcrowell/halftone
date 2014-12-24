@@ -16,7 +16,7 @@ Bullet.CachedCanvasRenderer.prototype = {
         return this.element;
     },
 
-    generateCircle: function(colorBase36, pixelSize){
+    generateCircle: function(basedColor, pixelSize){
 
         var canvas = document.createElement('canvas'),
             context = canvas.getContext('2d');
@@ -25,10 +25,10 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         var base = Bullet.Options.colorBase;
 
-        var rgb = Bullet.Util.base36toRgb(colorBase36, base),
+        var rgb = Bullet.Util.baseToRgb(basedColor, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Bullet.Util.getRasterWidth(colorBase36, base) * ((pixelSize) / 2),
+        var rasterSize = Bullet.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
             xOnCanvas = yOnCanvas = Math.floor(pixelSize / 2);
 
         context.beginPath();
@@ -41,10 +41,6 @@ Bullet.CachedCanvasRenderer.prototype = {
         return canvas;
 
     },
-/*
-    _partialRender: function(pixelColor, pixelIndexArray, cols, pixelSize, pixelRadius){
-
-    },*/
 
     render: function(encoderOutput){
 
@@ -91,9 +87,6 @@ Bullet.CachedCanvasRenderer.prototype = {
 
 
             }
-
-            //this._partialRender(pixelColor, pixelIndexArray, cols, pixelSize, pixelRadius)
-
 
         }
 

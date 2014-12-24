@@ -22,7 +22,7 @@ Bullet.Compressor.prototype = {
                 
                 if(Bullet.Util.getRgbSimilarity(oldPixel, newPixel) > Bullet.Options.maxPctRgbDifference){
 
-                    var newPixelAdjusted = Bullet.Util.rgbToBase36(newPixel, Bullet.Options.colorBase);
+                    var newPixelAdjusted = Bullet.Util.rgbToBase(newPixel, Bullet.Options.colorBase);
 
                     if(!differenceMatrix[newPixelAdjusted]){
                         differenceMatrix[newPixelAdjusted] = [];

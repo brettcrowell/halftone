@@ -64,7 +64,7 @@ Bullet.Util = {
 
     getRasterWidth: function(colorBase36, colorBase){
 
-        var rgb = this.base36toRgb(colorBase36, colorBase),
+        var rgb = this.baseToRgb(colorBase36, colorBase),
             hsv = this.rgbToHsv(rgb);
 
         return hsv[2];
@@ -147,7 +147,7 @@ Bullet.Util = {
 
     },
 
-    rgbToBase36: function(rgb, base){
+    rgbToBase: function(rgb, base){
 
         var range = base - 1;
 
@@ -159,7 +159,7 @@ Bullet.Util = {
 
     },
 
-    base36toRgb: function(base36, base){
+    baseToRgb: function(base36, base){
 
         var range = base - 1;
 
