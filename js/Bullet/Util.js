@@ -14,37 +14,6 @@ Bullet.Util = {
         return parseInt(hex.substr(1), 16);
     }),
 
-    getRasterWidth: function(colorBase36, colorBase){
-
-        var rgb = this.base36toRgb(colorBase36, colorBase),
-            hsv = this.rgbToHsv(rgb);
-
-        return hsv[2];
-
-    },
-
-    brightenHexColor: _.memoize(function(hex, mul){
-
-        var rgb = this.hexToRgb(hex);
-
-        var r = Math.min(rgb.r * mul, 255),
-            g = Math.min(rgb.g * mul, 255),
-            b = Math.min(rgb.b * mul, 255);
-
-        hex = ("000000" + Bullet.Util.rgbToHex(r,g,b)).slice(-6);
-
-        return "#" + hex[0] + hex[2] + hex[4];
-
-    }),
-
-    rgbToGrayscale: function (rgb){
-
-        // http://bobpowell.net/grayscale.aspx
-
-        return (rgb[0] *.3) + (rgb[1] *.59) + (rgb[2] *.11);
-
-    },
-
     hexToRgb: _.memoize(function (hex){
 
         hex = hex.substr(1);
@@ -59,13 +28,27 @@ Bullet.Util = {
 
     }),
 
+    brightenHexColor: _.memoize(function(hex, mul){
+
+        var rgb = this.hexToRgb(hex);
+
+        var r = Math.min(rgb.r * mul, 255),
+          g = Math.min(rgb.g * mul, 255),
+          b = Math.min(rgb.b * mul, 255);
+
+        hex = ("000000" + Bullet.Util.rgbToHex(r,g,b)).slice(-6);
+
+        return "#" + hex[0] + hex[2] + hex[4];
+
+    }),
+
     // http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 
     hexToHsv: _.memoize(function(hex){
 
         var r = parseInt(hex[1] + hex[1], 16),
-            g = parseInt(hex[2] + hex[2], 16),
-            b = parseInt(hex[3] + hex[3], 16);
+          g = parseInt(hex[2] + hex[2], 16),
+          b = parseInt(hex[3] + hex[3], 16);
 
         return this.rgbToHsv(r,g,b);
     }),
@@ -73,9 +56,26 @@ Bullet.Util = {
     hsvToHex: function(h, s, v){
 
         var rgb = this.hsvToRgb(h, s, v),
-            hex = ("000000" + this.rgbToHex(rgb[0],rgb[1],rgb[2])).slice(-6);
+          hex = ("000000" + this.rgbToHex(rgb[0],rgb[1],rgb[2])).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
+
+    },
+
+    getRasterWidth: function(colorBase36, colorBase){
+
+        var rgb = this.base36toRgb(colorBase36, colorBase),
+            hsv = this.rgbToHsv(rgb);
+
+        return hsv[2];
+
+    },
+
+    rgbToGrayscale: function(rgb){
+
+        // http://bobpowell.net/grayscale.aspx
+
+        return (rgb[0] *.3) + (rgb[1] *.59) + (rgb[2] *.11);
 
     },
 
