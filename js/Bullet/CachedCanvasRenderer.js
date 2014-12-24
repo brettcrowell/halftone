@@ -50,9 +50,10 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         var matrix = encoderOutput.matrix,
             cols = encoderOutput.metadata.cols,
-            pixelSize = this.element.width / cols,
-            floorPixelSize = Math.floor(pixelSize);
+            pixelSize = Math.floor(this.element.width / cols),
             pixelRadius = pixelSize / 2;
+
+        pixelSize += pixelSize % 2;
 
         for(var pixelColor in matrix) {
 
@@ -64,7 +65,7 @@ Bullet.CachedCanvasRenderer.prototype = {
             var sourcePixel = cache[pixelColor];
 
             if (!sourcePixel) {
-                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor, floorPixelSize);
+                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor, pixelSize);
             }
 
             var row, col, xOffset;
@@ -84,7 +85,7 @@ Bullet.CachedCanvasRenderer.prototype = {
                 var xOnCanvas = (col * pixelSize) + xOffset,
                     yOnCanvas = row * pixelSize;
 
-                context.drawImage(sourcePixel, 0, 0, floorPixelSize, floorPixelSize, xOnCanvas, yOnCanvas, floorPixelSize, floorPixelSize);
+                context.drawImage(sourcePixel, 0, 0, pixelSize, pixelSize, xOnCanvas, yOnCanvas, pixelSize, pixelSize);
 
                 xOffset = 0;
 
