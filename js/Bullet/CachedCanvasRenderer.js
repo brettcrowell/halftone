@@ -28,8 +28,8 @@ Bullet.CachedCanvasRenderer.prototype = {
         var rgb = Bullet.Util.base36toRgb(colorBase36, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Bullet.Util.getRasterWidth(colorBase36, base) * ((pixelSize - 1) / 2),
-            xOnCanvas = yOnCanvas = (pixelSize / 2);
+        var rasterSize = Bullet.Util.getRasterWidth(colorBase36, base) * ((pixelSize) / 2),
+            xOnCanvas = yOnCanvas = Math.floor(pixelSize / 2);
 
         context.beginPath();
         context.fillRect(0, 0, pixelSize, pixelSize);
@@ -51,6 +51,7 @@ Bullet.CachedCanvasRenderer.prototype = {
         var matrix = encoderOutput.matrix,
             cols = encoderOutput.metadata.cols,
             pixelSize = this.element.width / cols,
+            floorPixelSize = Math.floor(pixelSize);
             pixelRadius = pixelSize / 2;
 
         for(var pixelColor in matrix) {
@@ -58,12 +59,12 @@ Bullet.CachedCanvasRenderer.prototype = {
             var pixelIndexArray = matrix[pixelColor];
 
             var context = this.context,
-              cache = this.cache;
+                cache = this.cache;
 
             var sourcePixel = cache[pixelColor];
 
             if (!sourcePixel) {
-                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor, pixelSize);
+                sourcePixel = this.cache[pixelColor] = this.generateCircle(pixelColor, floorPixelSize);
             }
 
             var row, col, xOffset;
@@ -83,7 +84,7 @@ Bullet.CachedCanvasRenderer.prototype = {
                 var xOnCanvas = (col * pixelSize) + xOffset,
                     yOnCanvas = row * pixelSize;
 
-                context.drawImage(sourcePixel, 0, 0, pixelSize, pixelSize, xOnCanvas, yOnCanvas, pixelSize, pixelSize);
+                context.drawImage(sourcePixel, 0, 0, floorPixelSize, floorPixelSize, xOnCanvas, yOnCanvas, floorPixelSize, floorPixelSize);
 
                 xOffset = 0;
 
