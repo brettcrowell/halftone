@@ -8,8 +8,17 @@ Bullet.CachedCanvasRenderer = function(){
     this.context = this.element.getContext('2d');
 
     this.element.setAttribute('class', 'renderer');
-    this.element.width = 1280;
-    this.element.height = 960;
+
+    this.pixelSize = Bullet.Options.pixelSize,
+
+    // pixelSie must be even
+    this.pixelSize += this.pixelSize % 2;
+
+    var cols = Bullet.Options.quality,
+        aspect = Bullet.Options.aspectRatio
+
+    this.element.width = cols * this.pixelSize;
+    this.element.height = this.element.width * (1 / aspect);
 
 }
 
@@ -49,10 +58,8 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         var matrix = encoderOutput.matrix,
             cols = encoderOutput.metadata.cols,
-            pixelSize = Math.round(this.element.width / cols),
+            pixelSize = this.pixelSize,
             pixelRadius = pixelSize / 2;
-
-        pixelSize += pixelSize % 2;
 
         for(var pixelColor in matrix) {
 
