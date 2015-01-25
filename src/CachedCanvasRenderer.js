@@ -41,7 +41,8 @@ Halftone.CachedCanvasRenderer.prototype = {
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
         var rasterSize = Halftone.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
-            xOnCanvas = yOnCanvas = Math.floor(pixelSize / 2);
+            xOnCanvas = Math.floor(pixelSize / 2),
+            yOnCanvas = xOnCanvas;
 
         context.beginPath();
         context.fillRect(0, 0, pixelSize, pixelSize);
@@ -60,6 +61,8 @@ Halftone.CachedCanvasRenderer.prototype = {
             cols = encoderOutput.metadata.cols,
             pixelSize = this.pixelSize,
             pixelRadius = pixelSize / 2;
+
+        pixelSize += pixelSize % 2;
 
         for(var pixelColor in matrix) {
 

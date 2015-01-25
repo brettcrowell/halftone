@@ -5,11 +5,13 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 150,
+    quality: 200,
+    pixelSize: 10,
+    aspectRatio: 4 / 3,
     colorMultiplier: 1.75,
-    colorBase: 20, // max 36
+    colorBase: 10, // max 36
     stagger: true,
-    maxPctRgbDifference: 0.04,
+    maxPctRgbDifference: 0.02,
     frameRate: 7,
     backgroundColor: '#eee',
     videoConstraints: {

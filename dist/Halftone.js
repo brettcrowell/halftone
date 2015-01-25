@@ -27,11 +27,13 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 150,
+    quality: 200,
+    pixelSize: 6,
+    aspectRatio: 4 / 3,
     colorMultiplier: 1.75,
-    colorBase: 20, // max 36
+    colorBase: 10, // max 36
     stagger: true,
-    maxPctRgbDifference: 0.04,
+    maxPctRgbDifference: 0.02,
     frameRate: 7,
     backgroundColor: '#eee',
     videoConstraints: {
@@ -300,7 +302,8 @@ Halftone.CachedCanvasRenderer.prototype = {
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
         var rasterSize = Halftone.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
-            xOnCanvas = yOnCanvas = Math.floor(pixelSize / 2);
+            xOnCanvas = Math.floor(pixelSize / 2),
+            yOnCanvas = xOnCanvas;
 
         context.beginPath();
         context.fillRect(0, 0, pixelSize, pixelSize);
@@ -319,6 +322,8 @@ Halftone.CachedCanvasRenderer.prototype = {
             cols = encoderOutput.metadata.cols,
             pixelSize = this.pixelSize,
             pixelRadius = pixelSize / 2;
+
+        pixelSize += pixelSize % 2;
 
         for(var pixelColor in matrix) {
 
