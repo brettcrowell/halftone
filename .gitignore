@@ -1,1 +1,15 @@
-.idea/
+bower_components/
+node_modules/
+temp/
+tmp/
+logs/
+log/
+results/
+
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz

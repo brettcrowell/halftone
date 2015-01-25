@@ -1,7 +1,7 @@
-Bullet.WebcamSource = function(){
+Halftone.WebcamSource = function(){
 
-    this.width = Bullet.Options.videoConstraints.video.mandatory.maxWidth;
-    this.height = Bullet.Options.videoConstraints.video.mandatory.maxHeight;
+    this.width = Halftone.Options.videoConstraints.video.mandatory.maxWidth;
+    this.height = Halftone.Options.videoConstraints.video.mandatory.maxHeight;
 
     this.video = document.createElement('video');
 
@@ -12,18 +12,18 @@ Bullet.WebcamSource = function(){
 
     this.localMediaStream = null;
 
-    if (!Bullet.Util.hasGetUserMedia()) {
+    if (!Halftone.Util.hasGetUserMedia()) {
         alert('getUserMedia() is not supported in your browser');
     }
 
     // http://www.html5rocks.com/en/tutorials/getusermedia/intro/
 
     // Not showing vendor prefixes.
-    navigator.webkitGetUserMedia(Bullet.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
+    navigator.webkitGetUserMedia(Halftone.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
 
 }
 
-Bullet.WebcamSource.prototype = {
+Halftone.WebcamSource.prototype = {
 
     errorCallback: function(e) {
         alert('Reeeejected!', e);

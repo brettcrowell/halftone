@@ -1,10 +1,10 @@
-Bullet.RasterFrameEncoder = function(){
+Halftone.RasterFrameEncoder = function(){
 
     this.lastEncodedFrame = null;
 
 };
 
-Bullet.RasterFrameEncoder.prototype = {
+Halftone.RasterFrameEncoder.prototype = {
 
     _getRgbAtPoint: function(x, y, totalWidth, canvasPixelArray){
 
@@ -75,10 +75,10 @@ Bullet.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, stagger){
 
-        var width = Bullet.Options.videoConstraints.video.mandatory.maxWidth,
-            height = Bullet.Options.videoConstraints.video.mandatory.maxHeight;
+        var width = Halftone.Options.videoConstraints.video.mandatory.maxWidth,
+            height = Halftone.Options.videoConstraints.video.mandatory.maxHeight;
 
-        var cols = Bullet.Options.quality,
+        var cols = Halftone.Options.quality,
             rows = (cols / width) * height;
 
         var sampleSize = width / cols,

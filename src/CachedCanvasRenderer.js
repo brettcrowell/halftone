@@ -1,6 +1,6 @@
-Bullet.CachedCanvasRenderer = function(){
+Halftone.CachedCanvasRenderer = function(){
 
-    var colorBase = Bullet.Options.colorBase,
+    var colorBase = Halftone.Options.colorBase,
         colorSpace = Math.pow(colorBase, 3);
 
     this.cache = new Array(colorSpace);
@@ -9,20 +9,20 @@ Bullet.CachedCanvasRenderer = function(){
 
     this.element.setAttribute('class', 'renderer');
 
-    this.pixelSize = Bullet.Options.pixelSize,
+    this.pixelSize = Halftone.Options.pixelSize,
 
     // pixelSie must be even
     this.pixelSize += this.pixelSize % 2;
 
-    var cols = Bullet.Options.quality,
-        aspect = Bullet.Options.aspectRatio
+    var cols = Halftone.Options.quality,
+        aspect = Halftone.Options.aspectRatio
 
     this.element.width = cols * this.pixelSize;
     this.element.height = this.element.width * (1 / aspect);
 
 }
 
-Bullet.CachedCanvasRenderer.prototype = {
+Halftone.CachedCanvasRenderer.prototype = {
 
     getElement: function(){
         return this.element;
@@ -35,12 +35,12 @@ Bullet.CachedCanvasRenderer.prototype = {
 
         canvas.width = canvas.height = pixelSize;
 
-        var base = Bullet.Options.colorBase;
+        var base = Halftone.Options.colorBase;
 
-        var rgb = Bullet.Util.baseToRgb(basedColor, base),
+        var rgb = Halftone.Util.baseToRgb(basedColor, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Bullet.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
+        var rasterSize = Halftone.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
             xOnCanvas = yOnCanvas = Math.floor(pixelSize / 2);
 
         context.beginPath();
@@ -68,7 +68,7 @@ Bullet.CachedCanvasRenderer.prototype = {
             var context = this.context,
                 cache = this.cache;
 
-            var sourceIndex = parseInt(pixelColor, Bullet.Options.colorBase),
+            var sourceIndex = parseInt(pixelColor, Halftone.Options.colorBase),
                 sourcePixel = cache[sourceIndex];
 
             if (!sourcePixel) {

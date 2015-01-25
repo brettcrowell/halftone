@@ -1,11 +1,11 @@
-Bullet.SvgRenderer = function(){
+Halftone.SvgRenderer = function(){
 
-    this.element = document.createElementNS(Bullet.Options.svgNamespace, 'svg');
+    this.element = document.createElementNS(Halftone.Options.svgNamespace, 'svg');
     this._nodeCache = [];
 
 }
 
-Bullet.SvgRenderer.prototype = {
+Halftone.SvgRenderer.prototype = {
 
     getElement: function(){
       return this.element;
@@ -35,7 +35,7 @@ Bullet.SvgRenderer.prototype = {
 
                     } else {
 
-                        var pixel = document.createElementNS(Bullet.Options.svgNamespace, "circle");
+                        var pixel = document.createElementNS(Halftone.Options.svgNamespace, "circle");
 
                         var xOnCanvas = (c * pixelSize) + pixelRadius,
                             yOnCanvas = (r * pixelSize) + pixelRadius;
@@ -56,7 +56,7 @@ Bullet.SvgRenderer.prototype = {
                     // set pixel color
                     pixel.setAttributeNS(null, "fill", pixelColor);
 
-                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
+                    var rasterWidth = Halftone.Util.getRasterWidth(pixelColor,
                                                                  pixelRadius,
                                                                  encoderOutput.metadata.maxLumens,
                                                                  encoderOutput.metadata.minLumens);

@@ -11,7 +11,7 @@
 
 // source --> encode --> compress --> decompress/render/display
 
-Bullet = {};
+Halftone = {};
 
 var cache = {
 
@@ -25,17 +25,17 @@ var cache = {
 
 $(document).ready(function(){
 
-  //var svg = document.getElementById(Bullet.Options.svgId);
+  //var svg = document.getElementById(Halftone.Options.svgId);
 
-  var source = new Bullet.WebcamSource();
-      encoder = new Bullet.RasterFrameEncoder(),
-      compressor = new Bullet.Compressor(),
-      render = new Bullet.CachedCanvasRenderer();
+  var source = new Halftone.WebcamSource();
+      encoder = new Halftone.RasterFrameEncoder(),
+      compressor = new Halftone.Compressor(),
+      render = new Halftone.CachedCanvasRenderer();
 
   document.getElementById('viewport').appendChild(render.getElement());
 
-  var frameInterval = 1 / (Bullet.Options.frameRate / 1000),
-      resolution = Bullet.Options.resolution;
+  var frameInterval = 1 / (Halftone.Options.frameRate / 1000),
+      resolution = Halftone.Options.resolution;
 
   var lastKnownFrame = null;
 
@@ -50,19 +50,19 @@ $(document).ready(function(){
   function displayMetrics(renderTime, totalTime, imageTime, encodeTime, compressTime){
 
     metrics.totalTimes.push(totalTime);
-    var averageTime = Bullet.Util.average(metrics.totalTimes);
+    var averageTime = Halftone.Util.average(metrics.totalTimes);
 
     metrics.renderTimes.push(renderTime);
-    var averageRenderTime = Bullet.Util.average(metrics.renderTimes);
+    var averageRenderTime = Halftone.Util.average(metrics.renderTimes);
 
     metrics.imageTimes.push(imageTime);
-    var averageImageTime = Bullet.Util.average(metrics.imageTimes);
+    var averageImageTime = Halftone.Util.average(metrics.imageTimes);
 
     metrics.encodeTimes.push(encodeTime);
-    var averageEncodeTime = Bullet.Util.average(metrics.encodeTimes);
+    var averageEncodeTime = Halftone.Util.average(metrics.encodeTimes);
 
     metrics.compressTimes.push(compressTime);
-    var averageCompressTime = Bullet.Util.average(metrics.compressTimes);
+    var averageCompressTime = Halftone.Util.average(metrics.compressTimes);
 
     document.getElementById('total').textContent = parseInt(averageTime);
     document.getElementById('render').textContent = parseInt(averageRenderTime);
@@ -84,7 +84,7 @@ $(document).ready(function(){
           var imageTime = new Date().getTime() - imageBegin;
 
           var frameBegin = new Date().getTime();
-    var currentFrame = encoder.encodeFrame(imageData, Bullet.Options.stagger);
+    var currentFrame = encoder.encodeFrame(imageData, Halftone.Options.stagger);
           var frameTime = new Date().getTime() - frameBegin;
 
           var compressBegin = new Date().getTime();

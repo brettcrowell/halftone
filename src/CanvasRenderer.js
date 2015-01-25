@@ -1,4 +1,4 @@
-Bullet.CanvasRenderer = function(){
+Halftone.CanvasRenderer = function(){
 
     this.element = document.createElement('canvas');
     this.context = this.element.getContext('2d');
@@ -8,7 +8,7 @@ Bullet.CanvasRenderer = function(){
 
 }
 
-Bullet.CanvasRenderer.prototype = {
+Halftone.CanvasRenderer.prototype = {
 
     getElement: function(){
         return this.element;
@@ -43,7 +43,7 @@ Bullet.CanvasRenderer.prototype = {
                     var xOnCanvas = (c * pixelSize) + pixelRadius + xOffset,
                         yOnCanvas = (r * pixelSize) + pixelRadius;
 
-                    var rasterRadius = Bullet.Util.getRasterWidth(pixelColor,
+                    var rasterRadius = Halftone.Util.getRasterWidth(pixelColor,
                                                                   pixelRadius,
                                                                   encoderOutput.metadata.maxLumens,
                                                                   encoderOutput.metadata.minLumens);

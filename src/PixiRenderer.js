@@ -1,4 +1,4 @@
-Bullet.PixiRenderer = function(){
+Halftone.PixiRenderer = function(){
 
     this.renderer = new PIXI.autoDetectRenderer(1280,960,null,false,2,false); //
     this.stage = new PIXI.Stage(0xffffff);
@@ -7,7 +7,7 @@ Bullet.PixiRenderer = function(){
 
 }
 
-Bullet.PixiRenderer.prototype = {
+Halftone.PixiRenderer.prototype = {
 
     getElement: function(){
         return this.renderer.view;
@@ -58,7 +58,7 @@ Bullet.PixiRenderer.prototype = {
 
                     }
 
-                    var rasterWidth = Bullet.Util.getRasterWidth(pixelColor,
+                    var rasterWidth = Halftone.Util.getRasterWidth(pixelColor,
                                                                  pixelSize,
                                                                  encoderOutput.metadata.maxLumens,
                                                                  encoderOutput.metadata.minLumens);

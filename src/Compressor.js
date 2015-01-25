@@ -1,15 +1,15 @@
-Bullet.Compressor = function(){
+Halftone.Compressor = function(){
 
 };
 
-Bullet.Compressor.prototype = {
+Halftone.Compressor.prototype = {
 
     getDifferenceMatrix: function (oldMatrix, newMatrix){
 
         var differenceMatrix = {},
             currentPixelIndex = 0;
 
-        var mul = Bullet.Options.colorMultiplier;
+        var mul = Halftone.Options.colorMultiplier;
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
@@ -17,12 +17,12 @@ Bullet.Compressor.prototype = {
 
             for(var c = 0; c < row.length; c++){
 
-                var oldPixel = Bullet.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
-                    newPixel = Bullet.Util.brightenRgb(row[c], mul);
-                
-                if(Bullet.Util.getRgbSimilarity(oldPixel, newPixel) > Bullet.Options.maxPctRgbDifference){
+                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
+                    newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                    var newPixelAdjusted = Bullet.Util.rgbToBase(newPixel, Bullet.Options.colorBase);
+                if(Halftone.Util.getRgbSimilarity(oldPixel, newPixel) > Halftone.Options.maxPctRgbDifference){
+
+                    var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
 
                     if(!differenceMatrix[newPixelAdjusted]){
                         differenceMatrix[newPixelAdjusted] = [];

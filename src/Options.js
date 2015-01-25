@@ -1,4 +1,4 @@
-Bullet.Options = {
+Halftone.Options = {
 
     viewportId: 'viewport',
     svgId: 'display',
