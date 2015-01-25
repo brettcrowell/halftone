@@ -6,10 +6,10 @@ Halftone.Options = {
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
     quality: 200,
-    pixelSize: 10,
+    pixelSize: 5,
     aspectRatio: 4 / 3,
-    colorMultiplier: 1.75,
-    colorBase: 10, // max 36
+    colorMultiplier: 1.,
+    colorBase: 15, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
     frameRate: 7,
