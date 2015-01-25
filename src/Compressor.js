@@ -43,4 +43,4 @@ Halftone.Compressor.prototype = {
 
     }
 
-}
+};

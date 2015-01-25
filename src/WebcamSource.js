@@ -21,7 +21,7 @@ Halftone.WebcamSource = function(){
     // Not showing vendor prefixes.
     navigator.webkitGetUserMedia(Halftone.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
 
-}
+};
 
 Halftone.WebcamSource.prototype = {
 
@@ -39,7 +39,7 @@ Halftone.WebcamSource.prototype = {
         // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
         // See crbug.com/110938.
         this.video.onloadedmetadata = function(e) {
-            // Ready to go. Do some stuff.
+            console.log(e);
         };
 
     },
@@ -51,7 +51,7 @@ Halftone.WebcamSource.prototype = {
      * @returns {CanvasPixelArray}
      */
 
-    getFrame: function(video, canvasContext){
+    getFrame: function(){
 
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
 
@@ -59,4 +59,4 @@ Halftone.WebcamSource.prototype = {
 
     }
 
-}
+};

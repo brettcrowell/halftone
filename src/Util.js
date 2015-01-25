@@ -4,8 +4,10 @@ Halftone.Util = {
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
     rgbToHex: function(r, g, b) {
 
-        if (r > 255 || g > 255 || b > 255)
-            throw "Invalid color component";
+        if (r > 255 || g > 255 || b > 255) {
+          throw "Invalid color component";
+        }
+
         return ((r << 16) | (g << 8) | b).toString(16);
 
     },
@@ -24,7 +26,7 @@ Halftone.Util = {
             g: parseInt(hex[1] + hex[1], 16),
             b: parseInt(hex[2] + hex[2], 16)
 
-        }
+        };
 
     }),
 
@@ -75,7 +77,7 @@ Halftone.Util = {
 
         // http://bobpowell.net/grayscale.aspx
 
-        return (rgb[0] *.3) + (rgb[1] *.59) + (rgb[2] *.11);
+        return (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
 
     },
 
@@ -96,7 +98,7 @@ Halftone.Util = {
         var h, s, v = max;
 
         var d = max - min;
-        s = max == 0 ? 0 : d / max;
+        s = max === 0 ? 0 : d / max;
 
         if(max == min){
             h = 0; // achromatic
@@ -135,12 +137,36 @@ Halftone.Util = {
         var t = v * (1 - (1 - f) * s);
 
         switch(i % 6){
-            case 0: r = v, g = t, b = p; break;
-            case 1: r = q, g = v, b = p; break;
-            case 2: r = p, g = v, b = t; break;
-            case 3: r = p, g = q, b = v; break;
-            case 4: r = t, g = p, b = v; break;
-            case 5: r = v, g = p, b = q; break;
+            case 0:
+              r = v;
+              g = t;
+              b = p;
+            break;
+            case 1:
+              r = q;
+              g = v;
+              b = p;
+            break;
+            case 2:
+              r = p;
+              g = v;
+              b = t;
+            break;
+            case 3:
+              r = p;
+              g = q;
+              b = v;
+            break;
+            case 4:
+              r = t;
+              g = p;
+              b = v;
+            break;
+            case 5:
+              r = v;
+              g = p;
+              b = q;
+            break;
         }
 
         return [r * 255, g * 255, b * 255];
@@ -206,4 +232,4 @@ Halftone.Util = {
         navigator.mozGetUserMedia || navigator.msGetUserMedia);
     }
 
-}
+};

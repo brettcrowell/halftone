@@ -30,7 +30,7 @@ Halftone.Options = {
     quality: 200,
     pixelSize: 5,
     aspectRatio: 4 / 3,
-    colorMultiplier: 1.,
+    colorMultiplier: 1.5,
     colorBase: 15, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
@@ -45,7 +45,7 @@ Halftone.Options = {
         }
     }
 
-}
+};
 
 
 Halftone.Util = {
@@ -54,8 +54,10 @@ Halftone.Util = {
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
     rgbToHex: function(r, g, b) {
 
-        if (r > 255 || g > 255 || b > 255)
-            throw "Invalid color component";
+        if (r > 255 || g > 255 || b > 255) {
+          throw "Invalid color component";
+        }
+
         return ((r << 16) | (g << 8) | b).toString(16);
 
     },
@@ -74,7 +76,7 @@ Halftone.Util = {
             g: parseInt(hex[1] + hex[1], 16),
             b: parseInt(hex[2] + hex[2], 16)
 
-        }
+        };
 
     }),
 
@@ -125,7 +127,7 @@ Halftone.Util = {
 
         // http://bobpowell.net/grayscale.aspx
 
-        return (rgb[0] *.3) + (rgb[1] *.59) + (rgb[2] *.11);
+        return (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
 
     },
 
@@ -146,7 +148,7 @@ Halftone.Util = {
         var h, s, v = max;
 
         var d = max - min;
-        s = max == 0 ? 0 : d / max;
+        s = max === 0 ? 0 : d / max;
 
         if(max == min){
             h = 0; // achromatic
@@ -185,12 +187,36 @@ Halftone.Util = {
         var t = v * (1 - (1 - f) * s);
 
         switch(i % 6){
-            case 0: r = v, g = t, b = p; break;
-            case 1: r = q, g = v, b = p; break;
-            case 2: r = p, g = v, b = t; break;
-            case 3: r = p, g = q, b = v; break;
-            case 4: r = t, g = p, b = v; break;
-            case 5: r = v, g = p, b = q; break;
+            case 0:
+              r = v;
+              g = t;
+              b = p;
+            break;
+            case 1:
+              r = q;
+              g = v;
+              b = p;
+            break;
+            case 2:
+              r = p;
+              g = v;
+              b = t;
+            break;
+            case 3:
+              r = p;
+              g = q;
+              b = v;
+            break;
+            case 4:
+              r = t;
+              g = p;
+              b = v;
+            break;
+            case 5:
+              r = v;
+              g = p;
+              b = q;
+            break;
         }
 
         return [r * 255, g * 255, b * 255];
@@ -256,7 +282,7 @@ Halftone.Util = {
         navigator.mozGetUserMedia || navigator.msGetUserMedia);
     }
 
-}
+};
 
 
 Halftone.CachedCanvasRenderer = function(){
@@ -270,18 +296,20 @@ Halftone.CachedCanvasRenderer = function(){
 
     this.element.setAttribute('class', 'renderer');
 
-    this.pixelSize = Halftone.Options.pixelSize,
+    this.pixelSize = Halftone.Options.pixelSize;
+
+    var pixelModTwo = this.pixelSize % 2;
 
     // pixelSie must be even
-    this.pixelSize += this.pixelSize % 2;
+    this.pixelSize += pixelModTwo;
 
     var cols = Halftone.Options.quality,
-        aspect = Halftone.Options.aspectRatio
+        aspect = Halftone.Options.aspectRatio;
 
     this.element.width = cols * this.pixelSize;
     this.element.height = this.element.width * (1 / aspect);
 
-}
+};
 
 Halftone.CachedCanvasRenderer.prototype = {
 
@@ -350,7 +378,7 @@ Halftone.CachedCanvasRenderer.prototype = {
                 col = pixelIndex % cols;
 
                 if (row % 2 === 0) {
-                    xOffset = pixelRadius
+                    xOffset = pixelRadius;
                 }
 
                 var xOnCanvas = (col * pixelSize) + xOffset,
@@ -365,72 +393,6 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         }
 
-    }
-};
-
-
-Halftone.CanvasRenderer = function(){
-
-    this.element = document.createElement('canvas');
-    this.context = this.element.getContext('2d');
-
-    this.element.width = 1280;
-    this.element.height = 960;
-
-}
-
-Halftone.CanvasRenderer.prototype = {
-
-    getElement: function(){
-        return this.element;
-    },
-
-    render: function(encoderOutput){
-
-        var canvas = this.element,
-            context = this.context,
-            matrix = encoderOutput.matrix,
-            pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelSize / 2;
-
-        var row, pixelColor, xOffset = 0;
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        for(var r = 0; r < matrix.length; r++){
-
-            row = matrix[r];
-
-            if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                xOffset = pixelRadius
-            }
-
-            for(var c = 0; c < row.length; c++){
-
-                pixelColor = row[c];
-
-                if(pixelColor !== null){
-
-                    var xOnCanvas = (c * pixelSize) + pixelRadius + xOffset,
-                        yOnCanvas = (r * pixelSize) + pixelRadius;
-
-                    var rasterRadius = Halftone.Util.getRasterWidth(pixelColor,
-                                                                  pixelRadius,
-                                                                  encoderOutput.metadata.maxLumens,
-                                                                  encoderOutput.metadata.minLumens);
-
-                    context.beginPath();
-                    context.arc(xOnCanvas, yOnCanvas, rasterRadius, 0, 6, false);
-                    context.fillStyle = pixelColor;
-                    context.fill();
-                    context.closePath();
-
-                }
-
-            }
-
-            xOffset = 0;
-        }
     }
 };
 
@@ -477,86 +439,6 @@ Halftone.Compressor.prototype = {
         }
 
         return { metadata: newMatrix.metadata, matrix: differenceMatrix };
-
-    }
-
-}
-
-
-Halftone.PixiRenderer = function(){
-
-    this.renderer = new PIXI.autoDetectRenderer(1280,960,null,false,2,false); //
-    this.stage = new PIXI.Stage(0xffffff);
-
-    this._nodeCache = [];
-
-}
-
-Halftone.PixiRenderer.prototype = {
-
-    getElement: function(){
-        return this.renderer.view;
-    },
-
-    render: function(encoderOutput){
-
-        var stage = this.stage,
-            nodeCache = this._nodeCache,
-            pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelSize / 2;
-
-        _.each(encoderOutput.matrix, function(row, r){
-
-            if(!nodeCache[r]){ nodeCache.push([]); }
-
-            _.each(row, function(pixelColor, c){
-
-                if(pixelColor !== null){
-
-                    var pixel = nodeCache[r][c];
-
-                    if(!pixel){
-
-                        var graphics = new PIXI.Graphics();
-
-                        graphics.beginFill(0x000000);
-                        graphics.drawCircle(0, 0, pixelSize);
-                        graphics.endFill();
-
-                        pixel = new PIXI.Sprite(graphics.generateTexture());
-                        pixel.anchor.x = 0.5;
-                        pixel.anchor.y = 0.5;
-
-                        var xOnCanvas = (c * pixelSize),
-                            yOnCanvas = (r * pixelSize);
-
-                        if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                            xOnCanvas += pixelRadius
-                        }
-
-                        pixel.x = xOnCanvas + pixelRadius;
-                        pixel.y = yOnCanvas + pixelRadius;
-
-                        stage.addChild(pixel);
-
-                        nodeCache[r].push(pixel);
-
-                    }
-
-                    var rasterWidth = Halftone.Util.getRasterWidth(pixelColor,
-                                                                 pixelSize,
-                                                                 encoderOutput.metadata.maxLumens,
-                                                                 encoderOutput.metadata.minLumens);
-
-                    pixel.width = pixel.height = rasterWidth;
-
-                }
-
-            });
-
-        });
-
-        this.renderer.render(stage);
 
     }
 
@@ -625,7 +507,7 @@ Halftone.RasterFrameEncoder.prototype = {
             (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g + quadColors[4].g) / 5,
             (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b + quadColors[4].b) / 5
 
-        ]
+        ];
 
         return [avgColor[0], avgColor[1], avgColor[2]];
 
@@ -655,7 +537,7 @@ Halftone.RasterFrameEncoder.prototype = {
 
             var currentRow = [];
 
-            var offsetWidth = (r % 2 == 0) ? sampleSize : staggerWidth;
+            var offsetWidth = (r % 2 === 0) ? sampleSize : staggerWidth;
 
             for(var c = 0; c < cols; c++){
 
@@ -668,7 +550,7 @@ Halftone.RasterFrameEncoder.prototype = {
 
             }
 
-            matrix.push(currentRow)
+            matrix.push(currentRow);
 
         }
 
@@ -685,85 +567,7 @@ Halftone.RasterFrameEncoder.prototype = {
 
             matrix: matrix
 
-        }
-
-    }
-
-}
-
-
-Halftone.SvgRenderer = function(){
-
-    this.element = document.createElementNS(Halftone.Options.svgNamespace, 'svg');
-    this._nodeCache = [];
-
-}
-
-Halftone.SvgRenderer.prototype = {
-
-    getElement: function(){
-      return this.element;
-    },
-
-    render: function(encoderOutput){
-
-        var pixelWidth = 1280 / encoderOutput.metadata.cols,
-            pixelRadius = pixelSize / 2;
-
-        var nodeCache = this._nodeCache,
-            element = this.element;
-
-        _.each(encoderOutput.matrix, function(row, r){
-
-            if(!nodeCache[r]){ nodeCache.push([]); }
-
-            _.each(row, function(pixelColor, c){
-
-                if(pixelColor !== null){
-
-                    var cachedDomNode = nodeCache[r][c];
-
-                    if(cachedDomNode){
-
-                        var pixel = nodeCache[r][c];
-
-                    } else {
-
-                        var pixel = document.createElementNS(Halftone.Options.svgNamespace, "circle");
-
-                        var xOnCanvas = (c * pixelSize) + pixelRadius,
-                            yOnCanvas = (r * pixelSize) + pixelRadius;
-
-                        if(encoderOutput.metadata.stagger && (r % 2 === 0)){
-                            xOnCanvas += pixelRadius
-                        }
-
-                        pixel.setAttributeNS(null, "cx", xOnCanvas);
-                        pixel.setAttributeNS(null, "cy", yOnCanvas);
-
-                        element.appendChild(pixel);
-
-                        nodeCache[r].push(pixel);
-
-                    }
-
-                    // set pixel color
-                    pixel.setAttributeNS(null, "fill", pixelColor);
-
-                    var rasterWidth = Halftone.Util.getRasterWidth(pixelColor,
-                                                                 pixelRadius,
-                                                                 encoderOutput.metadata.maxLumens,
-                                                                 encoderOutput.metadata.minLumens);
-
-                    // rasterbating the pixels (changing diameter based on shade)
-                    pixel.setAttributeNS(null, "r", rasterWidth);
-
-
-                }
-
-            });
-
-        });
+        };
 
     }
 
@@ -793,7 +597,7 @@ Halftone.WebcamSource = function(){
     // Not showing vendor prefixes.
     navigator.webkitGetUserMedia(Halftone.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
 
-}
+};
 
 Halftone.WebcamSource.prototype = {
 
@@ -811,7 +615,7 @@ Halftone.WebcamSource.prototype = {
         // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
         // See crbug.com/110938.
         this.video.onloadedmetadata = function(e) {
-            // Ready to go. Do some stuff.
+            console.log(e);
         };
 
     },
@@ -823,7 +627,7 @@ Halftone.WebcamSource.prototype = {
      * @returns {CanvasPixelArray}
      */
 
-    getFrame: function(video, canvasContext){
+    getFrame: function(){
 
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
 
@@ -831,7 +635,7 @@ Halftone.WebcamSource.prototype = {
 
     }
 
-}
+};
 
 
 }(this));

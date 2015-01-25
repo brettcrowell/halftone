@@ -60,7 +60,7 @@ Halftone.RasterFrameEncoder.prototype = {
             (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g + quadColors[4].g) / 5,
             (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b + quadColors[4].b) / 5
 
-        ]
+        ];
 
         return [avgColor[0], avgColor[1], avgColor[2]];
 
@@ -90,7 +90,7 @@ Halftone.RasterFrameEncoder.prototype = {
 
             var currentRow = [];
 
-            var offsetWidth = (r % 2 == 0) ? sampleSize : staggerWidth;
+            var offsetWidth = (r % 2 === 0) ? sampleSize : staggerWidth;
 
             for(var c = 0; c < cols; c++){
 
@@ -103,7 +103,7 @@ Halftone.RasterFrameEncoder.prototype = {
 
             }
 
-            matrix.push(currentRow)
+            matrix.push(currentRow);
 
         }
 
@@ -120,8 +120,8 @@ Halftone.RasterFrameEncoder.prototype = {
 
             matrix: matrix
 
-        }
+        };
 
     }
 
-}
+};

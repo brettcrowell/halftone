@@ -8,7 +8,7 @@ Halftone.Options = {
     quality: 200,
     pixelSize: 5,
     aspectRatio: 4 / 3,
-    colorMultiplier: 1.,
+    colorMultiplier: 1.5,
     colorBase: 15, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
@@ -23,4 +23,4 @@ Halftone.Options = {
         }
     }
 
-}
+};

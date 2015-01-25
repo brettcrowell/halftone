@@ -9,18 +9,20 @@ Halftone.CachedCanvasRenderer = function(){
 
     this.element.setAttribute('class', 'renderer');
 
-    this.pixelSize = Halftone.Options.pixelSize,
+    this.pixelSize = Halftone.Options.pixelSize;
+
+    var pixelModTwo = this.pixelSize % 2;
 
     // pixelSie must be even
-    this.pixelSize += this.pixelSize % 2;
+    this.pixelSize += pixelModTwo;
 
     var cols = Halftone.Options.quality,
-        aspect = Halftone.Options.aspectRatio
+        aspect = Halftone.Options.aspectRatio;
 
     this.element.width = cols * this.pixelSize;
     this.element.height = this.element.width * (1 / aspect);
 
-}
+};
 
 Halftone.CachedCanvasRenderer.prototype = {
 
@@ -89,7 +91,7 @@ Halftone.CachedCanvasRenderer.prototype = {
                 col = pixelIndex % cols;
 
                 if (row % 2 === 0) {
-                    xOffset = pixelRadius
+                    xOffset = pixelRadius;
                 }
 
                 var xOnCanvas = (col * pixelSize) + xOffset,
