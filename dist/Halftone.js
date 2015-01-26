@@ -28,10 +28,10 @@ Halftone.Options = {
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
     quality: 200,
-    pixelSize: 5,
+    pixelSize: 10,
     aspectRatio: 4 / 3,
     colorMultiplier: 1.5,
-    colorBase: 15, // max 36
+    colorBase: 10, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
     frameRate: 7,
@@ -249,11 +249,17 @@ Halftone.Util = {
 
     brightenRgb: function(rgb, factor){
 
+      if(rgb){
+
         var r = Math.min(rgb[0] * factor, 255),
-            g = Math.min(rgb[1] * factor, 255),
-            b = Math.min(rgb[2] * factor, 255);
+          g = Math.min(rgb[1] * factor, 255),
+          b = Math.min(rgb[2] * factor, 255);
 
         return [r,g,b];
+
+      }
+
+      return [0,0,0];
 
     },
 

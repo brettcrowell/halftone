@@ -199,11 +199,17 @@ Halftone.Util = {
 
     brightenRgb: function(rgb, factor){
 
+      if(rgb){
+
         var r = Math.min(rgb[0] * factor, 255),
-            g = Math.min(rgb[1] * factor, 255),
-            b = Math.min(rgb[2] * factor, 255);
+          g = Math.min(rgb[1] * factor, 255),
+          b = Math.min(rgb[2] * factor, 255);
 
         return [r,g,b];
+
+      }
+
+      return [0,0,0];
 
     },
 
