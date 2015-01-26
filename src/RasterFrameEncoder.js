@@ -75,8 +75,8 @@ Halftone.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, stagger){
 
-        var width = Halftone.Options.videoConstraints.video.mandatory.maxWidth,
-            height = Halftone.Options.videoConstraints.video.mandatory.maxHeight;
+        var width = Halftone.Options.webcam.width,
+            height = Halftone.Options.webcam.height;
 
         var cols = Halftone.Options.quality,
             rows = (cols / width) * height;

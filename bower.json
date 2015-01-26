@@ -9,6 +9,7 @@
     "test"
   ],
   "dependencies": {
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "getUserMedia": "https://github.com/brettcrowell/getUserMedia.js.git#1b6b70bd59b17469f2fdb8e9f13ba03270496e7e"
   }
 }

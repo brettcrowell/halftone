@@ -36,13 +36,11 @@ Halftone.Options = {
     maxPctRgbDifference: 0.02,
     frameRate: 7,
     backgroundColor: '#eee',
-    videoConstraints: {
-        video: {
-            mandatory: {
-                maxWidth: 320,
-                maxHeight: 240
-            }
-        }
+    webcam: {
+      video: true,
+      audio: false,
+      width: 320,
+      height: 240
     }
 
 };
@@ -528,8 +526,8 @@ Halftone.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, stagger){
 
-        var width = Halftone.Options.videoConstraints.video.mandatory.maxWidth,
-            height = Halftone.Options.videoConstraints.video.mandatory.maxHeight;
+        var width = Halftone.Options.webcam.width,
+            height = Halftone.Options.webcam.height;
 
         var cols = Halftone.Options.quality,
             rows = (cols / width) * height;
@@ -582,8 +580,8 @@ Halftone.RasterFrameEncoder.prototype = {
 
 Halftone.WebcamSource = function(){
 
-    this.width = Halftone.Options.videoConstraints.video.mandatory.maxWidth;
-    this.height = Halftone.Options.videoConstraints.video.mandatory.maxHeight;
+    this.width = Halftone.Options.webcam.width;
+    this.height = Halftone.Options.webcam.height;
 
     this.video = document.createElement('video');
 
@@ -601,7 +599,7 @@ Halftone.WebcamSource = function(){
     // http://www.html5rocks.com/en/tutorials/getusermedia/intro/
 
     // Not showing vendor prefixes.
-    navigator.webkitGetUserMedia(Halftone.Options.videoConstraints, this.startVideo.bind(this), this.errorCallback);
+    getUserMedia(Halftone.Options.webcam, this.startVideo.bind(this), this.errorCallback, this.video);
 
 };
 

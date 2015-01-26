@@ -14,13 +14,11 @@ Halftone.Options = {
     maxPctRgbDifference: 0.02,
     frameRate: 7,
     backgroundColor: '#eee',
-    videoConstraints: {
-        video: {
-            mandatory: {
-                maxWidth: 320,
-                maxHeight: 240
-            }
-        }
+    webcam: {
+      video: true,
+      audio: false,
+      width: 320,
+      height: 240
     }
 
 };
