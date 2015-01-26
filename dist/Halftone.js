@@ -39,8 +39,8 @@ Halftone.Options = {
     webcam: {
       video: true,
       audio: false,
-      width: 320,
-      height: 240
+      width: 1280,
+      height: 720
     }
 
 };
