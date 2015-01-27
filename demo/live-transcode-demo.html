@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Halftone demo</title>
+    <link rel="stylesheet" href="./assets/normalize.css" />
+    <link rel="stylesheet" href="./assets/main.css" />
+    <style>
+      /* begin demo embedded styles */
+
+      /* end demo embedded styles */
+    </style>
+  </head>
+  <body>
+    <h1>Halftone demo</h1>
+
+    <!-- begin demo markup -->
+
+    <div id="viewport"></div>
+
+    <!-- end demo markup -->
+
+    <p>See the <a href="http://brettcrowell.github.io/Halftone">project homepage</a>.
+    <p>Check out the <a href="https://github.com/brettcrowell/Halftone">project repo</a>.
+    <p>Copyright 2014 Brett Crowell</p>
+
+    <script src="../bower_components/underscore/underscore-min.js"></script>
+    <script src="../bower_components/getUserMedia/dist/getUserMedia.js"></script>
+    <script src="./../dist/Halftone.js"></script>
+
+    <script>
+      /* begin demo script */
+
+      var cache = {
+
+        virtualDOM: [],
+        currentMatrix: [],
+        maxLumens: 0,
+        minLumens: 15
+
+      }
+
+      var source = new Halftone.FileSource("./assets/Runaway.mp4");
+          encoder = new Halftone.RasterFrameEncoder(),
+          compressor = new Halftone.Compressor(),
+          renderer = new Halftone.CachedCanvasRenderer();
+
+      document.getElementById('viewport').appendChild(renderer.getElement());
+
+      var frameInterval = 1 / (Halftone.Options.frameRate / 1000),
+          resolution = Halftone.Options.resolution;
+
+      var lastKnownFrame = null;
+
+      var metrics = {
+        renderTimes: [],
+        totalTimes: [],
+        imageTimes: [],
+        encodeTimes: [],
+        compressTimes: []
+      };
+
+      function updateFrame(){
+
+        var imageData = source.getFrame();
+
+        var currentFrame = encoder.encodeFrame(imageData, Halftone.Options.stagger);
+
+        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+
+        renderer.render(differenceMatrix);
+
+        lastKnownFrame = currentFrame;
+
+        // Object.keys(differenceMatrix.matrix).map(function(c){ return differenceMatrix.matrix[c].length; }).reduce(function(a,b){ return a + b })
+
+      }
+
+      setInterval(updateFrame, frameInterval)
+
+      /* end demo script */
+    </script>
+  </body>
+</html>
