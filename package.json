@@ -5,7 +5,7 @@
   "description": "Javascript experiment which converts a live video stream into halftones",
   "repository": {
     "type": "git",
-    "url": "git://github.com/brettcrowell/Halftone.git"
+    "url": "git://github.com/brettcrowell/halftone.git"
   },
   "keywords": [],
   "author": "Brett Crowell",

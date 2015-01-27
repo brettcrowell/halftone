@@ -12,12 +12,13 @@ Halftone.Util = {
 
     },
 
-    hexToDecimal: _.memoize(function(hex){
+    hexToDecimal: function(hex){
+        //@todo re-memoize
         return parseInt(hex.substr(1), 16);
-    }),
+    },
 
-    hexToRgb: _.memoize(function (hex){
-
+    hexToRgb: function (hex){
+      //@todo re-memoize
         hex = hex.substr(1);
 
         return {
@@ -28,10 +29,10 @@ Halftone.Util = {
 
         };
 
-    }),
+    },
 
-    brightenHexColor: _.memoize(function(hex, mul){
-
+    brightenHexColor: function(hex, mul){
+        //@todo re-memoize
         var rgb = this.hexToRgb(hex);
 
         var r = Math.min(rgb.r * mul, 255),
@@ -42,18 +43,18 @@ Halftone.Util = {
 
         return "#" + hex[0] + hex[2] + hex[4];
 
-    }),
+    },
 
     // http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 
-    hexToHsv: _.memoize(function(hex){
-
+    hexToHsv: function(hex){
+      //@todo re-memoize
         var r = parseInt(hex[1] + hex[1], 16),
           g = parseInt(hex[2] + hex[2], 16),
           b = parseInt(hex[3] + hex[3], 16);
 
         return this.rgbToHsv(r,g,b);
-    }),
+    },
 
     hsvToHex: function(h, s, v){
 
@@ -227,7 +228,11 @@ Halftone.Util = {
 
     average: function(arr){
 
-        var sum = _.reduce(arr, function(a,b){ return a + b; });
+        var sum = 0;
+
+        for(var i = 0; i < arr.length; i++){
+          sum += arr[i];
+        }
 
         return sum / arr.length;
 
