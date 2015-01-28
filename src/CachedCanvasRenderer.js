@@ -42,11 +42,17 @@ Halftone.CachedCanvasRenderer.prototype = {
         var rgb = Halftone.Util.baseToRgb(basedColor, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Halftone.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
-            xOnCanvas = Math.floor(pixelSize / 2),
+        var luminance = Halftone.Util.getRasterWidth(basedColor, base);
+
+        if(Halftone.Options.invert){ luminance = 1 - luminance; }
+
+        var rasterSize = luminance * ((pixelSize) / 2);
+
+        var xOnCanvas = Math.floor(pixelSize / 2),
             yOnCanvas = xOnCanvas;
 
         context.beginPath();
+        context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
         context.fillRect(0, 0, pixelSize, pixelSize);
         context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
         context.fillStyle = rgbString;

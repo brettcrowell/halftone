@@ -5,9 +5,10 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 100,
+    quality: 200,
     pixelSize: 10,
     aspectRatio: 16 / 9,
+    invert: false,
     colorMultiplier: 1,
     colorBase: 10, // max 36
     stagger: true,
