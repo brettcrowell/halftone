@@ -13,6 +13,7 @@
     "smarttabs": true,
     "globals": {
       "alert": false,
+      "colorConvert": false,
       "window": false,
       "document": false,
       "navigator": false,

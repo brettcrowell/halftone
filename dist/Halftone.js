@@ -27,14 +27,16 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 75,
+    quality: 200,
     pixelSize: 10,
     aspectRatio: 16 / 9,
-    colorMultiplier: 1.5,
-    colorBase: 16, // max 36
+    invert: false,
+    colorMultiplier: 1,
+    colorBase: 10, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    frameRate: 14,
+    maxDeltaE: 10,
+    frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
       video: true,
@@ -274,6 +276,27 @@ Halftone.Util = {
 
     },
 
+    getCIE76: function(rgb1, rgb2){
+
+      var lab1 = colorConvert.rgb2lab(rgb1),
+          lab2 = colorConvert.rgb2lab(rgb2);
+
+      // http://colormine.org/delta-e-calculator/
+
+      var lDistance = Math.max(lab2[0],lab1[0]) - Math.min(lab2[0],lab1[0]),
+          aDistance = Math.max(lab2[1],lab1[1]) - Math.min(lab2[1],lab1[1]),
+          bDistance = Math.max(lab2[2],lab1[2]) - Math.min(lab2[2],lab1[2]);
+
+      var lDistanceSquared = Math.pow(lDistance, 2),
+          aDistanceSquared = Math.pow(aDistance, 2),
+          bDistanceSquared = Math.pow(bDistance, 2);
+
+      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+
+      return deltaE;
+
+    },
+
     average: function(arr){
 
         var sum = 0;
@@ -338,11 +361,17 @@ Halftone.CachedCanvasRenderer.prototype = {
         var rgb = Halftone.Util.baseToRgb(basedColor, base),
             rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
-        var rasterSize = Halftone.Util.getRasterWidth(basedColor, base) * ((pixelSize) / 2),
-            xOnCanvas = Math.floor(pixelSize / 2),
+        var luminance = Halftone.Util.getRasterWidth(basedColor, base);
+
+        if(Halftone.Options.invert){ luminance = 1 - luminance; }
+
+        var rasterSize = luminance * ((pixelSize) / 2);
+
+        var xOnCanvas = Math.floor(pixelSize / 2),
             yOnCanvas = xOnCanvas;
 
         context.beginPath();
+        context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
         context.fillRect(0, 0, pixelSize, pixelSize);
         context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
         context.fillStyle = rgbString;
@@ -425,23 +454,32 @@ Halftone.Compressor.prototype = {
 
             for(var c = 0; c < row.length; c++){
 
-                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
-                    newPixel = Halftone.Util.brightenRgb(row[c], mul);
+              var newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                if(Halftone.Util.getRgbSimilarity(oldPixel, newPixel) > Halftone.Options.maxPctRgbDifference){
+              if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){
 
-                    var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                    if(!differenceMatrix[newPixelAdjusted]){
-                        differenceMatrix[newPixelAdjusted] = [];
-                    }
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
 
-                    // new pixel color is significantly different from old
-                    differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+                  currentPixelIndex++;
+
+                  continue;
 
                 }
 
-                currentPixelIndex++;
+              }
+
+              var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+
+              if(!differenceMatrix[newPixelAdjusted]){
+                differenceMatrix[newPixelAdjusted] = [];
+              }
+
+              // new pixel color is significantly different from old
+              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+              currentPixelIndex++;
 
             }
 
