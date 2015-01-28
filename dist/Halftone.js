@@ -35,7 +35,7 @@ Halftone.Options = {
     colorBase: 10, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 10,
+    maxDeltaE: 5,
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
@@ -484,7 +484,8 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              if(newPixelAdjusted === lastKnownColor){
+              if(newPixel === lastKnownColor){
+              //if(Halftone.Util.getCIE76(newPixelAdjusted, lastKnownColor) < Halftone.Options.maxDeltaE){
 
                 // new pixel color is significantly different from old
                 differenceMatrix[newPixelAdjusted].push(0);
@@ -496,7 +497,7 @@ Halftone.Compressor.prototype = {
 
               }
 
-              lastKnownColor = newPixelAdjusted;
+              lastKnownColor = newPixel;
               currentPixelIndex++;
 
             }

@@ -41,7 +41,8 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              if(newPixelAdjusted === lastKnownColor){
+              if(newPixel === lastKnownColor){
+              //if(Halftone.Util.getCIE76(newPixelAdjusted, lastKnownColor) < Halftone.Options.maxDeltaE){
 
                 // new pixel color is significantly different from old
                 differenceMatrix[newPixelAdjusted].push(0);
@@ -53,7 +54,7 @@ Halftone.Compressor.prototype = {
 
               }
 
-              lastKnownColor = newPixelAdjusted;
+              lastKnownColor = newPixel;
               currentPixelIndex++;
 
             }

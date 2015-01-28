@@ -13,7 +13,7 @@ Halftone.Options = {
     colorBase: 10, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 10,
+    maxDeltaE: 5,
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
