@@ -233,9 +233,9 @@ Halftone.Util = {
 
       // http://colormine.org/delta-e-calculator/
 
-      var lDistance = lab2[0] - lab1[0],
-          aDistance = lab2[1] - lab1[1],
-          bDistance = lab2[2] - lab1[2];
+      var lDistance = Math.max(lab2[0],lab1[0]) - Math.min(lab2[0],lab1[0]),
+          aDistance = Math.max(lab2[1],lab1[1]) - Math.min(lab2[1],lab1[1]),
+          bDistance = Math.max(lab2[2],lab1[2]) - Math.min(lab2[2],lab1[2]);
 
       var lDistanceSquared = Math.pow(lDistance, 2),
           aDistanceSquared = Math.pow(aDistance, 2),
