@@ -32,6 +32,7 @@
     <p>Copyright 2014 Brett Crowell</p>
 
     <script src="../bower_components/getUserMedia/dist/getUserMedia.js"></script>
+    <script src="../bower_components/color-convert/color-convert-0.5.1.min.js"></script>
     <script src="./../dist/Halftone.js"></script>
 
     <script>
@@ -127,8 +128,10 @@
 
         renderer.render(differenceMatrix);
 
+        console.log("num pixels changed: " + Object.keys(differenceMatrix.matrix).length)
+
         var renderTime = new Date().getTime() - renderBegin,
-          totalTime = new Date().getTime() - totalBegin;
+            totalTime = new Date().getTime() - totalBegin;
 
         displayMetrics(renderTime, totalTime, imageTime, frameTime, compressTime);
 

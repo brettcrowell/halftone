@@ -27,14 +27,15 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 75,
+    quality: 120,
     pixelSize: 10,
     aspectRatio: 16 / 9,
-    colorMultiplier: 1.5,
+    colorMultiplier: 3,
     colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    frameRate: 14,
+    maxDeltaE: 5,
+    frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
       video: true,
@@ -274,6 +275,27 @@ Halftone.Util = {
 
     },
 
+    getCIE76: function(rgb1, rgb2){
+
+      var lab1 = colorConvert.rgb2lab(rgb1),
+          lab2 = colorConvert.rgb2lab(rgb2);
+
+      // http://colormine.org/delta-e-calculator/
+
+      var lDistance = lab2[0] - lab1[0],
+          aDistance = lab2[1] - lab1[1],
+          bDistance = lab2[2] - lab1[2];
+
+      var lDistanceSquared = Math.pow(lDistance, 2),
+          aDistanceSquared = Math.pow(aDistance, 2),
+          bDistanceSquared = Math.pow(bDistance, 2);
+
+      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+
+      return deltaE;
+
+    },
+
     average: function(arr){
 
         var sum = 0;
@@ -428,7 +450,7 @@ Halftone.Compressor.prototype = {
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
                     newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                if(Halftone.Util.getRgbSimilarity(oldPixel, newPixel) > Halftone.Options.maxPctRgbDifference){
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) > Halftone.Options.maxDeltaE){
 
                     var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
 

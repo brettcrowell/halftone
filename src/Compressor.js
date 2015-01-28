@@ -20,7 +20,7 @@ Halftone.Compressor.prototype = {
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
                     newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                if(Halftone.Util.getRgbSimilarity(oldPixel, newPixel) > Halftone.Options.maxPctRgbDifference){
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) > Halftone.Options.maxDeltaE){
 
                     var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
 
