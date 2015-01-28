@@ -52,9 +52,10 @@ Halftone.CachedCanvasRenderer.prototype = {
             yOnCanvas = xOnCanvas;
 
         context.beginPath();
-        context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
+        context.fillStyle = Halftone.Util.rgbToHex(Halftone.Util.brightenRgb(rgb, 0.5));
+        //context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
         context.fillRect(0, 0, pixelSize, pixelSize);
-        context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
+        context.arc(xOnCanvas, yOnCanvas, rasterSize + 1, 0, Math.PI * 2, false);
         context.fillStyle = rgbString;
         context.fill();
         context.closePath();

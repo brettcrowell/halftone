@@ -10,10 +10,10 @@ Halftone.Options = {
     aspectRatio: 16 / 9,
     invert: false,
     colorMultiplier: 1,
-    colorBase: 10, // max 36
+    colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 5,
+    maxDeltaE: 2,
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
