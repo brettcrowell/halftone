@@ -24,6 +24,7 @@
     <p>Copyright 2014 Brett Crowell</p>
 
     <script src="../bower_components/getUserMedia/dist/getUserMedia.js"></script>
+    <script src="../bower_components/color-convert/color-convert-0.5.1.min.js"></script>
     <script src="./../dist/Halftone.js"></script>
 
     <script>
@@ -64,7 +65,7 @@
 
         var currentFrame = encoder.encodeFrame(imageData, Halftone.Options.stagger);
 
-        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+        var differenceMatrix = compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
 
         renderer.render(differenceMatrix);
 

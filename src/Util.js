@@ -226,6 +226,27 @@ Halftone.Util = {
 
     },
 
+    getCIE76: function(rgb1, rgb2){
+
+      var lab1 = colorConvert.rgb2lab(rgb1),
+          lab2 = colorConvert.rgb2lab(rgb2);
+
+      // http://colormine.org/delta-e-calculator/
+
+      var lDistance = Math.max(lab2[0],lab1[0]) - Math.min(lab2[0],lab1[0]),
+          aDistance = Math.max(lab2[1],lab1[1]) - Math.min(lab2[1],lab1[1]),
+          bDistance = Math.max(lab2[2],lab1[2]) - Math.min(lab2[2],lab1[2]);
+
+      var lDistanceSquared = Math.pow(lDistance, 2),
+          aDistanceSquared = Math.pow(aDistance, 2),
+          bDistanceSquared = Math.pow(bDistance, 2);
+
+      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+
+      return deltaE;
+
+    },
+
     average: function(arr){
 
         var sum = 0;
