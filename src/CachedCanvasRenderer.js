@@ -86,11 +86,17 @@ Halftone.CachedCanvasRenderer.prototype = {
                 sourcePixel = this.cache[sourceIndex] = this.generateCircle(pixelColor, pixelSize);
             }
 
-            var row, col, xOffset;
+            var row, col, xOffset, lastPixelIndex;
 
             for (var p = 0; p < pixelIndexArray.length; p++) {
 
                 var pixelIndex = pixelIndexArray[p];
+
+                if(pixelIndex === 0){
+                  pixelIndex = ++lastPixelIndex;
+                }
+
+                lastPixelIndex = pixelIndex;
 
                 // decode pixelIndex (find row and col)
                 row = Math.floor(pixelIndex / cols);

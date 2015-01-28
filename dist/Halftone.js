@@ -405,11 +405,17 @@ Halftone.CachedCanvasRenderer.prototype = {
                 sourcePixel = this.cache[sourceIndex] = this.generateCircle(pixelColor, pixelSize);
             }
 
-            var row, col, xOffset;
+            var row, col, xOffset, lastPixelIndex;
 
             for (var p = 0; p < pixelIndexArray.length; p++) {
 
                 var pixelIndex = pixelIndexArray[p];
+
+                if(pixelIndex === 0){
+                  pixelIndex = ++lastPixelIndex;
+                }
+
+                lastPixelIndex = pixelIndex;
 
                 // decode pixelIndex (find row and col)
                 row = Math.floor(pixelIndex / cols);
@@ -448,6 +454,8 @@ Halftone.Compressor.prototype = {
 
         var mul = Halftone.Options.colorMultiplier;
 
+        var lastKnownColor = -1;
+
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
             var row = newMatrix.matrix[r];
@@ -476,9 +484,19 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              // new pixel color is significantly different from old
-              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+              if(newPixelAdjusted === lastKnownColor){
 
+                // new pixel color is significantly different from old
+                differenceMatrix[newPixelAdjusted].push(0);
+
+              } else {
+
+                // new pixel color is significantly different from old
+                differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+              }
+
+              lastKnownColor = newPixelAdjusted;
               currentPixelIndex++;
 
             }
@@ -532,6 +550,35 @@ Halftone.FileSource.prototype = {
 
         return this.context.getImageData(0, 0, this.width, this.height).data;
 
+    }
+
+};
+
+
+Halftone.ImageSource = function(srcPath){
+
+  this.width = Halftone.Options.webcam.width;
+  this.height = Halftone.Options.webcam.height;
+
+  this.canvas = document.createElement('canvas');
+  this.context = this.canvas.getContext('2d');
+  this.canvas.width = this.width;
+  this.canvas.height = this.height;
+
+  this.image = new Image();
+
+  this.image.onload = function(){
+    this.context.drawImage(this.image,0,0);
+  }.bind(this);
+
+  this.image.src = srcPath;
+
+};
+
+Halftone.ImageSource.prototype = {
+
+    getFrame: function(){
+        return this.context.getImageData(0, 0, this.width, this.height).data;
     }
 
 };

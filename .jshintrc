@@ -14,6 +14,7 @@
     "globals": {
       "alert": false,
       "colorConvert": false,
+      "Image": false,
       "window": false,
       "document": false,
       "navigator": false,

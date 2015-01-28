@@ -11,6 +11,8 @@ Halftone.Compressor.prototype = {
 
         var mul = Halftone.Options.colorMultiplier;
 
+        var lastKnownColor = -1;
+
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
             var row = newMatrix.matrix[r];
@@ -39,9 +41,19 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              // new pixel color is significantly different from old
-              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+              if(newPixelAdjusted === lastKnownColor){
 
+                // new pixel color is significantly different from old
+                differenceMatrix[newPixelAdjusted].push(0);
+
+              } else {
+
+                // new pixel color is significantly different from old
+                differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+              }
+
+              lastKnownColor = newPixelAdjusted;
               currentPixelIndex++;
 
             }
