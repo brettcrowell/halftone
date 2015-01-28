@@ -469,10 +469,12 @@ Halftone.Compressor.prototype = {
 
               if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){
 
+                // if there is an old matrix to compare to, find the matching pixel
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
                 if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
 
+                  // if the pixel color hasn't changed enough (based on deltaE), don't change it
                   currentPixelIndex++;
 
                   continue;
@@ -481,21 +483,23 @@ Halftone.Compressor.prototype = {
 
               }
 
+              // either old matrix doesn't exist or pixel color has shifted beyond deltaE tolerance
+
               var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
 
               if(!differenceMatrix[newPixelAdjusted]){
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              //if(newPixel === lastKnownColor){
-              if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
+              if(newPixel === lastKnownColor){
+              //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
 
-                // new pixel color is significantly different from old
+                // colors are encoded in streaks of 'similar enough' colored pixels
                 differenceMatrix[lastKnownColorAdjusted].push(0);
 
               } else {
 
-                // new pixel color is significantly different from old
+                // current pixel color is significantly different previous column
                 differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
 
                 lastKnownColor = newPixel;
