@@ -291,7 +291,7 @@ Halftone.Util = {
           aDistanceSquared = Math.pow(aDistance, 2),
           bDistanceSquared = Math.pow(bDistance, 2);
 
-      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+      var deltaE = Math.sqrt(Math.max((lDistanceSquared + aDistanceSquared - bDistanceSquared), 0));
 
       return deltaE;
 
@@ -405,7 +405,9 @@ Halftone.CachedCanvasRenderer.prototype = {
                 sourcePixel = this.cache[sourceIndex] = this.generateCircle(pixelColor, pixelSize);
             }
 
-            var row, col, xOffset, lastPixelIndex;
+            var row, col, xOffset;
+
+            var lastPixelIndex = -1;
 
             for (var p = 0; p < pixelIndexArray.length; p++) {
 
@@ -454,7 +456,8 @@ Halftone.Compressor.prototype = {
 
         var mul = Halftone.Options.colorMultiplier;
 
-        var lastKnownColor = -1;
+        var lastKnownColor = -1,
+            lastKnownColorAdjusted = '#000';
 
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
@@ -484,20 +487,22 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              if(newPixel === lastKnownColor){
-              //if(Halftone.Util.getCIE76(newPixelAdjusted, lastKnownColor) < Halftone.Options.maxDeltaE){
+              //if(newPixel === lastKnownColor){
+              if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
 
                 // new pixel color is significantly different from old
-                differenceMatrix[newPixelAdjusted].push(0);
+                differenceMatrix[lastKnownColorAdjusted].push(0);
 
               } else {
 
                 // new pixel color is significantly different from old
                 differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
 
+                lastKnownColor = newPixel;
+                lastKnownColorAdjusted = newPixelAdjusted;
+
               }
 
-              lastKnownColor = newPixel;
               currentPixelIndex++;
 
             }
