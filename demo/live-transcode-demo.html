@@ -65,7 +65,7 @@
 
         var currentFrame = encoder.encodeFrame(imageData, Halftone.Options.stagger);
 
-        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+        var differenceMatrix = compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
 
         renderer.render(differenceMatrix);
 

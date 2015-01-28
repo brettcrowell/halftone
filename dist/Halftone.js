@@ -27,14 +27,14 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 120,
+    quality: 150,
     pixelSize: 10,
     aspectRatio: 16 / 9,
     colorMultiplier: 3,
     colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 5,
+    maxDeltaE: 10,
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
@@ -282,9 +282,9 @@ Halftone.Util = {
 
       // http://colormine.org/delta-e-calculator/
 
-      var lDistance = lab2[0] - lab1[0],
-          aDistance = lab2[1] - lab1[1],
-          bDistance = lab2[2] - lab1[2];
+      var lDistance = Math.max(lab2[0],lab1[0]) - Math.min(lab2[0],lab1[0]),
+          aDistance = Math.max(lab2[1],lab1[1]) - Math.min(lab2[1],lab1[1]),
+          bDistance = Math.max(lab2[2],lab1[2]) - Math.min(lab2[2],lab1[2]);
 
       var lDistanceSquared = Math.pow(lDistance, 2),
           aDistanceSquared = Math.pow(aDistance, 2),
@@ -447,23 +447,32 @@ Halftone.Compressor.prototype = {
 
             for(var c = 0; c < row.length; c++){
 
-                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
-                    newPixel = Halftone.Util.brightenRgb(row[c], mul);
+              var newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) > Halftone.Options.maxDeltaE){
+              if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){
 
-                    var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                    if(!differenceMatrix[newPixelAdjusted]){
-                        differenceMatrix[newPixelAdjusted] = [];
-                    }
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
 
-                    // new pixel color is significantly different from old
-                    differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+                  currentPixelIndex++;
+
+                  continue;
 
                 }
 
-                currentPixelIndex++;
+              }
+
+              var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+
+              if(!differenceMatrix[newPixelAdjusted]){
+                differenceMatrix[newPixelAdjusted] = [];
+              }
+
+              // new pixel color is significantly different from old
+              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+              currentPixelIndex++;
 
             }
 

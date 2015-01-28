@@ -121,7 +121,7 @@
         var frameTime = new Date().getTime() - frameBegin;
 
         var compressBegin = new Date().getTime();
-        var differenceMatrix = (lastKnownFrame === null) ? currentFrame : compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+        var differenceMatrix = compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
         var compressTime = new Date().getTime() - compressBegin;
 
         var renderBegin = new Date().getTime();

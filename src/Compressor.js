@@ -17,23 +17,32 @@ Halftone.Compressor.prototype = {
 
             for(var c = 0; c < row.length; c++){
 
-                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul),
-                    newPixel = Halftone.Util.brightenRgb(row[c], mul);
+              var newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) > Halftone.Options.maxDeltaE){
+              if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){
 
-                    var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+                var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                    if(!differenceMatrix[newPixelAdjusted]){
-                        differenceMatrix[newPixelAdjusted] = [];
-                    }
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
 
-                    // new pixel color is significantly different from old
-                    differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+                  currentPixelIndex++;
+
+                  continue;
 
                 }
 
-                currentPixelIndex++;
+              }
+
+              var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
+
+              if(!differenceMatrix[newPixelAdjusted]){
+                differenceMatrix[newPixelAdjusted] = [];
+              }
+
+              // new pixel color is significantly different from old
+              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+              currentPixelIndex++;
 
             }
 
