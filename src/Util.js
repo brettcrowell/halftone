@@ -241,7 +241,7 @@ Halftone.Util = {
           aDistanceSquared = Math.pow(aDistance, 2),
           bDistanceSquared = Math.pow(bDistance, 2);
 
-      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+      var deltaE = Math.sqrt(Math.max((lDistanceSquared + aDistanceSquared - bDistanceSquared), 0));
 
       return deltaE;
 
