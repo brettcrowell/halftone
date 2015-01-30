@@ -35,7 +35,8 @@ Halftone.Options = {
     colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 2,
+    maxIntraframeDeltaE: 2,   // inside each frame
+    maxInterframeDeltaE: 0,   // between frames
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
@@ -481,7 +482,7 @@ Halftone.Compressor.prototype = {
                 // if there is an old matrix to compare to, find the matching pixel
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
+                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
 
                   // if the pixel color hasn't changed enough (based on deltaE), don't change it
                   currentPixelIndex++;
@@ -501,7 +502,7 @@ Halftone.Compressor.prototype = {
               }
 
               if(newPixelAdjusted === lastKnownColorAdjusted){
-              //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
+              //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxIntraframeDeltaE){
 
                 // colors are encoded in streaks of 'similar enough' colored pixels
                 differenceMatrix[lastKnownColorAdjusted].push(0);
@@ -738,8 +739,6 @@ Halftone.WebcamSource = function(){
     this.height = Halftone.Options.webcam.height;
 
     this.video = document.createElement('video');
-
-    document.body.appendChild(this.video);
 
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
