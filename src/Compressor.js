@@ -46,7 +46,7 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              if(newPixel === lastKnownColor){
+              if(newPixelAdjusted === lastKnownColorAdjusted){
               //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
 
                 // colors are encoded in streaks of 'similar enough' colored pixels

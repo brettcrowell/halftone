@@ -500,7 +500,7 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              if(newPixel === lastKnownColor){
+              if(newPixelAdjusted === lastKnownColorAdjusted){
               //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxDeltaE){
 
                 // colors are encoded in streaks of 'similar enough' colored pixels
@@ -738,6 +738,8 @@ Halftone.WebcamSource = function(){
     this.height = Halftone.Options.webcam.height;
 
     this.video = document.createElement('video');
+
+    document.body.appendChild(this.video);
 
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
