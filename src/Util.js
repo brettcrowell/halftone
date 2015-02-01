@@ -236,6 +236,10 @@ Halftone.Util = {
 
     getCIE76: function(rgb1, rgb2){
 
+      if(rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2]){
+        return 0;
+      }
+
       var lab1 = colorConvert.rgb2lab(rgb1),
           lab2 = colorConvert.rgb2lab(rgb2);
 
