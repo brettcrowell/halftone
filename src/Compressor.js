@@ -27,14 +27,34 @@ Halftone.Compressor.prototype = {
                 // if there is an old matrix to compare to, find the matching pixel
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
+                if(Halftone.Options.maxInterframeDeltaE > 0){
 
-                  // if the pixel color hasn't changed enough (based on deltaE), don't change it
-                  currentPixelIndex++;
+                  // if an exact match isn't required, calculate distance between colors
 
-                  continue;
+                  if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
+
+                    // if the pixel color hasn't changed enough (based on deltaE), don't change it
+                    currentPixelIndex++;
+
+                    continue;
+
+                  } else {
+
+                    // exact match required.  don't bother calculating non-exact matches
+
+                    if(Halftone.Util.rgbEquals(oldPixel, newPixel)){
+
+                      currentPixelIndex++;
+
+                      continue;
+
+                    }
+
+                  }
 
                 }
+
+
 
               }
 

@@ -234,9 +234,15 @@ Halftone.Util = {
 
     },
 
+    rgbEquals: function(rgb1, rgb2) {
+
+      return rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2];
+
+    },
+
     getCIE76: function(rgb1, rgb2){
 
-      if(rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2]){
+      if(this.rgbEquals(rgb1, rgb2)){
         return 0;
       }
 

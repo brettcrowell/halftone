@@ -27,7 +27,7 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 200,
+    quality: 150,
     pixelSize: 10,
     aspectRatio: 16 / 9,
     invert: false,
@@ -285,9 +285,15 @@ Halftone.Util = {
 
     },
 
+    rgbEquals: function(rgb1, rgb2) {
+
+      return rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2];
+
+    },
+
     getCIE76: function(rgb1, rgb2){
 
-      if(rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2]){
+      if(this.rgbEquals(rgb1, rgb2)){
         return 0;
       }
 
@@ -486,14 +492,34 @@ Halftone.Compressor.prototype = {
                 // if there is an old matrix to compare to, find the matching pixel
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
+                if(Halftone.Options.maxInterframeDeltaE > 0){
 
-                  // if the pixel color hasn't changed enough (based on deltaE), don't change it
-                  currentPixelIndex++;
+                  // if an exact match isn't required, calculate distance between colors
 
-                  continue;
+                  if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
+
+                    // if the pixel color hasn't changed enough (based on deltaE), don't change it
+                    currentPixelIndex++;
+
+                    continue;
+
+                  } else {
+
+                    // exact match required.  don't bother calculating non-exact matches
+
+                    if(Halftone.Util.rgbEquals(oldPixel, newPixel)){
+
+                      currentPixelIndex++;
+
+                      continue;
+
+                    }
+
+                  }
 
                 }
+
+
 
               }
 
