@@ -2,13 +2,19 @@ Halftone.Util = {
 
     // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
-    rgbToHex: function(r, g, b) {
+    rgbToHex: function(rgb) {
+
+        var r = rgb[0],
+            g = rgb[1],
+            b = rgb[2];
 
         if (r > 255 || g > 255 || b > 255) {
           throw "Invalid color component";
         }
 
-        return ((r << 16) | (g << 8) | b).toString(16);
+        var hex = "000000" + ((r << 16) | (g << 8) | b).toString(16);
+
+        return "#" + hex.substr(-6);
 
     },
 
@@ -36,10 +42,10 @@ Halftone.Util = {
         var rgb = this.hexToRgb(hex);
 
         var r = Math.min(rgb.r * mul, 255),
-          g = Math.min(rgb.g * mul, 255),
-          b = Math.min(rgb.b * mul, 255);
+            g = Math.min(rgb.g * mul, 255),
+            b = Math.min(rgb.b * mul, 255);
 
-        hex = ("000000" + Halftone.Util.rgbToHex(r,g,b)).slice(-6);
+        hex = ("000000" + Halftone.Util.rgbToHex([r,g,b]).substr(1)).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
 
@@ -59,7 +65,7 @@ Halftone.Util = {
     hsvToHex: function(h, s, v){
 
         var rgb = this.hsvToRgb(h, s, v),
-          hex = ("000000" + this.rgbToHex(rgb[0],rgb[1],rgb[2])).slice(-6);
+            hex = ("000000" + this.rgbToHex(rgb).substr(1)).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
 
@@ -78,7 +84,9 @@ Halftone.Util = {
 
         // http://bobpowell.net/grayscale.aspx
 
-        return (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
+        var g = (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
+
+        return [g,g,g];
 
     },
 
@@ -203,8 +211,8 @@ Halftone.Util = {
       if(rgb){
 
         var r = Math.min(rgb[0] * factor, 255),
-          g = Math.min(rgb[1] * factor, 255),
-          b = Math.min(rgb[2] * factor, 255);
+            g = Math.min(rgb[1] * factor, 255),
+            b = Math.min(rgb[2] * factor, 255);
 
         return [r,g,b];
 
@@ -226,7 +234,17 @@ Halftone.Util = {
 
     },
 
+    rgbEquals: function(rgb1, rgb2) {
+
+      return rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2];
+
+    },
+
     getCIE76: function(rgb1, rgb2){
+
+      if(this.rgbEquals(rgb1, rgb2)){
+        return 0;
+      }
 
       var lab1 = colorConvert.rgb2lab(rgb1),
           lab2 = colorConvert.rgb2lab(rgb2);
@@ -241,7 +259,7 @@ Halftone.Util = {
           aDistanceSquared = Math.pow(aDistance, 2),
           bDistanceSquared = Math.pow(bDistance, 2);
 
-      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+      var deltaE = Math.sqrt(Math.max((lDistanceSquared + aDistanceSquared - bDistanceSquared), 0));
 
       return deltaE;
 

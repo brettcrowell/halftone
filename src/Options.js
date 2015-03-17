@@ -5,15 +5,16 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 200,
+    quality: 150,
     pixelSize: 10,
     aspectRatio: 16 / 9,
     invert: false,
     colorMultiplier: 1,
-    colorBase: 10, // max 36
+    colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 10,
+    maxIntraframeDeltaE: 2,   // inside each frame
+    maxInterframeDeltaE: 0,   // between frames
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {

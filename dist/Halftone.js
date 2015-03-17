@@ -27,15 +27,16 @@ Halftone.Options = {
     sourceCanvasId: 'imgSource',
     svgNamespace: "http://www.w3.org/2000/svg",
     testImage: './img/test-image.jpg',
-    quality: 200,
+    quality: 150,
     pixelSize: 10,
     aspectRatio: 16 / 9,
     invert: false,
     colorMultiplier: 1,
-    colorBase: 10, // max 36
+    colorBase: 16, // max 36
     stagger: true,
     maxPctRgbDifference: 0.02,
-    maxDeltaE: 10,
+    maxIntraframeDeltaE: 2,   // inside each frame
+    maxInterframeDeltaE: 0,   // between frames
     frameRate: 10,
     backgroundColor: '#eee',
     webcam: {
@@ -52,13 +53,19 @@ Halftone.Util = {
 
     // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
-    rgbToHex: function(r, g, b) {
+    rgbToHex: function(rgb) {
+
+        var r = rgb[0],
+            g = rgb[1],
+            b = rgb[2];
 
         if (r > 255 || g > 255 || b > 255) {
           throw "Invalid color component";
         }
 
-        return ((r << 16) | (g << 8) | b).toString(16);
+        var hex = "000000" + ((r << 16) | (g << 8) | b).toString(16);
+
+        return "#" + hex.substr(-6);
 
     },
 
@@ -86,10 +93,10 @@ Halftone.Util = {
         var rgb = this.hexToRgb(hex);
 
         var r = Math.min(rgb.r * mul, 255),
-          g = Math.min(rgb.g * mul, 255),
-          b = Math.min(rgb.b * mul, 255);
+            g = Math.min(rgb.g * mul, 255),
+            b = Math.min(rgb.b * mul, 255);
 
-        hex = ("000000" + Halftone.Util.rgbToHex(r,g,b)).slice(-6);
+        hex = ("000000" + Halftone.Util.rgbToHex([r,g,b]).substr(1)).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
 
@@ -109,7 +116,7 @@ Halftone.Util = {
     hsvToHex: function(h, s, v){
 
         var rgb = this.hsvToRgb(h, s, v),
-          hex = ("000000" + this.rgbToHex(rgb[0],rgb[1],rgb[2])).slice(-6);
+            hex = ("000000" + this.rgbToHex(rgb).substr(1)).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
 
@@ -128,7 +135,9 @@ Halftone.Util = {
 
         // http://bobpowell.net/grayscale.aspx
 
-        return (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
+        var g = (rgb[0] *0.3) + (rgb[1] *0.59) + (rgb[2] *0.11);
+
+        return [g,g,g];
 
     },
 
@@ -253,8 +262,8 @@ Halftone.Util = {
       if(rgb){
 
         var r = Math.min(rgb[0] * factor, 255),
-          g = Math.min(rgb[1] * factor, 255),
-          b = Math.min(rgb[2] * factor, 255);
+            g = Math.min(rgb[1] * factor, 255),
+            b = Math.min(rgb[2] * factor, 255);
 
         return [r,g,b];
 
@@ -276,7 +285,17 @@ Halftone.Util = {
 
     },
 
+    rgbEquals: function(rgb1, rgb2) {
+
+      return rgb1[0] === rgb2[0] && rgb1[1] === rgb2[1] && rgb1[2] === rgb2[2];
+
+    },
+
     getCIE76: function(rgb1, rgb2){
+
+      if(this.rgbEquals(rgb1, rgb2)){
+        return 0;
+      }
 
       var lab1 = colorConvert.rgb2lab(rgb1),
           lab2 = colorConvert.rgb2lab(rgb2);
@@ -291,7 +310,7 @@ Halftone.Util = {
           aDistanceSquared = Math.pow(aDistance, 2),
           bDistanceSquared = Math.pow(bDistance, 2);
 
-      var deltaE = Math.sqrt(lDistanceSquared + aDistanceSquared - bDistanceSquared);
+      var deltaE = Math.sqrt(Math.max((lDistanceSquared + aDistanceSquared - bDistanceSquared), 0));
 
       return deltaE;
 
@@ -371,9 +390,10 @@ Halftone.CachedCanvasRenderer.prototype = {
             yOnCanvas = xOnCanvas;
 
         context.beginPath();
-        context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
+        context.fillStyle = Halftone.Util.rgbToHex(Halftone.Util.brightenRgb(rgb, 0.5));
+        //context.fillStyle = (Halftone.Options.invert) ? '#FFFFFF' : '#000000';
         context.fillRect(0, 0, pixelSize, pixelSize);
-        context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
+        context.arc(xOnCanvas, yOnCanvas, rasterSize + 1, 0, Math.PI * 2, false);
         context.fillStyle = rgbString;
         context.fill();
         context.closePath();
@@ -407,9 +427,17 @@ Halftone.CachedCanvasRenderer.prototype = {
 
             var row, col, xOffset;
 
+            var lastPixelIndex = -1;
+
             for (var p = 0; p < pixelIndexArray.length; p++) {
 
                 var pixelIndex = pixelIndexArray[p];
+
+                if(pixelIndex === 0){
+                  pixelIndex = ++lastPixelIndex;
+                }
+
+                lastPixelIndex = pixelIndex;
 
                 // decode pixelIndex (find row and col)
                 row = Math.floor(pixelIndex / cols);
@@ -448,6 +476,9 @@ Halftone.Compressor.prototype = {
 
         var mul = Halftone.Options.colorMultiplier;
 
+        var lastKnownColor = -1,
+            lastKnownColorAdjusted = '#000';
+
         for(var r = 0; r < newMatrix.matrix.length; r++){
 
             var row = newMatrix.matrix[r];
@@ -458,17 +489,41 @@ Halftone.Compressor.prototype = {
 
               if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){
 
+                // if there is an old matrix to compare to, find the matching pixel
                 var oldPixel = Halftone.Util.brightenRgb(oldMatrix.matrix[r][c], mul);
 
-                if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxDeltaE){
+                if(Halftone.Options.maxInterframeDeltaE > 0){
 
-                  currentPixelIndex++;
+                  // if an exact match isn't required, calculate distance between colors
 
-                  continue;
+                  if(Halftone.Util.getCIE76(oldPixel, newPixel) < Halftone.Options.maxInterframeDeltaE){
+
+                    // if the pixel color hasn't changed enough (based on deltaE), don't change it
+                    currentPixelIndex++;
+
+                    continue;
+
+                  } else {
+
+                    // exact match required.  don't bother calculating non-exact matches
+
+                    if(Halftone.Util.rgbEquals(oldPixel, newPixel)){
+
+                      currentPixelIndex++;
+
+                      continue;
+
+                    }
+
+                  }
 
                 }
 
+
+
               }
+
+              // either old matrix doesn't exist or pixel color has shifted beyond deltaE tolerance
 
               var newPixelAdjusted = Halftone.Util.rgbToBase(newPixel, Halftone.Options.colorBase);
 
@@ -476,8 +531,21 @@ Halftone.Compressor.prototype = {
                 differenceMatrix[newPixelAdjusted] = [];
               }
 
-              // new pixel color is significantly different from old
-              differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+              if(newPixelAdjusted === lastKnownColorAdjusted){
+              //if(Halftone.Util.getCIE76(newPixel, lastKnownColor) < Halftone.Options.maxIntraframeDeltaE){
+
+                // colors are encoded in streaks of 'similar enough' colored pixels
+                differenceMatrix[lastKnownColorAdjusted].push(0);
+
+              } else {
+
+                // current pixel color is significantly different previous column
+                differenceMatrix[newPixelAdjusted].push(currentPixelIndex);
+
+                lastKnownColor = newPixel;
+                lastKnownColorAdjusted = newPixelAdjusted;
+
+              }
 
               currentPixelIndex++;
 
@@ -532,6 +600,35 @@ Halftone.FileSource.prototype = {
 
         return this.context.getImageData(0, 0, this.width, this.height).data;
 
+    }
+
+};
+
+
+Halftone.ImageSource = function(srcPath){
+
+  this.width = Halftone.Options.webcam.width;
+  this.height = Halftone.Options.webcam.height;
+
+  this.canvas = document.createElement('canvas');
+  this.context = this.canvas.getContext('2d');
+  this.canvas.width = this.width;
+  this.canvas.height = this.height;
+
+  this.image = new Image();
+
+  this.image.onload = function(){
+    this.context.drawImage(this.image,0,0);
+  }.bind(this);
+
+  this.image.src = srcPath;
+
+};
+
+Halftone.ImageSource.prototype = {
+
+    getFrame: function(){
+        return this.context.getImageData(0, 0, this.width, this.height).data;
     }
 
 };
