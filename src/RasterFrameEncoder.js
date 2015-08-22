@@ -1,5 +1,16 @@
 Halftone.RasterFrameEncoder = function(){
 
+    this.options = {
+
+        columns: 200,
+        webcamWidth: 640,
+        aspectRatio: 16/9
+
+    };
+
+    // auto-calculate the webcam height
+    this.options.webcamHeight = (1 / this.options.aspectRatio) * this.options.webcamWidth;
+
     this.lastEncodedFrame = null;
 
 };
@@ -75,10 +86,9 @@ Halftone.RasterFrameEncoder.prototype = {
 
     encodeFrame: function (canvasPixelArray, stagger){
 
-        var width = Halftone.Options.webcam.width,
-            height = Halftone.Options.webcam.height;
+        var width = this.options.webcamWidth, height = this.options.webcamHeight;
 
-        var cols = Halftone.Options.quality,
+        var cols = this.options.columns,
             rows = (cols / width) * height;
 
         var sampleSize = width / cols,
