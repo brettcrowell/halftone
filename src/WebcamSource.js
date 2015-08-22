@@ -1,14 +1,22 @@
 Halftone.WebcamSource = function(){
 
-    this.width = Halftone.Options.webcam.width;
-    this.height = Halftone.Options.webcam.height;
+    this.options = {
+
+        aspectRatio: 16 / 9,
+        video: true,
+        audio: false,
+        width: 640
+
+    };
+
+    this.options.height = (1 / this.options.aspectRatio) * this.options.width;
 
     this.video = document.createElement('video');
 
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+    this.canvas.width = this.options.width;
+    this.canvas.height = this.options.height;
 
     this.localMediaStream = null;
 
@@ -19,7 +27,7 @@ Halftone.WebcamSource = function(){
     // http://www.html5rocks.com/en/tutorials/getusermedia/intro/
 
     // Not showing vendor prefixes.
-    getUserMedia(Halftone.Options.webcam, this.startVideo.bind(this), this.errorCallback, this.video);
+    getUserMedia(this.options, this.startVideo.bind(this), this.errorCallback, this.video);
 
 };
 
@@ -53,9 +61,9 @@ Halftone.WebcamSource.prototype = {
 
     getFrame: function(){
 
-        this.context.drawImage(this.video, 0, 0, this.width, this.height);
+        this.context.drawImage(this.video, 0, 0, this.options.width, this.options.height);
 
-        return this.context.getImageData(0, 0, this.width, this.height).data;
+        return this.context.getImageData(0, 0, this.options.width, this.options.height).data;
 
     }
 
