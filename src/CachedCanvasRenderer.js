@@ -3,7 +3,6 @@ Halftone.CachedCanvasRenderer = function(options){
     this.options = {
 
         colorBase: 16,
-        pixelSize: 10,
         invert: true
 
     };
@@ -16,14 +15,12 @@ Halftone.CachedCanvasRenderer = function(options){
         }
     }
 
-    var colorBase = this.options.colorBase,
-        colorSpace = Math.pow(colorBase, 3);
-
-    this.cache = new Array(colorSpace);
+    this.cache = {};
     this.element = document.createElement('canvas');
-    this.context = this.element.getContext('2d');
-
     this.element.setAttribute('class', 'renderer');
+
+    this.element.width = 1280;
+    this.element.height = 720;
 
 };
 
@@ -42,8 +39,8 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         var base = this.options.colorBase;
 
-        var rgb = Halftone.Util.baseToRgb(basedColor, base),
-            rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+        var rgb = Halftone.Util.baseToRgb(basedColor, base);
+        //var rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 
         var luminance = Halftone.Util.getRasterWidth(basedColor, base);
 
@@ -62,7 +59,7 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         context.fillRect(0, 0, pixelSize, pixelSize);
         context.arc(xOnCanvas, yOnCanvas, rasterSize + 1, 0, Math.PI * 2, false);
-        context.fillStyle = rgbString;
+        context.fillStyle = "#000000";
         context.fill();
         context.closePath();
 
@@ -70,33 +67,44 @@ Halftone.CachedCanvasRenderer.prototype = {
 
     },
 
+    getCachedPixel: function(pixelColor, pixelSize){
+
+        var sourceIndex = parseInt(pixelColor, this.options.colorBase);
+        var cachedPixel;
+
+        if(this.cache[pixelSize]){
+
+            cachedPixel = this.cache[pixelSize][sourceIndex];
+
+        } else {
+
+            this.cache[pixelSize] = [];
+
+        }
+
+        this.cache[pixelSize][sourceIndex] = cachedPixel || this.generateCircle(pixelColor, pixelSize);
+
+        return this.cache[pixelSize][sourceIndex];
+
+    },
+
     render: function(encoderOutput){
 
         var matrix = encoderOutput.matrix,
-            cols = encoderOutput.metadata.cols,
-            rows = encoderOutput.metadata.rows,
-            pixelSize = this.options.pixelSize,
-            pixelRadius = pixelSize / 2;
+            cols = encoderOutput.metadata.cols;
+            //rows = encoderOutput.metadata.rows;
 
-        pixelSize += pixelSize % 2;
+        var pixelSize = this.element.offsetWidth / cols;
 
-        // allow for dynamic resizing of element
-        this.element.width = cols * this.options.pixelSize;
-        this.element.height = rows * this.options.pixelSize;
+        var pixelRadius = pixelSize / 2;
 
         for(var pixelColor in matrix) {
 
             var pixelIndexArray = matrix[pixelColor];
 
-            var context = this.context,
-                cache = this.cache;
+            var context = this.element.getContext('2d');
 
-            var sourceIndex = parseInt(pixelColor, this.options.colorBase),
-                sourcePixel = cache[sourceIndex];
-
-            if (!sourcePixel) {
-                sourcePixel = this.cache[sourceIndex] = this.generateCircle(pixelColor, pixelSize);
-            }
+            var sourcePixel = this.getCachedPixel(pixelColor, pixelSize);
 
             var row, col, xOffset;
 
