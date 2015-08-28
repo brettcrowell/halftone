@@ -33,47 +33,15 @@ Halftone.RasterFrameEncoder.prototype = {
 
     // http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
     // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
-    getRgbAtPoint: function (x, y, pixelSize, totalWidth, canvasPixelArray){
+    getPixelRgb: function (x, y, pixelSize, totalWidth, canvasPixelArray){
 
         var roundPixelRadius = Math.round(pixelSize / 2),
-            roundPixelQuad = Math.round(pixelSize / 4),
             xCenter = x + roundPixelRadius,
             yCenter = y + roundPixelRadius;
 
-        // gather pixels for upperLeft/uproundPixelSizeperRight, lowerLeft/lowerRight
-        var quadColors = [
+        var rgbAtCenter = this._getRgbAtPoint(xCenter, yCenter, totalWidth, canvasPixelArray);
 
-          this._getRgbAtPoint(xCenter, yCenter, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter - roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter, yCenter - roundPixelQuad, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter + roundPixelQuad, yCenter, totalWidth, canvasPixelArray),
-          this._getRgbAtPoint(xCenter, yCenter + roundPixelQuad, totalWidth, canvasPixelArray)
-
-        ];
-
-        /*
-
-        var sum = function(a, b) {
-            return a + b;
-        };
-
-        var avgColor = [
-
-          quadColors.map(function(rgb){ return rgb.r; }).reduce(sum) / 4,
-          quadColors.map(function(rgb){ return rgb.g; }).reduce(sum) / 4,
-          quadColors.map(function(rgb){ return rgb.b; }).reduce(sum) / 4
-
-        ]*/
-
-        var avgColor = [
-
-            (quadColors[0].r + quadColors[1].r + quadColors[2].r + quadColors[3].r + quadColors[4].r) / 5,
-            (quadColors[0].g + quadColors[1].g + quadColors[2].g + quadColors[3].g + quadColors[4].g) / 5,
-            (quadColors[0].b + quadColors[1].b + quadColors[2].b + quadColors[3].b + quadColors[4].b) / 5
-
-        ];
-
-        return [avgColor[0], avgColor[1], avgColor[2]];
+        return [rgbAtCenter.r, rgbAtCenter.g, rgbAtCenter.b];
 
     },
 
@@ -107,7 +75,7 @@ Halftone.RasterFrameEncoder.prototype = {
                 var xOnCanvas = Math.round((c * sampleSize) + offsetWidth),
                     yOnCanvas = Math.round((r * sampleSize) + staggerWidth);
 
-                var colorAtPoint = this.getRgbAtPoint(xOnCanvas, yOnCanvas, sampleSize, width, canvasPixelArray);
+                var colorAtPoint = this.getPixelRgb(xOnCanvas, yOnCanvas, sampleSize, width, canvasPixelArray);
 
                 currentRow.push(colorAtPoint);
 
