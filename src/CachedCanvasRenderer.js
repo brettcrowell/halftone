@@ -37,7 +37,8 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         var base = this.options.colorBase;
 
-        var luminance = Halftone.Util.getRasterWidth(basedColor, base);
+        var rgb = Halftone.Util.baseToRgb(basedColor, base);
+        var luminance = Halftone.Util.getRgbLuminance(rgb);
 
         if(this.options.invert){ luminance = 1 - luminance; }
 

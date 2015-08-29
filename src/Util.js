@@ -71,10 +71,9 @@ Halftone.Util = {
 
     },
 
-    getRasterWidth: function(colorBase36, colorBase){
+    getRgbLuminance: function(rgb){
 
-        var rgb = this.baseToRgb(colorBase36, colorBase),
-            hsv = this.rgbToHsv(rgb);
+        var hsv = this.rgbToHsv(rgb);
 
         return hsv[2];
 
