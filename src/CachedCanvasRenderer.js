@@ -3,6 +3,7 @@ Halftone.CachedCanvasRenderer = function(options){
     this.options = {
 
         colorBase: 16,
+        pixelSize: 20,
         invert: true
 
     };
@@ -18,9 +19,6 @@ Halftone.CachedCanvasRenderer = function(options){
     this.cache = {};
     this.element = document.createElement('canvas');
     this.element.setAttribute('class', 'renderer');
-
-    this.element.width = 1280;
-    this.element.height = 720;
 
 };
 
@@ -39,9 +37,6 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         var base = this.options.colorBase;
 
-        var rgb = Halftone.Util.baseToRgb(basedColor, base);
-        //var rgbString = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
-
         var luminance = Halftone.Util.getRasterWidth(basedColor, base);
 
         if(this.options.invert){ luminance = 1 - luminance; }
@@ -52,14 +47,10 @@ Halftone.CachedCanvasRenderer.prototype = {
         var yOnCanvas = xOnCanvas;
 
         context.beginPath();
-        context.fillStyle = "#ffffff";
-
-        context.fillStyle = Halftone.Util.rgbToHex(Halftone.Util.brightenRgb(rgb, 0.5));
         context.fillStyle = (this.options.invert) ? '#FFFFFF' : '#000000';
-
         context.fillRect(0, 0, pixelSize, pixelSize);
-        context.arc(xOnCanvas, yOnCanvas, rasterSize + 1, 0, Math.PI * 2, false);
-        context.fillStyle = "#000000";
+        context.fillStyle = (this.options.invert) ? '#000000' : '#FFFFFF';
+        context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
         context.fill();
         context.closePath();
 
@@ -91,12 +82,14 @@ Halftone.CachedCanvasRenderer.prototype = {
     render: function(encoderOutput){
 
         var matrix = encoderOutput.matrix,
-            cols = encoderOutput.metadata.cols;
-            //rows = encoderOutput.metadata.rows;
+            cols = encoderOutput.metadata.cols,
+            rows = encoderOutput.metadata.rows;
 
-        var pixelSize = this.element.offsetWidth / cols;
-
+        var pixelSize = this.options.pixelSize + (this.options.pixelSize % 2);
         var pixelRadius = pixelSize / 2;
+
+        this.element.width = cols * pixelSize;
+        this.element.height = rows * pixelSize;
 
         for(var pixelColor in matrix) {
 
