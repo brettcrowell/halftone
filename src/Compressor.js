@@ -20,7 +20,6 @@ Halftone.Compressor.prototype = {
 
             for(var c = 0; c < row.length; c++){
 
-              //var newPixel = Halftone.Util.
               var newPixel = Halftone.Util.brightenRgb(row[c], mul);
 
               if(oldMatrix && oldMatrix.matrix && oldMatrix.matrix[r] && oldMatrix.matrix[r][c]){

@@ -71,11 +71,11 @@ Halftone.Util = {
 
     },
 
-    getRgbLuminance: function(rgb){
+    getRgbLuminance: function(rgb, precision){
 
         var hsv = this.rgbToHsv(rgb);
 
-        return hsv[2];
+        return parseInt(hsv[2] * precision, 10) / precision;
 
     },
 
