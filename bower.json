@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "getUserMedia": "https://github.com/brettcrowell/getUserMedia.js.git#1b6b70bd59b17469f2fdb8e9f13ba03270496e7e",
-    "color-convert": "https://github.com/harthur/color-convert.git#gh-pages"
+    "color-convert": "https://github.com/harthur/color-convert.git#gh-pages",
+    "rivets": "~0.8.1"
   }
 }

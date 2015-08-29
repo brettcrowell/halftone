@@ -3,7 +3,7 @@
   <head>
     <title>Halftone demo</title>
     <link rel="stylesheet" href="./assets/normalize.css" />
-    <link rel="stylesheet" href="./assets/main.css" />
+    <link rel="stylesheet" href="./assets/halftone.css" />
     <style>
       /* begin demo embedded styles */
 
@@ -67,8 +67,8 @@
 
       document.getElementById('viewport').appendChild(renderer.getElement());
 
-      var frameInterval = 1 / (Halftone.Options.frameRate / 1000),
-        resolution = Halftone.Options.resolution;
+      var frameInterval = 1 / (Halftone.Options.frameRate / 1000);
+      var resolution = Halftone.Options.resolution;
 
       var lastKnownFrame = null;
 

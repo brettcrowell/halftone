@@ -1,9 +1,9 @@
-Halftone.CachedCanvasRenderer = function(options){
+Halftone.CachedCanvasLuminanceRenderer = function(options){
 
     this.options = {
 
-        colorBase: 16,
         pixelSize: 20,
+        autoPixelSize: true,
         invert: true
 
     };
@@ -22,23 +22,20 @@ Halftone.CachedCanvasRenderer = function(options){
 
 };
 
-Halftone.CachedCanvasRenderer.prototype = {
+Halftone.CachedCanvasLuminanceRenderer.prototype = {
 
     getElement: function(){
         return this.element;
     },
 
-    generateCircle: function(basedColor, pixelSize){
+    generateCircle: function(luminance, pixelSize){
+
+        luminance = isNaN(luminance) ? 1 : luminance;
 
         var canvas = document.createElement('canvas'),
             context = canvas.getContext('2d');
 
         canvas.width = canvas.height = pixelSize;
-
-        var base = this.options.colorBase;
-
-        var rgb = Halftone.Util.baseToRgb(basedColor, base);
-        var luminance = Halftone.Util.getRgbLuminance(rgb);
 
         if(this.options.invert){ luminance = 1 - luminance; }
 
@@ -59,14 +56,13 @@ Halftone.CachedCanvasRenderer.prototype = {
 
     },
 
-    getCachedPixel: function(pixelColor, pixelSize){
+    getCachedPixel: function(luminance, pixelSize){
 
-        var sourceIndex = parseInt(pixelColor, this.options.colorBase);
         var cachedPixel;
 
         if(this.cache[pixelSize]){
 
-            cachedPixel = this.cache[pixelSize][sourceIndex];
+            cachedPixel = this.cache[pixelSize][luminance];
 
         } else {
 
@@ -74,9 +70,9 @@ Halftone.CachedCanvasRenderer.prototype = {
 
         }
 
-        this.cache[pixelSize][sourceIndex] = cachedPixel || this.generateCircle(pixelColor, pixelSize);
+        this.cache[pixelSize][luminance] = cachedPixel || this.generateCircle(luminance, pixelSize);
 
-        return this.cache[pixelSize][sourceIndex];
+        return this.cache[pixelSize][luminance];
 
     },
 
@@ -87,26 +83,36 @@ Halftone.CachedCanvasRenderer.prototype = {
             rows = encoderOutput.metadata.rows;
 
         var pixelSize = this.options.pixelSize + (this.options.pixelSize % 2);
+
+        if(this.element.width != (cols * pixelSize)){
+
+            if(this.options.autoPixelSize){
+                pixelSize = this.options.pixelSize = parseInt(this.element.offsetWidth / cols, 10);
+                pixelSize += pixelSize % 2;
+            }
+
+            this.element.width = cols * pixelSize;
+            this.element.height = rows * pixelSize;
+
+        }
+
         var pixelRadius = pixelSize / 2;
 
-        this.element.width = cols * pixelSize;
-        this.element.height = rows * pixelSize;
+        for(var luminance in matrix) {
 
-        for(var pixelColor in matrix) {
-
-            var pixelIndexArray = matrix[pixelColor];
+            var pixelsForThisLuminance = matrix[luminance];
 
             var context = this.element.getContext('2d');
 
-            var sourcePixel = this.getCachedPixel(pixelColor, pixelSize);
+            var sourcePixel = this.getCachedPixel(luminance, pixelSize);
 
             var row, col, xOffset;
 
             var lastPixelIndex = -1;
 
-            for (var p = 0; p < pixelIndexArray.length; p++) {
+            for (var p = 0; p < pixelsForThisLuminance.length; p++) {
 
-                var pixelIndex = pixelIndexArray[p];
+                var pixelIndex = pixelsForThisLuminance[p];
 
                 if(pixelIndex === 0){
                   pixelIndex = ++lastPixelIndex;

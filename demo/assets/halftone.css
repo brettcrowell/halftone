@@ -1,17 +1,9 @@
-svg {
+canvas.renderer {
   width: 100%;
   height: 100%;
 }
 
-video {
-  display: none;
-}
-
-div#viewport {
+div#viewport{
   width: 1280px;
-  height: 960px;
-}
-
-canvas.renderer {
-  background-color: #000;
+  height: 720px;
 }
