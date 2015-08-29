@@ -1,7 +1,7 @@
 Halftone.LuminanceCompressor = function(){
 
   this.options = {
-    precision: 100,
+    precision: 50,
     similarity: 0.025
   };
 
@@ -28,12 +28,16 @@ Halftone.LuminanceCompressor.prototype = {
                 // if there is an old matrix to compare to, find the matching pixel
                 var oldPixelLuminance = Halftone.Util.getRgbLuminance(oldMatrix.matrix[r][c], this.options.precision);
 
-                if(Math.abs(oldPixelLuminance - newPixelLuminance) < this.options.similarity){
+                if(oldMatrix.metadata.cols == newMatrix.metadata.cols){
 
-                  // if the pixel color hasn't changed enough, don't change it
-                  currentPixelIndex++;
+                  if(Math.abs(oldPixelLuminance - newPixelLuminance) < this.options.similarity){
 
-                  continue;
+                    // if the pixel color hasn't changed enough, don't change it
+                    currentPixelIndex++;
+
+                    continue;
+
+                  }
 
                 }
 

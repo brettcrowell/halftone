@@ -2,7 +2,6 @@ Halftone.CachedCanvasLuminanceRenderer = function(options){
 
     this.options = {
 
-        colorBase: 16,
         pixelSize: 20,
         invert: true
 
