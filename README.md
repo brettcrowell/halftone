@@ -6,13 +6,17 @@ Halftone is a Javascript experiment which converts a live video stream into news
 
 This project was recenty (10/2016) translated into ES6 and Webpack.  Therefore, to get started, simply...
 
-1) Clone (or Fork & Clone) this repo
-2) Install Dependencies with NPM (`npm install`)
-3) Launch Webpack Dev Server to try it live...
+1. Clone (or Fork & Clone) this repo
+2. Install Dependencies with NPM (`npm install`)
+3. Launch Webpack Dev Server to try it live...
 
 ```
 ./node_modules/.bin/webpack-dev-server
 ```
+
+## Reading the Data Format
+
+More on that soon.
 
 ## Contributing
 
