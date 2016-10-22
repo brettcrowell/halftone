@@ -1,15 +1,33 @@
-/* Halftone main */
+import WebcamSource from "./sources/WebcamSource";
+import RasterFrameEncoder from "./encoders/RasterFrameEncoder";
+import Compressor from "./compressors/Compressor";
+import CachedCanvasRenderer from "./renderers/CachedCanvasRenderer";
 
-// Base function.
-var Halftone = function() {
-  // Add functionality here.
-  return true;
-};
+// max frame rate = 1 / ((21+19)/1000)
+// source --> encode --> compress --> decompress/renderer/display
 
+const source = new WebcamSource();
+const encoder = new RasterFrameEncoder();
+const compressor = new Compressor();
+const renderer = new CachedCanvasRenderer();
 
-// Version.
-Halftone.VERSION = '0.0.0';
+document.getElementById('viewport').appendChild(renderer.getElement());
 
+const frameRate = 10;
+const frameInterval = 1 / (frameRate / 1000);
 
-// Export to the root, which is probably `window`.
-root.Halftone = Halftone;
+var lastKnownFrame = null;
+
+function updateFrame(){
+
+  var imageData = source.getFrame();
+  var currentFrame = encoder.encodeFrame(imageData, true);
+  var differenceMatrix = compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+
+  renderer.render(differenceMatrix);
+
+  lastKnownFrame = currentFrame;
+
+}
+
+setInterval(updateFrame, frameInterval);

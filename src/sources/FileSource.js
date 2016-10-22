@@ -1,7 +1,8 @@
-Halftone.FileSource = function(srcPath){
+export default class FileSource {
+  constructor(srcPath, width, height) {
 
-    this.width = Halftone.Options.webcam.width;
-    this.height = Halftone.Options.webcam.height;
+    this.width = width;
+    this.height = height;
 
     this.video = document.createElement('video');
     this.video.autoplay = true;
@@ -17,27 +18,18 @@ Halftone.FileSource = function(srcPath){
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-};
+  }
 
-Halftone.FileSource.prototype = {
+  errorCallback(e) {
+    alert('Reeeejected!', e);
+  }
 
-    errorCallback: function(e) {
-        alert('Reeeejected!', e);
-    },
+  getFrame() {
 
-    /**
-     *
-     * @param video
-     * @param canvasContext
-     * @returns {CanvasPixelArray}
-     */
+    this.context.drawImage(this.video, 0, 0, this.width, this.height);
 
-    getFrame: function(){
+    return this.context.getImageData(0, 0, this.width, this.height).data;
 
-        this.context.drawImage(this.video, 0, 0, this.width, this.height);
+  }
 
-        return this.context.getImageData(0, 0, this.width, this.height).data;
-
-    }
-
-};
+}

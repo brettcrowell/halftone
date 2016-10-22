@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Halftone | Javascript experiment which converts a live video stream into halftones</title>
-    <link rel="stylesheet" href="./demo/assets/normalize.css">
-    <link rel="stylesheet" href="../css/halftone.css">
-  </head>
-  <body>
+    <style>
+        canvas.renderer {
+            width: 100%;
+            height: 100%;
+        }
+
+        div#viewport {
+            width: 1280px;
+            height: 720px;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
     <h1>Halftone</h1>
     <p>Javascript experiment which converts a live video stream into halftones</p>
+    <div id="viewport"></div>
     <p>Check out the <a href="http://brettcrowell.github.io/Halftone/demo/index.html">project homepage</a>.</p>
     <p>Check out the <a href="https://github.com/brettcrowell/Halftone">source code on GitHub</a>.</p>
     <p>Copyright 2014 Brett Crowell</p>
-  </body>
+    <script type="text/javascript" src="./assets/halftone.js"></script>
+</body>
 </html>
