@@ -1,4 +1,4 @@
-Halftone.Util = {
+export default {
 
     // http://www.html5canvastutorials.com/advanced/html5-canvas-load-image-data-url/
     // http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
@@ -45,7 +45,7 @@ Halftone.Util = {
             g = Math.min(rgb.g * mul, 255),
             b = Math.min(rgb.b * mul, 255);
 
-        hex = ("000000" + Halftone.Util.rgbToHex([r,g,b]).substr(1)).slice(-6);
+        hex = ("000000" + this.rgbToHex([r,g,b]).substr(1)).slice(-6);
 
         return "#" + hex[0] + hex[2] + hex[4];
 
