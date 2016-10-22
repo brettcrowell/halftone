@@ -1,42 +1,28 @@
 # Halftone
 
-Javascript experiment which converts a live video stream into halftones
+Halftone is a Javascript experiment which converts a live video stream into newspaper/print style halftones.  This is both an artistic venture, and a quest to create a super-slim codec-like transport format.
 
-## About
+## Getting Started
 
-A JavaScript library by Brett Crowell.
+This project was recenty (10/2016) translated into ES6 and Webpack.  Therefore, to get started, simply...
 
-See the [project homepage](http://brettcrowell.github.io/Halftone).
+1) Clone (or Fork & Clone) this repo
+2) Install Dependencies with NPM (`npm install`)
+3) Launch Webpack Dev Server to try it live...
 
-## Installation
-
-Using Bower:
-
-    bower install Halftone
-
-Or grab the [source](https://github.com/brettcrowell/Halftone/dist/Halftone.js) ([minified](https://github.com/brettcrowell/Halftone/dist/Halftone.min.js)).
-
-## Usage
-
-Basic usage is as follows:
-
-    Halftone();
-
-For advanced usage, see the documentation.
-
-## Documentation
-
-Start with `docs/MAIN.md`.
+```
+./node_modules/.bin/webpack-dev-server
+```
 
 ## Contributing
 
-We'll check out your contribution if you:
+I'll check out your contribution if you:
 
 * Provide a comprehensive suite of tests for your fork.
 * Have a clear and documented rationale for your changes.
 * Package these up in a pull request.
 
-We'll do our best to help you out with any contribution issues you may have.
+I'll do my best to help you out with any contribution issues you may have.
 
 ## License
 
