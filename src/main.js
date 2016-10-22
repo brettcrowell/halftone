@@ -1,5 +1,5 @@
 import WebcamSource from "./sources/WebcamSource";
-import RasterFrameEncoder from "./encoders/RasterFrameEncoder";
+import MatrixFrameEncoder from "./encoders/MatrixFrameEncoder";
 import Compressor from "./compressors/Compressor";
 import CachedCanvasRenderer from "./renderers/CachedCanvasRenderer";
 
@@ -7,7 +7,7 @@ import CachedCanvasRenderer from "./renderers/CachedCanvasRenderer";
 // source --> encode --> compress --> decompress/renderer/display
 
 const source = new WebcamSource();
-const encoder = new RasterFrameEncoder();
+const encoder = new MatrixFrameEncoder();
 const compressor = new Compressor();
 const renderer = new CachedCanvasRenderer();
 
