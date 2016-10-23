@@ -30,32 +30,34 @@ export default class CachedCanvasRenderer {
     return this.element;
   }
 
-  generateCircle(basedColor, pixelSize) {
+  /**
+   *
+   * @param pixelMagnitude [0...1]
+   * @param quadrantSize
+   * @returns {Element}
+   */
 
-    var canvas = document.createElement('canvas'),
-      context = canvas.getContext('2d');
+  generateCircle(pixelMagnitude, quadrantSize) {
 
-    canvas.width = canvas.height = pixelSize;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
 
-    var base = this.options.colorBase;
-
-    var rgb = utils.baseToRgb(basedColor, base);
-    var luminance = utils.getRgbLuminance(rgb, 50);
+    canvas.width = canvas.height = quadrantSize;
 
     if (this.options.invert) {
-      luminance = 1 - luminance;
+      pixelMagnitude = 1 - pixelMagnitude;
     }
 
-    var rasterSize = luminance * ((pixelSize) / 2);
+    var pixelRadius = pixelMagnitude * ((quadrantSize) / 2);
 
-    var xOnCanvas = Math.floor(pixelSize / 2);
+    var xOnCanvas = Math.floor(quadrantSize / 2);
     var yOnCanvas = xOnCanvas;
 
     context.beginPath();
     context.fillStyle = (this.options.invert) ? '#FFFFFF' : '#000000';
-    context.fillRect(0, 0, pixelSize, pixelSize);
+    context.fillRect(0, 0, quadrantSize, quadrantSize);
     context.fillStyle = (this.options.invert) ? '#000000' : '#FFFFFF';
-    context.arc(xOnCanvas, yOnCanvas, rasterSize, 0, Math.PI * 2, false);
+    context.arc(xOnCanvas, yOnCanvas, pixelRadius, 0, Math.PI * 2, false);
     context.fill();
     context.closePath();
 
@@ -63,24 +65,16 @@ export default class CachedCanvasRenderer {
 
   }
 
-  getCachedPixel(pixelColor, pixelSize) {
+  getCachedPixel(pixelMagnitude, quadrantSize) {
 
-    var sourceIndex = parseInt(pixelColor, this.options.colorBase);
-    var cachedPixel;
+    if (!(this.cache[quadrantSize] && this.cache[quadrantSize][pixelMagnitude])) {
 
-    if (this.cache[pixelSize]) {
-
-      cachedPixel = this.cache[pixelSize][sourceIndex];
-
-    } else {
-
-      this.cache[pixelSize] = [];
+      this.cache[quadrantSize] = this.cache[quadrantSize] || [];
+      this.cache[quadrantSize][pixelMagnitude] = this.generateCircle(pixelMagnitude, quadrantSize);
 
     }
 
-    this.cache[pixelSize][sourceIndex] = cachedPixel || this.generateCircle(pixelColor, pixelSize);
-
-    return this.cache[pixelSize][sourceIndex];
+    return this.cache[quadrantSize][pixelMagnitude];
 
   }
 

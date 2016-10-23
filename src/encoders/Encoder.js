@@ -4,7 +4,8 @@ export default class Encoder {
 
     var defaultOptions = {
 
-      cols: 200,
+      cols: 240,
+      rows: 135,
       webcamWidth: 640,
       aspectRatio: 16 / 9
 
