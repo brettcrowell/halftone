@@ -11,6 +11,7 @@ const encoder = new BinaryFrameEncoder();
 const compressor = new BinaryCompressor();
 const renderer = new BinaryCachedCanvasRenderer();
 
+document.getElementById("redrawFrame").onclick = updateFrame;
 document.getElementById("updateFrame").onclick = () => console.log(lastFrameSeen);
 document.getElementById("updateDiff").onclick = () => console.log(lastDiffSeen);
 document.getElementById('viewport').appendChild(renderer.getElement());
