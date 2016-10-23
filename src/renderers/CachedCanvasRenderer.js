@@ -32,7 +32,7 @@ export default class CachedCanvasRenderer {
 
   /**
    *
-   * @param pixelMagnitude [0...1]
+   * @param pixelMagnitude [0...14]
    * @param quadrantSize
    * @returns {Element}
    */
@@ -44,11 +44,9 @@ export default class CachedCanvasRenderer {
 
     canvas.width = canvas.height = quadrantSize;
 
-    if (this.options.invert) {
-      pixelMagnitude = 1 - pixelMagnitude;
-    }
-
-    var pixelRadius = pixelMagnitude * ((quadrantSize) / 2);
+    //@todo allow for inversions again someday
+    //@todo 14 is a magic number here! (represents 1 less than 1111
+    var pixelRadius = (pixelMagnitude / 14) * ((quadrantSize) / 2);
 
     var xOnCanvas = Math.floor(quadrantSize / 2);
     var yOnCanvas = xOnCanvas;
@@ -67,7 +65,7 @@ export default class CachedCanvasRenderer {
 
   getCachedPixel(pixelMagnitude, quadrantSize) {
 
-    if (!(this.cache[quadrantSize] && this.cache[quadrantSize][pixelMagnitude])) {
+    if (!this.cache[quadrantSize] || !this.cache[quadrantSize][pixelMagnitude]) {
 
       this.cache[quadrantSize] = this.cache[quadrantSize] || [];
       this.cache[quadrantSize][pixelMagnitude] = this.generateCircle(pixelMagnitude, quadrantSize);

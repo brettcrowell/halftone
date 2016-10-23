@@ -30,7 +30,7 @@ export default class BinaryCachedCanvasRenderer extends CachedCanvasRenderer {
 
       if(binaryMagnitude != "0000"){
 
-        const pixelMagnitude = (parseInt(binaryMagnitude, 2) - 1) / 14;
+        const pixelMagnitude = 14 - (parseInt(binaryMagnitude, 2) - 1);
         const sourcePixel = this.getCachedPixel(pixelMagnitude, pixelSize);
 
         const xOffset = (currentRow % 2 === 0) ? pixelRadius : 0;
