@@ -16,7 +16,7 @@ document.getElementById("updateFrame").onclick = () => console.log(lastFrameSeen
 document.getElementById("updateDiff").onclick = () => console.log(lastDiffSeen);
 document.getElementById('viewport').appendChild(renderer.getElement());
 
-const frameRate = 10;
+const frameRate = 30;
 const frameInterval = 1 / (frameRate / 1000);
 
 let lastFrameSeen = null;
