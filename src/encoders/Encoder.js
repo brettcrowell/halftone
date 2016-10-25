@@ -1,10 +1,11 @@
-export default class RasterFrameEncoder {
+export default class Encoder {
 
   constructor(options) {
 
     var defaultOptions = {
 
-      cols: 200,
+      cols: 240,
+      rows: 135,
       webcamWidth: 640,
       aspectRatio: 16 / 9
 
@@ -20,8 +21,6 @@ export default class RasterFrameEncoder {
 
     // auto-calculate the webcam height
     this.options.webcamHeight = (1 / this.options.aspectRatio) * this.options.webcamWidth;
-
-    this.lastEncodedFrame = null;
 
   }
 
@@ -60,54 +59,6 @@ export default class RasterFrameEncoder {
    * @returns {Array}
    */
 
-  encodeFrame(canvasPixelArray, stagger) {
-
-    var width = this.options.webcamWidth, height = this.options.webcamHeight;
-
-    var cols = this.options.cols,
-      rows = (cols / width) * height;
-
-    var sampleSize = width / cols,
-      staggerWidth = sampleSize / 2;
-
-    var matrix = [];
-
-    for (var r = 0; r < rows; r++) {
-
-      var currentRow = [];
-
-      var offsetWidth = (r % 2 === 0) ? sampleSize : staggerWidth;
-
-      for (var c = 0; c < cols; c++) {
-
-        var xOnCanvas = Math.round((c * sampleSize) + offsetWidth),
-          yOnCanvas = Math.round((r * sampleSize) + staggerWidth);
-
-        var colorAtPoint = this.getPixelRgb(xOnCanvas, yOnCanvas, sampleSize, width, canvasPixelArray);
-
-        currentRow.push(colorAtPoint);
-
-      }
-
-      matrix.push(currentRow);
-
-    }
-
-    // store this matrix in the cache for comparison
-    this.lastEncodedFrame = matrix;
-
-    return {
-
-      metadata: {
-        rows: rows,
-        cols: cols,
-        stagger: stagger
-      },
-
-      matrix: matrix
-
-    };
-
-  }
+  encodeFrame(canvasPixelArray, stagger) {}
 
 }

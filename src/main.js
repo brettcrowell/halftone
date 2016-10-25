@@ -1,32 +1,37 @@
 import WebcamSource from "./sources/WebcamSource";
-import RasterFrameEncoder from "./encoders/RasterFrameEncoder";
-import Compressor from "./compressors/Compressor";
-import CachedCanvasRenderer from "./renderers/CachedCanvasRenderer";
+import BinaryFrameEncoder from "./encoders/BinaryFrameEncoder";
+import BinaryCompressor from "./compressors/BinaryCompressor";
+import BinaryCachedCanvasRenderer from "./renderers/BinaryCachedCanvasRenderer";
 
 // max frame rate = 1 / ((21+19)/1000)
 // source --> encode --> compress --> decompress/renderer/display
 
 const source = new WebcamSource();
-const encoder = new RasterFrameEncoder();
-const compressor = new Compressor();
-const renderer = new CachedCanvasRenderer();
+const encoder = new BinaryFrameEncoder();
+const compressor = new BinaryCompressor();
+const renderer = new BinaryCachedCanvasRenderer();
 
+document.getElementById("redrawFrame").onclick = updateFrame;
+document.getElementById("updateFrame").onclick = () => console.log(lastFrameSeen);
+document.getElementById("updateDiff").onclick = () => console.log(lastDiffSeen);
 document.getElementById('viewport').appendChild(renderer.getElement());
 
-const frameRate = 10;
+const frameRate = 30;
 const frameInterval = 1 / (frameRate / 1000);
 
-var lastKnownFrame = null;
+let lastFrameSeen = null;
+let lastDiffSeen = null;
 
 function updateFrame(){
 
   var imageData = source.getFrame();
   var currentFrame = encoder.encodeFrame(imageData, true);
-  var differenceMatrix = compressor.getDifferenceMatrix(lastKnownFrame, currentFrame);
+  var difference = compressor.getDifferenceMatrix(lastFrameSeen, currentFrame);
 
-  renderer.render(differenceMatrix);
+  lastFrameSeen = currentFrame;
+  lastDiffSeen = difference;
 
-  lastKnownFrame = currentFrame;
+  renderer.render(difference);
 
 }
 
