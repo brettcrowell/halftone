@@ -40,13 +40,12 @@ export default class Encoder {
 
   // http://stackoverflow.com/questions/667045/getpixel-from-html-canvas
   // http://msdn.microsoft.com/en-us/library/ie/ff974957%28v=vs.85%29.aspx
-  getPixelRgb(x, y, pixelSize, totalWidth, canvasPixelArray) {
+  getPixelRgb(x, y, quadrantWidth, quadrantHeight, canvasWidth, canvasPixelArray) {
 
-    var roundPixelRadius = Math.round(pixelSize / 2),
-      xCenter = x + roundPixelRadius,
-      yCenter = y + roundPixelRadius;
+    const xCenter = x + Math.round(quadrantWidth / 2);
+    const yCenter = y + Math.round(quadrantHeight / 2);
 
-    var rgbAtCenter = this._getRgbAtPoint(xCenter, yCenter, totalWidth, canvasPixelArray);
+    const rgbAtCenter = this._getRgbAtPoint(xCenter, yCenter, canvasWidth, canvasPixelArray);
 
     return [rgbAtCenter.r, rgbAtCenter.g, rgbAtCenter.b];
 

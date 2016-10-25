@@ -19,22 +19,23 @@ export default class BinaryFrameEncoder extends Encoder {
     const cols = this.options.cols;
     const rows = this.options.rows; //(cols / width) * height;
 
-    const sampleSize = width / cols;
-    const staggerWidth = sampleSize / 2;
+    const quadrantWidth = width / cols;
+    const quadrantHeight = height / rows;
+    const staggerWidth = quadrantWidth / 2;
 
     let bitstring = "";
 
     for (var r = 0; r < rows; r++) {
 
-      var offsetWidth = (r % 2 === 0) ? sampleSize : staggerWidth;
+      var offsetWidth = (r % 2 === 0) ? quadrantWidth : staggerWidth;
 
       for (var c = 0; c < cols; c++) {
 
-        const xOnCanvas = Math.round((c * sampleSize) + offsetWidth);
-        const yOnCanvas = Math.round((r * sampleSize) + staggerWidth);
+        const xOnCanvas = Math.round((c * quadrantWidth) + offsetWidth);
+        const yOnCanvas = Math.round(r * quadrantWidth);
 
-        const colorAtPoint = this.getPixelRgb(xOnCanvas, yOnCanvas, sampleSize, width, canvasPixelArray);
-        let luminance = utils.getRgbLuminance(colorAtPoint, 14);
+        const quadrantColor = this.getPixelRgb(xOnCanvas, yOnCanvas, quadrantWidth, quadrantHeight, width, canvasPixelArray);
+        let luminance = utils.getRgbLuminance(quadrantColor, 14);
 
         if (invert) { luminance = 1 - luminance; }
 
