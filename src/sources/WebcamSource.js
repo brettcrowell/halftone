@@ -41,7 +41,7 @@ export default class WebcamSource {
     this.localMediaStream = stream;
 
     this.video.autoplay = true;
-    this.video.src = window.URL.createObjectURL(this.localMediaStream);
+    this.video.srcObject = this.localMediaStream;
 
     // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
     // See crbug.com/110938.
