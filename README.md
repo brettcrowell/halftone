@@ -4,15 +4,19 @@ Halftone is a Javascript experiment which converts a live video stream into news
 
 ## Getting Started
 
-This project was recenty (10/2016) translated into ES6 and Webpack.  Therefore, to get started, simply...
+Use Node.js 20.19+ (20.x) or 22.12+ and npm. Node.js 24 LTS is recommended.
 
 1. Clone (or Fork & Clone) this repo
 2. Install Dependencies with NPM (`npm install`)
-3. Launch Webpack Dev Server to try it live...
+3. Launch the Vite development server:
 
 ```
-./node_modules/.bin/webpack-dev-server
+npm run dev
 ```
+
+Open the local URL printed by Vite and allow webcam access. `npm start` also starts the development server.
+
+To create a production build in `dist/`, run `npm run build`. To check that build locally, run `npm run preview` and open the printed URL. Webcam access requires localhost or HTTPS.
 
 ## Reading the Data Format
 
